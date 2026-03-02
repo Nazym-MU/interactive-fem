@@ -1,0 +1,1423 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage[margin=1in]{geometry}
+
+\title{Finite element method applied to 2D dynamic wetting problems with modelisation of interface formation effects}
+\author{Carlos A. Galeano-Rios\\School of Mathematics, University of Birmingham, Birmingham, B15 2TT, UK}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+These notes are a guide into the model here considered and were written for a beginner in the FEM who has certain familiarity with fluid mechanics. The notes were edited several times as improvements were made to the code implementation. It is possible that some portions of the text were not fully updated to be an exact match to the latest version of the code (version 43). Still, they constitute the roadmap used to code the FEM implementation, and the code that accompanies them is largely based on the notation here used. Questions or comments about these notes can be directed to the email of the author.
+\end{abstract}
+
+\noindent \textbf{Key words:} Dynamic wetting, finite element method, spine method.
+
+\tableofcontents
+
+\newpage
+
+\section{Introduction}
+
+We consider the 2-dimensional flow in a droplet of incompressible fluid, as it spreads over a solid surface. The fluid domain \(\Omega\) is enclosed by a free surface \(\partial \Omega^{1}\), a solid surface \(\partial \Omega^{2}\) and the axis of symmetry \(\partial \Omega^{3}\) (see figure 1). We model the interface formation process following Shikhmurzaev [1993, 1997, 2007, 2020] and we closely follow Sprittles \& Shikhmurzaev (2013 2012a) and adapt their finite-element-method framework to the case at hand.
+
+\begin{figure}[h]
+\centering
+\begin{tabular}{|c|}
+\hline
+FIGURE 1. The fluid domain \(\Omega\) is enclosed by the free surface \(\partial \Omega^1\), shown here in blue; the solid surface \(\partial \Omega^2\) along the \(r\) axis, shown in green; and the axis of symmetry \(\partial \Omega^3\) along the \(r = 0\) axis, shown in red. The contact line lies at a distance equal to \(f\) from the origin (here \(f = 3\)). The liquid-solid line is curved here, as the method can in principle be easily adaptable for a curved solid surface; however, from here on we assume a flat solid surface. \\
+\hline
+\end{tabular}
+\end{figure}
+
+\section{Governing equations}
+
+The equations for conservation of momentum in an arbitrary Lagrangian-Eulerian (ALE) frame of reference are given by
+
+\begin{equation}
+\partial_{t}\pmb {u}^{\prime} + (\pmb {u}^{\prime} - \pmb {c}^{\prime})\cdot \nabla^{\prime}\pmb {u}^{\prime} = \frac{\nabla^{\prime}\cdot\pmb{P}^{\prime}}{\rho} +g\hat{g}, \tag{2.1}
+\end{equation}
+
+where \(\pmb {u}' = (u',w')\) is the velocity of the fluid, \(\pmb {c}'\) is the velocity of the ALE coordinates, \(\rho\) is the fluid density (which we assume is uniform and constant), \(g\) is the modulus of the acceleration of gravity, \(\hat{g}\) is the unit vector that points in the direction of the gravitational acceleration, and \(\pmb{P}'\) is the stress tensor defined by
+
+\begin{equation}
+\pmb{P}^{\prime} = \left\{-p^{\prime}I + \rho \nu \left[\nabla^{\prime}\pmb {u}^{\prime} + (\nabla^{\prime}\pmb {u}^{\prime})^{T}\right]\right\}, \tag{2.2}
+\end{equation}
+
+where \(\nu\) is the kinematic viscosity of the fluid. All dimensional variables and differential operators are denoted with a \(\prime\).
+
+Conservation of mass is given by
+
+\begin{equation}
+\nabla^{\prime}\cdot \pmb {u}^{\prime} = 0. \tag{2.3}
+\end{equation}
+
+\subsection{Boundary conditions at the axis of symmetry}
+
+Flow at the axis of symmetry is subject to impermeability
+
+\begin{equation}
+u^{\prime}\cdot n^{3} = 0, \tag{2.4}
+\end{equation}
+
+where \(n^3\) is the unit normal to boundary 3 which points into the domain, and to no tangential stress
+
+\begin{equation}
+n^3\cdot P^{\prime}\cdot (I - n^3 n^3) = 0. \tag{2.5}
+\end{equation}
+
+\subsection{Interface formation boundary conditions}
+
+We treat the liquid-gas interface and the liquid-solid interface as separate 2-dimensional phases, whose velocities and 2-dimensional densities are represented by \(v^{s_1'}\), \(v^{s_2'}\), \(\rho^{s_1'}\) and \(\rho^{s_2'}\), respectively; where the sub-index 1 refers to the liquid-gas interface, and sub-index 2 to the liquid-solid interface.
+
+\subsubsection{The free surface}
+
+On the free surface, the flow is subject to the kinematic boundary condition (KBC)
+
+\begin{equation}
+(v^{s_1'} - c') \cdot n^1 = 0, \tag{2.6}
+\end{equation}
+
+where \(n^1\) is the normal to boundary 1 that points into \(\Omega\); and to tangential and normal dynamic boundary conditions (DBC), given respectively by
+
+\begin{equation}
+n^1\cdot P^{\prime}\cdot (I - n^1 n^1) = -\nabla^{s_1'}\sigma^{1'}, \tag{2.7}
+\end{equation}
+
+and
+
+\begin{equation}
+\left(n^1\cdot P\cdot n^1\right)n^1 = \left(\sigma^{1'}\nabla^{s'}\cdot n^1\right)n^1 -p^{g'n^1}. \tag{2.8}
+\end{equation}
+
+where \(\sigma^{1'}\) is the surface tension coefficient along surface \(\partial \Omega^1\), \(p^{g'}\) is the pressure of the gas on the free surface, and \(\nabla^{s'}\) is the surface \(\nabla\) (nabla) operator.
+
+The latter two equations can be combined into a single one (henceforth called DBC1) by noticing that
+
+\begin{equation}
+\begin{array}{r}\nabla^{s'}\cdot \left[\sigma '(I - n^1 n^1)\right] = \nabla^{s'}\cdot (\sigma 'I) - \nabla^{s'}\cdot \left[\sigma '(n^1 n^1)\right]\\ = (\nabla^{s'}\sigma 'I - \sigma '\nabla^{s'}\cdot J - (\nabla^{s'}\sigma ')\cdot n^1 n^1 - \sigma '(\nabla^{s'}\cdot n^1)n^1 \end{array} \tag{2.9}
+\end{equation}
+
+and that adding equations (2.7) and (2.8) we have the DBC1
+
+\begin{equation}
+P^{\prime}\cdot n^{1} = -p^{g^{\prime}}n^{1} - \nabla^{s^{\prime}}\cdot \left[\sigma^{1^{\prime}}(I - n^{1}n^{1})\right]. \tag{2.10}
+\end{equation}
+
+Four further conditions are needed for the free surface. These are
+
+\begin{equation}
+(v^{s_1'} - u') \cdot (I - n^1 n^1) = \frac{1 + 4\alpha_g\beta_g}{4\beta_g}\nabla^s\sigma^{1'}, \tag{2.11}
+\end{equation}
+
+which states that the tangential velocity between the free-surface phase and the bulk phase at the same location is proportional to the surface gradient of surface tension (henceforth referred to a the SC1);
+
+\begin{equation}
+\sigma^{1} = \gamma_{g}\left(\rho^{s^{\prime}}(0) - \rho^{s_{1}^{\prime}}\right), \tag{2.12}
+\end{equation}
+
+which controls the changes in surface tension as a function of the changes in the density of the 2-dimensional free-surface phase (henceforth referred to as TDC1); the mass exchange between surface and bulk condition
+
+\begin{equation}
+\rho (u^{\prime} - v^{s_{1}^{\prime}})\cdot n^{1} = \frac{(\rho^{s_{1}^{\prime}} - \rho^{s_{1},c})}{\tau_{g}}, \tag{2.13}
+\end{equation}
+
+which quantifies the mass transfer between the surface phase and the bulk (henceforth referred to as MEC1); and the mass transport equations on the free surface
+
+\begin{equation}
+\partial_{t^{\prime}}\rho^{s_{1}^{\prime}} - \pmb{c}^{\prime}\cdot \nabla^{s^{\prime}}\rho^{s_{1}^{\prime}} + \nabla^{s^{\prime}}\cdot (\rho^{s_{1}^{\prime}}\pmb{v}^{s_{1}^{\prime}}) = \frac{\rho^{s_{1},c} - \rho^{s_{1}^{\prime}}}{\tau_{g}}, \tag{2.14}
+\end{equation}
+
+which models density transport within the surface (notice that the second term on the left-hand side appears due to our adoption of an ALE reference system). This condition will be referred to as the DTC1 from here on.
+
+We recall the vector calculus identity
+
+\begin{equation}
+\nabla^{s}\cdot (\phi \pmb {A}) = \pmb {A}\cdot \nabla^{s}\phi +\phi \nabla^{s}\cdot \pmb {A}. \tag{2.15}
+\end{equation}
+
+We take \(\phi = \rho^{s_{1}^{\prime}}\) and \(A = c^{\prime}\) and obtain
+
+\begin{equation}
+\nabla^{s^{\prime}}\cdot (\rho^{s_{1}^{\prime}}\pmb {c}^{\prime}) = \pmb {c}\cdot \nabla^{s^{\prime}}\rho^{s_{1}^{\prime}} + \rho^{s_{1}^{\prime}}\nabla^{s^{\prime}}\cdot \pmb {c}^{\prime}. \tag{2.16}
+\end{equation}
+
+i.e.
+
+\begin{equation}
+-\pmb {c}\cdot \nabla^{s^{\prime}}\rho^{s_{1}^{\prime}} = -\nabla^{s^{\prime}}\cdot (\rho^{s_{1}^{\prime}}\pmb {c}^{\prime}) + \rho^{s_{1}^{\prime}}\nabla^{s^{\prime}}\cdot \pmb {c}^{\prime}. \tag{2.17}
+\end{equation}
+
+Taking this result into condition DTC1, we have
+
+\begin{equation}
+\partial_{t}\rho^{s_{1}^{\prime}} + \rho^{s_{1}^{\prime}}\nabla^{s^{\prime}}\cdot \pmb {c}^{\prime} - \nabla^{s^{\prime}}\cdot (\rho^{s_{1}^{\prime}}\pmb {c}^{\prime}) + \nabla^{s^{\prime}}\cdot (\rho^{s_{1}^{\prime}}\pmb{v}^{s_{1}^{\prime}}) = \frac{\rho^{s_{1},c} - \rho^{s_{1}^{\prime}}}{\tau_{g}}, \tag{2.18}
+\end{equation}
+
+i.e.
+
+\begin{equation}
+\partial_{t}\rho^{s_{1}^{\prime}} + \rho^{s_{1}^{\prime}}\nabla^{s^{\prime}}\cdot \pmb {c}^{\prime} + \nabla^{s^{\prime}}\cdot [\rho^{s_{1}^{\prime}}(\pmb{v}^{s_{1}^{\prime}} - \pmb {c}^{\prime})] = \frac{\rho^{s_{1},c} - \rho^{s_{1}^{\prime}}}{\tau_{g}}. \tag{2.19}
+\end{equation}
+
+In the equations above, \(\alpha_{g}\) \(\beta_{g}\) \(\gamma_{g}\) and \(\tau_{g}\) (the relaxation time of the surface) are constants that depend on the liquid being considered (and possibly the gas as well). Moreover, \(\rho_{(0)}^{s}\) is the surface density for which surface tension is null; which is a property of the liquid. Moreover, \(\rho^{s_{1},c}\) is the equilibrium surface density for the liquid-gas interface.
+
+\subsubsection{The liquid-solid surface}
+
+On the liquid-solid interface, we have the impermeability condition (IC)
+
+\begin{equation}
+(\pmb{v}^{2^{\prime}} - \pmb{u}^{s^{\prime}})\cdot \pmb{n}^{2} = 0, \tag{2.20}
+\end{equation}
+
+where \(\pmb{u}^{s^{\prime}}\) is the velocity of the solid; the slip condition between the surface phase, the bulk and the solid (SC2)
+
+\begin{equation}
+\left[\pmb{v}^{s_{2}^{\prime}} - \frac{1}{2} (\pmb{u}^{\prime} + \pmb{u}^{s^{\prime}})\right]\cdot (\pmb {l} - \pmb{n}^{2}\pmb{n}^{2}) = \alpha_{s}\nabla^{s^{\prime}}\sigma^{2^{\prime}}; \tag{2.21}
+\end{equation}
+
+the Generalised Navier Slip Condition (GNSC), which plays the role of tangential DBC,
+
+\begin{equation}
+\pmb{n}^{2}\cdot \pmb{P}^{\prime}\cdot (\pmb {l} - \pmb{n}^{2}\pmb{n}^{2}) + \frac{1}{2}\nabla^{s^{\prime}}\sigma^{2^{\prime}} = \beta_{s}(\pmb{u}^{\prime} - \pmb{u}^{s^{\prime}})\cdot (\pmb {l} - \pmb{n}^{2}\pmb{n}^{2}), \tag{2.22}
+\end{equation}
+
+where \(n^2\) is the inward-pointing unit normal to \(\partial \Omega^2\). We substitute condition SC1 into the GNSC and obtain
+
+\begin{equation}
+n^2\cdot \pmb {P}^{\prime}\cdot (I - n^2 n^2) + \frac{1}{2\alpha_s}\left[v^{s_2} - \frac{1}{2} (u^{\prime} + u^{s^{\prime}})\right]\cdot (I - n^2 n^2) = \beta_s(u^{\prime} - u^{s^{\prime}})\cdot (I - n^2 n^2), \tag{2.23}
+\end{equation}
+
+the dependence of surface tension on surface density for boundary 2 (henceforth called TDC2)
+
+\begin{equation}
+\sigma^{2^{\prime}} = \gamma_{s}\left(\rho_{(0)}^{s} - \rho^{s_{2^{\prime}}}\right); \tag{2.24}
+\end{equation}
+
+the condition for mass exchange between interface 2 and the bulk (henceforth called MEC2)
+
+\begin{equation}
+\rho (u^{\prime} - v^{s_{2^{\prime}}})\cdot n^{2} = \frac{\rho^{s_{2^{\prime}}} - \rho^{s_{2^{\prime}}}}{\tau_{s}}; \tag{2.25}
+\end{equation}
+
+and the condition for the transport of density along boundary 2 (henceforth called DTC2)
+
+\begin{equation}
+\partial_{t}\rho^{s_{2^{\prime}}} - \pmb{c}^{\prime}\cdot \nabla^{\prime}\rho^{s_{2^{\prime}}} + \nabla^{s^{\prime}}\cdot (\rho^{s_{2^{\prime}}}v^{s_{2^{\prime}}}) = \frac{\rho^{s_{2^{\prime}}} - \rho^{s_{2^{\prime}}}}{\tau_{s}}, \tag{2.26}
+\end{equation}
+
+which can be reformulated (using identical arguments as were used above for boundary 1) into
+
+\begin{equation}
+\partial_{t}\rho^{s_{2^{\prime}}} + \rho^{s_{2^{\prime}}}\nabla^{s^{\prime}}\cdot \pmb{c}^{\prime} + \nabla^{s^{\prime}}\cdot [\rho^{s_{2^{\prime}}}(v^{s_{2^{\prime}}} - \pmb{c}^{\prime})] = \frac{\rho^{s_{2^{\prime}}} - \rho^{s_{2^{\prime}}}}{\tau_{s}}. \tag{2.27}
+\end{equation}
+
+\subsection{Boundary conditions at contact line}
+
+DBC1 on the free surface and the GNSC on the liquid-solid interface require their own boundary conditions for the surface-tension variables, given that they involve terms in which the surface tension is differentiated along the respective interfaces. The condition for these two equations is given by Young's equation for the contact angle, i.e.
+
+\begin{equation}
+\sigma^{2^{\prime}} + \sigma^{1^{\prime}}\cos \theta_{c} = \sigma^{g - s}, \tag{2.28}
+\end{equation}
+
+where \(\sigma^{g - s}\) is the surface tension between the gas and solid phases.
+
+Similarly, DTC1 and DTC2 both need boundary conditions on the flux \((\rho v)\), for the same reason a stated above. The necessary condition is given by the mass balance (henceforth referred to as MBC) at the contact line, i.e.
+
+\begin{equation}
+\rho^{s_{1^{\prime}}}\left(v_{\parallel}^{s_{1^{\prime}}} - u_{c^{\prime}}\right)\cdot m^{1} + \rho^{s_{2^{\prime}}}\left(v_{\parallel}^{s_{2^{\prime}}} - u_{c^{\prime}}\right)\cdot m^{2} = 0, \tag{2.29}
+\end{equation}
+
+where \(m^{1}\) and \(m^{2}\) are unit vectors that are normal to the contact line, tangent to the free surface and the liquid-solid interface, respectively, and that point into the corresponding surface; and \(u_{c}\) is the bulk velocity at the contact line.
+
+Since \(m^{1}\) is given by a rotation of \(\theta_{c}\) of \(m^{2}\), it is more convenient to express \(m^{1}\) as
+
+\begin{equation}
+m^{1} = \cos (\theta_{c})m^{2} + \sin (\theta_{c})n^{2}(c), \tag{2.30}
+\end{equation}
+
+where \(n^{2}(c)\) is the normal to surface 2 at the contact line. Where, in turn,
+
+\begin{equation}
+m^{2} = (-\cos (-\theta_{s c}),\sin (-\theta_{s c})), \tag{2.31}
+\end{equation}
+
+where
+
+\begin{equation}
+\theta_{sc} = \arctan (\theta_{r}z^{s}). \tag{2.32}
+\end{equation}
+
+Equation (2.30) implies that
+
+\begin{equation}
+\cos (\theta_{c}) = m^{1}\cdot m^{2}. \tag{2.33}
+\end{equation}
+
+\subsection{The split-domain formulation}
+
+The formulation presented above is complete, provided initial conditions are given for the momentum (initial velocity) and the surface transport equations (initial surface densities); however, its solution by means of the standard finite element method has been shown to conduct to the correct solution only when the contact angle is acute (Sprittles \& Shikhmurzaev 2011b). In the case of an obtuse contact angle, this formulation allows a spurious eigen-solution (i.e. a non-zero solution to the Stokes equation in a wedge, which is subject to impermeability and no-tangential-stress conditions on its boundary) to be captured by the standard finite element method when used to solve the problem above. This eigen-solution strongly disturbs the flow in the vicinity of the contact line resulting in the model predicting non-physical effects for the flow and the pressure distribution.
+
+Consequently, when the contact angle is obtuse, we must resort to the methods developed in Sprittles \& Shikhmurzaev (2011b), which are discussed in detail in the second half of this manuscript. The method there presented only modifies the treatment of the equations above in the vicinity of the contact line, so we can split the domain and use the standard method for a region that exclude the vicinity of the contact line and the obtuse-angle method only where needed (as it involves a more complex treatment of the flow).
+
+As is well known, dynamic wetting flows may alternate between one case and the other; hence, when solving the equations above we need an algorithm that can seamlessly transition between one method and the other. This is achieved by always solving the problem in a split domain and matching the flow, stresses and pressure along their separatrix. When the angle is acute, both methods will solve the standard formulation; when it is obtuse, the near-field of the contact line will be solved with the special formulation.
+
+We thus introduce one further boundary which is a separatrix of the domain for which we will also need boundary conditions. We will referred to this boundary as \(\partial \Omega^4\), when we discuss the far field formulation and it will be then understood that it is associated to its normal that points into the far-field portion of the split domain. In an entirely analogue manner we will refer to the same separatrix as \(\partial \Omega^5\) when we are dealing with the near-field formulation and it will be then understood that the opposite normal is chosen by default.
+
+Matching conditions along boundary 4 will be discussed when the near field formulation is introduced. For now it suffices to act as if stresses and velocities along this boundary are given.
+
+On boundary 4 we thus have
+
+\begin{equation}
+n^4\cdot P^{\prime}\cdot n^4 = \lambda^4, \tag{2.34}
+\end{equation}
+
+i.e. the normal stress on boundary 4 is given by \(\lambda^4 n^4\).
+
+Similarly
+
+\begin{equation}
+n^4\cdot P^{\prime}\cdot (I - n^4 n^4) = \gamma^4 t^4, \tag{2.35}
+\end{equation}
+
+i.e. the tangential stress on boundary 4 is given by \(\lambda^4 t^4\), where \(t^4\) is the unit tangent to surface 4.
+
+\subsection{Non-dimensionalisation}
+
+\subsubsection{Bulk equations}
+
+We choose \(U\) as the characteristic velocity, \(L\) as the characteristic length, and \(\rho \nu U / L\) as the characteristic stress; and we non-dimensionalise the momentum equation as follows
+
+\begin{equation}
+\frac{U^2}{L}\partial_tu + \frac{U^2}{L} u(u - c)\cdot \nabla u = \frac{\rho\nu U}{L^2}\frac{\nabla\cdot P}{\rho} +g\hat{g}, \tag{2.36}
+\end{equation}
+
+with
+
+\begin{equation}
+P = \left\{-pl + \left[\nabla u + (\nabla u)^T\right]\right\}, \tag{2.37}
+\end{equation}
+
+where variables without a \(^{\prime}\) correspond to the dimensionless version of the respective variables with a \(^{\prime}\).
+
+We multiply equation (2.36) by \(\nu U / L^2\) to obtain
+
+\begin{equation}
+R e[\partial_{t}u + (u - c)\cdot \nabla u] - \nabla \cdot P + S t e_{z} = 0, \tag{2.38}
+\end{equation}
+
+where
+
+\begin{equation}
+R e = U L / \nu \tag{2.39}
+\end{equation}
+
+and
+
+\begin{equation}
+S t = g L^{2} / (\nu U) \tag{2.40}
+\end{equation}
+
+are the Reynolds and Stokes numbers, respectively; and the continuity equation retains its form
+
+\begin{equation}
+\nabla \cdot \pmb {u} = 0. \tag{2.41}
+\end{equation}
+
+\subsubsection{The axis of symmetry}
+
+On the axis of symmetry, the boundary conditions are given by
+
+\begin{equation}
+u\cdot n^3 = 0, \tag{2.42}
+\end{equation}
+
+and
+
+\begin{equation}
+n^3\cdot P\cdot (I - n^3 n^3) = 0. \tag{2.43}
+\end{equation}
+
+\subsubsection{The free surface}
+
+On the free surface, the kinematic boundary condition yields
+
+\begin{equation}
+(\pmb{v}^{s_1} - \pmb {c})\cdot \pmb{n}^1 = 0, \tag{2.44}
+\end{equation}
+
+and the dynamic boundary condition
+
+\begin{equation}
+\frac{\rho\nu U}{L} (p^{g\prime} + P^{\prime})\cdot n^{1} = -\frac{\sigma_{L}^{1\prime}}{L}\nabla^{s}\cdot \left[\sigma^{1\prime}(I - n^{1}n^{1})\right], \tag{2.45}
+\end{equation}
+
+results in
+
+\begin{equation}
+(p^{g} + P)\cdot n^{1} = -\frac{\nabla^{s}\cdot[\sigma^{1}(I - n^{1}n^{1})]}{Ca}, \tag{2.46}
+\end{equation}
+
+where \(Ca = \rho \nu U / \sigma^{1,e}\), with \(\sigma^{1,e}\) being the equilibrium surface tension of the gas-liquid interface and \(\sigma^{1} = \sigma^{1\prime} / \sigma^{1,e}\) (as opposed to what would result if we used the stress and lengths units to define a surface tension unit).
+
+Moreover, the SC1 becomes
+
+\begin{equation}
+(\pmb{v}^{s_1} - \pmb {u})\cdot (I - n^1 n^1) = \frac{1 + 4E_gB_g}{4B_g}\nabla^s\sigma^1, \tag{2.47}
+\end{equation}
+
+TDC1 is given by
+
+\begin{equation}
+\sigma^1 = Cg(1 - \rho^{s_1}), \tag{2.48}
+\end{equation}
+
+where \(Cg = \gamma_{g}\rho_{(0)}^{s} / \sigma^{1,e}\), and \(\rho^{s_1} = \rho^{s_1} / \rho_{(0)}^{s}\) (as opposed to what would be if the surface-density unit were derived from the stress unit, the length unit and the time unit); and the mass exchange between the free surface and the bulk
+
+\begin{equation}
+(\pmb {u} - \pmb{v}^{s_1})\cdot \pmb{n}^1 = Fg(\rho^{s_1} - Dg), \tag{2.49}
+\end{equation}
+
+where \(Fg = \rho_{(0)}^{s} / (\rho U\tau_{g})\) and \(Dg = \rho^{s_1} / \rho_{(0)}^{s}\). We highlight here that \(Fg\) is indeed dimensionless, as the units of \(\rho^{s_1}\) (2-dimensional density) are different from those of \(\rho\) (standard 3-dimensional density).
+
+Furthermore, on boundary 1 we have the DTC1 which, in dimensionless form, is given by
+
+\begin{equation}
+Tg\{\partial_t\rho^{s_1} + \rho^{s_1}\nabla^s\cdot \pmb {c} + \nabla^s\cdot [\rho^{s_1}(\pmb{v}^{s_1} - \pmb {c})]\} = Dg - \rho^{s_1}. \tag{2.50}
+\end{equation}
+
+where \(Tg = \tau_{g}U / L\)
+
+\subsubsection{The liquid-solid interface}
+
+On the solid surface we have the IC, which in dimensionless form is given by
+
+\begin{equation}
+\left(\pmb {v}^2 -\pmb {u}^s\right)\cdot \pmb{n}^2 = 0; \tag{2.51}
+\end{equation}
+
+the SC2 becomes
+
+\begin{equation}
+\left[\pmb{v}^{s_2} - \frac{1}{2} (\pmb {u} + \pmb{u}^s)\right]\cdot (\pmb {I} - \pmb{n}^2 \pmb{n}^2) = E_s \nabla^s \sigma^2, \tag{2.52}
+\end{equation}
+
+where we introduce \(E_{s} = \alpha_{s}\sigma^{1,e} / (UL)\). We highlight that \(\sigma^2 = \sigma^2 /\sigma^{1,e}\), i.e. the free-surface equilibrium surface tension is taken as unit of surface tension and we note that if \(\alpha_{g} = \alpha_{s}\), \(E_{s} = E_{g}\).
+
+The GNSC is given by
+
+\begin{equation}
+n^2\cdot \pmb {P}\cdot (\pmb {I} - n^2 n^2) + \frac{1}{2CaE_s}\left[\pmb{v}^{s_2} - \frac{1}{2} (\pmb {u} + \pmb{u}^s)\right]\cdot (\pmb {I} - n^2 n^2) = B e(\pmb {u} - \pmb{u}^s)\cdot (\pmb {I} - n^2 n^2), \tag{2.53}
+\end{equation}
+
+where \(B e = \beta_{s}L / (\rho \nu)\) and we recall that \(C a = \rho \nu U / \sigma_{c}^{1}\)
+
+The dependence of surface tension on density (TDC2) becomes
+
+\begin{equation}
+\sigma^2 = C_s(1 - \rho^{s_2}); \tag{2.54}
+\end{equation}
+
+where \(C_{s} = \gamma_{s}\rho^{s,0} / \sigma^{1,e}\) (we note that if \(\gamma_{g} = \gamma_{s}\), \(C_{s} = C_{g}\)); and the mass exchange between the bulk and the surface is given by
+
+\begin{equation}
+(\pmb {u} - \pmb{v}^{s_2})\cdot \pmb{n}^2 = Fs(\rho^{s_2} - Ds), \tag{2.55}
+\end{equation}
+
+where \(D_{s} = \rho^{s_2,e} / \rho^{s,0}\) and \(F_{s} = \rho^{s,0} / (\rho U\tau_{s})\)
+
+Furthermore, we have the DTC2 which is given by
+
+\begin{equation}
+T_{s}\left\{\partial_{t}\rho^{s_{2}} + \rho^{s_{2}}\nabla^{s}\cdot \pmb {c} + \nabla^{s}\cdot [\rho^{s_{2}}(\pmb{v}^{s_{2}} - \pmb {c})]\right\} = D_{s} - \rho^{s_{2}}. \tag{2.56}
+\end{equation}
+
+where we recall that \(T_{s} = \tau_{s}U / L\)
+
+\subsubsection{Contact-line conditions}
+
+For the stress condition at the contact line we have
+
+\begin{equation}
+\sigma^{1}\cos (\theta_{c}) + \sigma^{2} = S_{0}, \tag{2.57}
+\end{equation}
+
+where \(S_{0} = \sigma^{g - s} / \sigma^{1,e}\).
+
+Finally for the mass balance condition MBC between the two surfaces we have
+
+\begin{equation}
+\rho^{s_1}(v^{s_1} - u)\cdot m^1 +\rho^{s_2}(v^{s_2} - u)\cdot m^2 = 0, \tag{2.58}
+\end{equation}
+
+which holds on the contact line.
+
+The contact angle condition
+
+\begin{equation}
+\cos (\theta_c) = m^1 \cdot m^2 \tag{2.59}
+\end{equation}
+
+remains unchanged.
+
+\section{Momentum, continuity and kinematic conditions in Cartesian coordinates}
+
+Defining \(\pmb {u} = (u,w)\) \(\pmb {c} = (u^{c},w^{c})\) \(\hat{g} = (\hat{g}_{r},\hat{g}_{z})\) and re-writing the governing equations by components we have the \(r\)-momentum equation
+
+\begin{equation}
+Re\partial_{t}u + Reu\partial_{r}u + Rew\partial_{z}u - Reu^{c}\partial_{r}u - Rew^{c}\partial_{z}u - St\hat{g}_{r} - e_{r}\cdot \nabla \cdot \pmb {P} = 0, \tag{3.1}
+\end{equation}
+
+the \(\mathcal{Z}\)-momentum equation
+
+\begin{equation}
+Re\partial_{t}w + Reu\partial_{r}w + Rew\partial_{z}w - Reu^{c}\partial_{r}w - Rew^{c}\partial_{z}w - St\hat{g}_{z} - e_{z}\cdot \nabla \cdot \pmb {P} = 0, \tag{3.2}
+\end{equation}
+
+and the continuity equation
+
+\begin{equation}
+\partial_{r}u + \partial_{z}w = 0; \tag{3.3}
+\end{equation}
+
+which are subject to the KBC
+
+\begin{equation}
+(u - u^{c})n_{r}^{1} + (w - w^{c})n_{z}^{1} = 0 \tag{3.4}
+\end{equation}
+
+on the free surface, where \(\pmb{n}^{1} = (n_{r}^{1},n_{z}^{1})\), and to the IC
+
+\begin{equation}
+(u - u^{s})n_{r}^{2} + (w - w^{s})n_{z}^{2} = 0, \tag{3.5}
+\end{equation}
+
+on the solid surface, \(n^{2} = (n_{r}^{2},n_{z}^{2})\). For the time being we will not write the DBC (2.10) and the NSC (2.53) in components.
+
+\begin{figure}[h]
+\centering
+\begin{tabular}{|c|}
+\hline
+FIGURE 2. Schematics of the distribution of node in the domain. The lines connecting the horizontal solid surface to the free surface are the spines, whose lengths determine the shape of the domain and along which the nodes are evenly spaced out. The spine lengths will be variables in our equation system. Nodes are evenly spaced along spines which are arcs of circumferences of Apolonian circles in a bipolar coordinate system for which the contact line coincides with one of the coordinate system's foci, and boundary 3 is the mediatrix of the line determined by both foci. The set of spines to be used is chosen by setting the number of spines desired and the ratio of the distances between the "foo" of each spine (i.e. its intersection with boundary 2) to the foot of the two spines adjacent to it. That is to say, the distance between a given spine foot to the the first spine foot to its left over the distance from the the given spine foot to the first spine foot to its right (following Sprittles \& Shikhmurzaev 2012b). The numbering convention of the nodes is also illustrated. \\
+\hline
+\end{tabular}
+\end{figure}
+
+\section{The \(r\)-momentum residuals}
+
+We define the \(i\)-th residuals of the \(r\)-momentum equation as
+
+\begin{equation}
+\begin{array}{l}{M_{i}^{r} = Re\int_{\Omega^{f}}\phi_{i}\partial_{t}u + Re\int_{\Omega^{f}}\phi_{i}u\partial_{r}u + Re\int_{\Omega^{f}}\phi_{i}w\partial_{z}u - Re\int_{\Omega^{f}}\phi_{i}u^{c}\partial_{r}u}\\ {~ - Re\int_{\Omega^{f}}\phi_{i}w^{c}\partial_{z}u - St\int_{\Omega^{f}}\phi_{i}\bar{g}_{r} - \int_{\Omega^{f}}\phi_{i}e_{r}\cdot \nabla \cdot \pmb {P},} \end{array} \tag{4.1}
+\end{equation}
+
+where functions \(\phi_{i}\) are chosen to be low-degree piece-wise polynomials with the property that their value is equal to 1 in a single point inside the domain. Moreover, the \(i\) index goes from 1 to \(n_{v}\), where each index is also associated with a different point in the domain, i.e. a velocity node (see figure 2). Naturally, residuals must be identically zero for all \(i\).
+
+We recall the tensor identity
+
+\begin{equation}
+\nabla \cdot (\pmb {x}\cdot \pmb {A}) = \pmb {x}\cdot \nabla \cdot \pmb {A} + \nabla \pmb {x}:\pmb {A}, \tag{4.2}
+\end{equation}
+
+taking \(x = \phi_{i}e_{r}\) and \(\pmb {A} = \pmb{P}\) we have
+
+\begin{equation}
+-\phi_{i}e_{r}\cdot \nabla \cdot \pmb {P} = -\nabla \cdot (\phi_{i}e_{r}\cdot \pmb {P}) + \nabla (\phi_{i}e_{r}):\pmb {P}, \tag{4.3}
+\end{equation}
+
+which reduces \(M_i^r\) to
+
+\begin{equation}
+\begin{array}{l} M_i^r = Re\int_{\Omega^f}\phi_i\partial_tu + Re\int_{\Omega^f}\phi_iu\partial_r u + Re\int_{\Omega^f}\phi_iw\partial_z u - Re\int_{\Omega^f}\phi_iu^c\partial_r u \\ - Re\int_{\Omega^f}\phi_iw^c\partial_z u - St\int_{\Omega^f}\phi_i\hat{g}_r + \int_{\Omega^f}\nabla(\phi_ie_r):\pmb {P} - \int_{\Omega^f}\nabla\cdot (\phi_ie_r\cdot \pmb {P}), \end{array} \tag{4.4}
+\end{equation}
+
+we can now apply the divergence theorem to the last term on the right hand side above to obtain
+
+\begin{equation}
+\begin{array}{l} M_i^r = Re\int_{\Omega^f}\phi_i\partial_tu + Re\int_{\Omega^f}\phi_iu\partial_r u + Re\int_{\Omega^f}\phi_iw\partial_z u - Re\int_{\Omega^f}\phi_iu^c\partial_r u \\ - Re\int_{\Omega^f}\phi_iw^c\partial_z u - St\int_{\Omega^f}\phi_i\hat{g}_r + \int_{\Omega^f}\nabla(\phi_ie_r):\pmb {P} + \int_{\partial\Omega}\phi_ie_r\cdot \pmb {P}\cdot n, \end{array} \tag{4.5}
+\end{equation}
+
+where \(\partial\Omega\) is the boundary of \(\Omega\), and \(n\) is its unit normal, that points into \(\Omega\).
+
+We notice that
+
+\begin{equation}
+\nabla(\phi_ie_r):\pmb {P} = \begin{pmatrix} \partial_r\phi_i \\ \partial_z\phi_i \\ 0 \\ 0 \end{pmatrix} : \begin{pmatrix} P_{rr} & P_{rz} \\ P_{zr} & P_{zz} \end{pmatrix} \tag{4.6}
+\end{equation}
+
+i.e.
+
+\begin{equation}
+\nabla(\phi_ie_r):\pmb {P} = \begin{pmatrix} \partial_r\phi_i \\ \partial_z\phi_i \\ 0 \\ 0 \end{pmatrix} : \begin{pmatrix} -p + 2\partial_ru & \partial_zu + \partial_rw \\ \partial_rw + \partial_zu & -p + 2\partial_zw \end{pmatrix}, \tag{4.7}
+\end{equation}
+
+which is
+
+\begin{equation}
+\nabla(\phi_ie_r):\pmb {P} = \partial_r\phi_i P_{rr} + \partial_z\phi_i P_{rz} = -p\partial_r\phi_i + 2\partial_ru\partial_r\phi_i + \partial_zu\partial_z\phi_i + \partial_rw\partial_z\phi_i. \tag{4.8}
+\end{equation}
+
+Therefore we have
+
+\begin{equation}
+\begin{array}{l} M_i^r = Re\int_{\Omega^f}\phi_i\partial_tu + Re\int_{\Omega^f}\phi_iu\partial_r u + Re\int_{\Omega^f}\phi_iw\partial_z u - Re\int_{\Omega^f}\phi_iu^c\partial_r u - Re\int_{\Omega^f}\phi_iw^c\partial_z u \\ - St\int_{\Omega^f}\phi_i\hat{g}_r - \int_{\Omega^f}p\partial_r\phi_i + 2\int_{\Omega^f}\partial_ru\partial_r\phi_i + \int_{\Omega^f}\partial_zu\partial_z\phi_i + \int_{\Omega^f}\partial_rw\partial_z\phi_i + \int_{\partial\Omega}\phi_ie_r\cdot \pmb {P}\cdot n, \end{array} \tag{4.9}
+\end{equation}
+
+We now consider the penultimate term in the RHS of the equation above, i.e.
+
+\begin{equation}
+\int_{\Omega^f}\partial_rw\partial_z\phi_i. \tag{4.10}
+\end{equation}
+
+We recall the multi-variable integration by parts formula given by
+
+\begin{equation}
+\int_{\Omega}f\partial_{x_i}g = -\int_{\Omega}g\partial_{x_i}f - \int_{\partial\Omega}fgn_i, \tag{4.11}
+\end{equation}
+
+where \(n_i\) is the i-th Cartesian component of the inward-pointing unit normal to \(\Omega\).
+
+Taking \(f = \partial_r w\) and \(g = \phi_i\), we have
+
+\begin{equation}
+\int_{\Omega^f}\partial_r w\partial_z\phi_i = -\int_{\Omega^f}\phi_i\partial_z\partial_r w - \int_{\partial\Omega^f}\phi_i n_z^1\partial_r w. \tag{4.12}
+\end{equation}
+
+We can then exchange the order of the derivatives of \(w\) in the first integral on the RHS above to obtain
+
+\begin{equation}
+\int_{\Omega^f}\partial_r w\partial_z\phi_i = -\int_{\Omega^f}\phi_i\partial_z\partial_r w - \int_{\partial\Omega^f}\phi_i n_z^1\partial_r w, \tag{4.13}
+\end{equation}
+
+and taking \(f = \phi_i\) and \(g = \partial_z w\) above, we can apply integration by parts once more, obtaining
+
+\begin{equation}
+\int_{\Omega^f}\partial_r w\partial_z\phi_i = \int_{\Omega^f}\partial_r\phi_i\partial_z w + \int_{\partial\Omega^f}\phi_i n_z^1\partial_z w - \int_{\partial\Omega^f}\phi_i n_z^1\partial_r w. \tag{4.14}
+\end{equation}
+
+We now recall equation 2.41 which implies that \(\partial_z w = -\partial_r u\), and we substitute this expression into the second integral on the RHS above, obtaining
+
+\begin{equation}
+\int_{\Omega^f}\partial_r w\partial_z\phi_i = \int_{\Omega^f}\partial_r\phi_i\partial_z w - \int_{\partial\Omega^f}\phi_i n_z^1\partial_r u - \int_{\partial\Omega^f}\phi_i n_z^1\partial_r w. \tag{4.15}
+\end{equation}
+
+We substitute this into equation 4.9 and we have
+
+\begin{equation}
+\begin{array}{l}{M_i^r = Re\int_{\Omega^f}\phi_i\partial_tu + Re\int_{\Omega^f}\phi_iu\partial_r u + Re\int_{\Omega^f}\phi_iw\partial_z u - Re\int_{\Omega^f}\phi_iu^c\partial_r u}\\ {~ - Re\int_{\Omega^f}\phi_iw^c\partial_z u - St\int_{\Omega^f}\phi_i\hat{g}_r - \int_{\Omega^f}p\partial_r\phi_i + \int_{\Omega^f}\partial_r u\partial_r\phi_i + \int_{\Omega^f}\partial_z u\partial_z\phi_i}\\ {~ + \int_{\Omega^f}\partial_r\phi_i(\partial_r u + \partial_z w) - \int_{\partial\Omega^f}\phi_i n_z^1\partial_r u - \int_{\partial\Omega^f}\phi_i n_z^1\partial_r w + \int_{\partial\Omega^f}\phi_i e_r\cdot \pmb {P}\cdot n,} \end{array} \tag{4.16}
+\end{equation}
+
+We now consider the last integral on the right hand side of the equation above
+
+\begin{equation}
+{\int_{\partial\Omega^{2}}\phi_{i}e_{r}\cdot P\cdot n=\int_{\partial\Omega^{2},1}\phi_{i}e_{r}\cdot P\cdot n^{1}+\int_{\partial\Omega^{2},1}\phi_{i}e_{r}\cdot P\cdot\ n^{2}} {+\int_{\partial\Omega^{3}}\phi_{i}e_{r}\cdot P\cdot n^{3}+\int_{\partial\Omega^{4}}\phi_{i}e_{r}\cdot P\cdot n^{4},} \tag{4.17}
+\end{equation}
+
+where \(\partial \Omega^1\) is the free surface, \(\partial \Omega^2\) is the solid surface, \(\partial \Omega^3\) is the axis of symmetry, and \(\partial \Omega^4\) the separatrix.
+
+Taking this expansion into equation 4.9 we have
+
+\begin{equation}
+M_i^r = M_i^{r,0} + M_i^{r,1} + M_i^{r,2} + M_i^{r,3} + M_i^{r,5} \tag{4.18}
+\end{equation}
+
+where
+
+\begin{equation}
+\begin{array}{l}{M_i^{r,0} = Re\int_{\Omega^f}\phi_i\partial_tu + Re\int_{\Omega^f}\phi_iu\partial_r u + Re\int_{\Omega^f}\phi_iu\partial_z u - Re\int_{\Omega^f}\phi_iu^c\partial_r u}\\ {~ - Re\int_{\Omega^f}\phi_iw^c\partial_z u - St\int_{\Omega^f}\phi_i\hat{g}_r - \int_{\Omega^f}p\partial_r\phi_i + \int_{\Omega^f}\partial_r u\partial_r\phi_i + \int_{\Omega^f}\partial_z u\partial_z\phi_i,} \end{array} \tag{4.19}
+\end{equation}
+
+\begin{equation}
+M_{i}^{r,1} = -\int_{\partial \Omega^{1,f}}\phi_{i}n_{r}^{1}\partial_{r}u - \int_{\partial \Omega^{1,f}}\phi_{i}n_{r}^{1}\partial_{\nu}w + \int_{\partial \Omega^{1,f}}\phi_{i}e_{r}\cdot \pmb {P}\cdot \pmb{n}^{1}, \tag{4.20}
+\end{equation}
+
+\begin{equation}
+M_{i}^{r,2} = -\int_{\partial \Omega^{2,f}}\phi_{i}n_{r}^{2}\partial_{r}u - \int_{\partial \Omega^{2,f}}\phi_{i}n_{r}^{2}\partial_{\nu}w + \int_{\partial \Omega^{2,f}}\phi_{i}e_{r}\cdot \pmb{P}\cdot \pmb{n}^{2}, \tag{4.21}
+\end{equation}
+
+\begin{equation}
+M_{i}^{r,3} = -\int_{\partial \Omega^{3}}\phi_{i}n_{r}^{3}\partial_{r}u - \int_{\partial \Omega^{3}}\phi_{i}n_{r}^{3}\partial_{\nu}w + \int_{\partial \Omega^{3}}\phi_{i}e_{r}\cdot \pmb{P}\cdot \pmb{n}^{3}, \tag{4.22}
+\end{equation}
+
+\begin{equation}
+M_{i}^{r,5} = -\int_{\partial \Omega^{4}}\phi_{i}n_{r}^{4}\partial_{r}u - \int_{\partial \Omega^{4}}\phi_{i}n_{r}^{4}\partial_{\nu}w + \int_{\partial \Omega^{4}}\phi_{i}e_{r}\cdot \pmb{P}\cdot \pmb{n}^{4}, \tag{4.23}
+\end{equation}
+
+For equation (4.20) we have equation (2.46), which states that
+
+\begin{equation}
+\pmb {P}\cdot \pmb{n}^{1} = -p^{g}\pmb{n}^{1} - \frac{\nabla^{s}\cdot[\sigma^{1}(\pmb{I} - \pmb{n}^{1}\pmb{n}^{1})]}{C a}, \tag{4.24}
+\end{equation}
+
+and therefore
+
+\begin{equation}
+\phi_{i}e_{r}\cdot \pmb{P}\cdot \pmb{n}^{1} = -\phi_{i}p^{g}e_{r}\cdot \pmb{n}^{1} - \frac{1}{C a}\phi_{i}e_{r}\cdot \nabla^{s}\cdot [\sigma^{1}(\pmb{I} - \pmb{n}^{1}\pmb{n}^{1})]. \tag{4.25}
+\end{equation}
+
+Now, we have the following surface vector calculus identity
+
+\begin{equation}
+\nabla^{s}\cdot (\pmb {x}\cdot \pmb {A}) = \pmb {A}\colon \nabla^{s}\pmb {x} + \pmb {x}\cdot \nabla^{s}\cdot \pmb {A}, \tag{4.26}
+\end{equation}
+
+and taking \(\pmb {x} = \phi_{i}e_{r}\) and \(\pmb {A} = \sigma^{1}(\pmb {I} - \pmb{n}^{1}\pmb{n}^{1})\), we have
+
+\begin{equation}
+\nabla^{s}\cdot (\phi_{i}e_{r}\cdot \sigma^{1}(\pmb {I} - \pmb{n}^{1}\pmb{n}^{1})) = \sigma^{1}(\pmb {I} - \pmb{n}^{1}\pm b^{1})\colon \nabla^{s}(\phi_{i}e_{r}) + \phi_{i}e_{r}\cdot \nabla^{s}\cdot \sigma^{1}(\pmb {I} - \pmb{n}^{1}\pmb{n}^{1}) \tag{4.27}
+\end{equation}
+
+which yields
+
+\begin{equation}
+\phi_{i}e_{r}\cdot \nabla^{s}\cdot \sigma^{1}(\pmb {I} - \pmb{n}^{1}\pmb{n}^{1}) = \nabla^{s}\cdot (\phi_{i}e_{r}\cdot \sigma^{1}(\pmb {I} - \pmb{n}^{1}\pmb{n}^{1})) - \sigma^{1}(\pmb {I} - \pmb{n}^{1}\pm b^{1})\colon \nabla^{s}(\phi_{i}e_{r}). \tag{4.28}
+\end{equation}
+
+In this 1D-surface case, we have
+
+\begin{equation}
+\nabla^{s}(\phi_{i}e_{r}) = \left[ \begin{array}{cc}t_{r}^{1}\partial_{s}\phi_{i} & 0\\ t_{s}^{1}\partial_{s}\phi_{i} & 0 \end{array} \right], \tag{4.29}
+\end{equation}
+
+where \(t^{1} = (t_{r}^{1},t_{s}^{1})\), and the tangent vector must be pointing in the direction of increasing arc-length \(s\), therefore
+
+\begin{equation}
+(\pmb {I} - \pmb{n}^{1}\pmb{n}^{1}):\nabla^{s}(\phi_{i}e_{r}) = \left[ \begin{array}{cc}1 - n_{r}^{1}n_{s}^{1} & -n_{r}^{1}n_{s}^{1}\\ -n_{s}^{1}n_{r}^{1} & 1 - n_{s}^{1}n_{s}^{1} \end{array} \right]:\left[ \begin{array}{cc}t_{r}^{1}\partial_{s}\phi_{i} & 0\\ t_{s}^{1}\partial_{s}\phi_{i} & 0 \end{array} \right], \tag{4.30}
+\end{equation}
+
+where \(\pmb{n}^{1} = (n_{r}^{1},n_{s}^{1})\), i.e.
+
+\begin{equation}
+(\pmb {I} - \pmb{n}^{1}\pmb{n}^{1}):\nabla^{s}\phi_{i}e_{r} = t_{r}^{1}\partial_{s}\phi_{i} - (t^{1}\cdot \pmb{n}^{1})n_{r}^{1}\partial_{s}\phi_{i} = t_{r}^{1}\partial_{s}\phi_{i}. \tag{4.31}
+\end{equation}
+
+We therefore have in equation (4.28)
+
+\begin{equation}
+\phi_{i}e_{r}\cdot \nabla^{s}\cdot \sigma^{1}(\pmb {I} - \pmb{n}^{1}\pmb{n}^{1}) = \nabla^{s}\cdot (\phi_{i}e_{r}\cdot \sigma^{1}(\pmb {I} - \pmb{n}^{1}\pmb{n}^{1})) - \sigma^{1}t_{r}^{1}\partial_{s}\phi_{i}, \tag{4.32}
+\end{equation}
+
+and consequently in equation (4.25)
+
+\begin{equation}
+\phi_{i}e_{r}\cdot \pmb{P}\cdot \pmb{n}^{1} = -\phi_{i}p^{g}e_{r}\cdot \pmb{n}^{1} - \frac{1}{C a}\nabla^{s}\cdot (\phi_{i}e_{r}\cdot \sigma^{1}(\pmb {I} - \pmb{n}^{1}\pmb{n}^{1})) + \frac{1}{C a}\sigma^{1}t_{r}^{1}\partial_{s}\phi_{i}. \tag{4.33}
+\end{equation}
+
+Thus for \(M_i^{r,1}\) we have
+
+\begin{equation}
+\begin{array}{l}{M_{i}^{r,1} = -\int_{\partial \Omega^{1,f}}\phi_{i}n_{r}^{1}\partial_{r}u - \int_{\partial \Omega^{1,f}}\phi_{i}n_{z}^{1}\partial_{r}w - \int_{\partial \Omega^{1,f}}\phi_{i}p^{g}e_{r}\cdot \pmb{n}^{1}}\\ {-\frac{1}{Ca}\int_{\partial \Omega^{1,f}}\nabla^{s}\cdot (\sigma^{1}\phi_{i}e_{r}\cdot (I - \pmb{n}^{1}\pmb{n}^{1})) + \frac{1}{Ca}\int_{\partial \Omega^{1,f}}t_{r}^{1}\sigma^{1}\partial_{s}\phi_{i},} \end{array} \tag{4.34}
+\end{equation}
+
+Using the surface divergence theorem and the definition of the surface divergence for a 1D surface, we have
+
+\begin{equation}
+\begin{array}{l}{M_{i}^{r,1} = -\int_{\partial \Omega^{1,f}}\phi_{i}n_{r}^{1}\partial_{r}u - \int_{\partial \Omega^{1,f}}\phi_{i}n_{z}^{1}\partial_{r}w - \int_{\partial \Omega^{1,f}}\phi_{i}p^{g}e_{r}\cdot \pmb{n}^{1}}\\ {+\frac{1}{Ca}\int_{C_{1}}\sigma^{1}\phi_{i}e_{r}\cdot \pmb{m}^{1} + \frac{1}{Ca}\int_{\partial \Omega^{1,f}}t_{r}^{1}\sigma^{1}\partial_{s}\phi_{i},} \end{array} \tag{4.35}
+\end{equation}
+
+where \(C_1\) is actually the two points bounding the free surface, and \(m^1\) is the vector that is tangent to the free surface, normal to the contact line and points into the free surface. Above, we have also used that \(n^1 = (n_r^1, n_z^1)\).
+
+Therefore we have
+
+\begin{equation}
+\begin{array}{l}{M_{i}^{r,1} = -\int_{\partial \Omega^{1,f}}\phi_{i}n_{r}^{1}\partial_{r}u - \int_{\partial \Omega^{1,f}}\phi_{i}n_{z}^{1}\partial_{r}w - \int_{\partial \Omega^{1,f}}\phi_{i}p^{g}e_{r}\cdot \pmb{n}^{1}}\\ {+\frac{\sigma^{1}(r_{j^{1}},z_{j^{1}})\phi_{i}(r_{j^{1}},z_{j^{1}})}{Ca} m_{r}^{1}f(r_{j^{1}},z_{j^{1}})}\\ {+\frac{\sigma^{1}(r_{a},z_{a})\phi_{i}(r_{a},z_{a})}{Ca} m_{r}^{1}(r_{a},z_{a}) + \frac{1}{Ca}\int_{\partial \Omega^{1,f}}t_{r}^{1}\sigma^{1}\partial_{s}\phi_{i},} \end{array} \tag{4.36}
+\end{equation}
+
+where the sub-index \(J^1\) indicates the junction point of the two sub-domains along boundary 1. We recall that, for the case at hand \(m^{1,f}(r_{j^{1}},z_{j^{1}})\) is given by the tangent to the far-field portion of the free surface. Furthermore,
+
+\begin{equation}
+m^{1}(r_{a},z_{a}) = m_{r}^{1}(r_{a},z_{a})e_{r} + m_{z}^{1}(r_{a},z_{a})e_{z} = \sin (\theta_{a})e_{r} - \cos (\theta_{a})e_{z}, \tag{4.37}
+\end{equation}
+
+at the other end of the free surface (droplet apex). We highlight that in our case \(\theta_{a} = \pi /2\). We consider now the term
+
+\begin{equation}
+\int_{\partial \Omega^{2,f}}\phi_{i}e_{r}\cdot \pmb {P}\cdot \pmb{n}^{2}, \tag{4.38}
+\end{equation}
+
+in equation (4.21) where we have
+
+\begin{equation}
+\begin{array}{r}\phi_{i}e_{r}\cdot \pmb {P}\cdot \pmb{n}^{2} = \phi_{i}e_{r}\cdot \frac{\pmb{n}^{2}\cdot\pmb{P}\cdot(\pmb{n}^{2}\pmb{n}^{2})}{B e(\pmb{u} - \pmb{u}^{s})\cdot(\pmb{l} - \pmb{n}^{2}\pmb{n}^{2}) - \frac{1}{2C a E s} [\pmb{v}^{s2} - \frac{1}{2} (\pmb{u} + \pmb{u}^{s})]\cdot (\pmb{l} - \pmb{n}^{2}\pmb{n}^{2})} \end{array} \tag{4.39}
+\end{equation}
+
+where we have used equation (2.53) and we have introduced \(\lambda^2\), i.e. the normal stress on boundary 2.
+
+Hence, we have
+
+\begin{equation}
+\phi_{i}e_{r}\cdot P\cdot n^2 = Be \phi_i (u\cdot t^2) e_r\cdot t^2 - Be \phi_i (u^s\cdot t^2) e_r\cdot t^2 + \lambda^2\phi_i n_r^2 - \frac{1}{2Ca E_s} \phi_i \left[ v^{s2}\cdot t^2 - \frac{1}{2}u\cdot t^2 - \frac{1}{2}u^s\cdot t^2 \right] e_r\cdot t^2. \tag{4.40}
+\end{equation}
+
+Rewriting we have
+
+\begin{equation}
+\phi_i e_r\cdot P\cdot n^2 = Be \phi_i (u t_r^2 + w t_z^2) t_r^2 - Be \phi_i (u^s t_r^2 + w^s t_z^2) t_r^2 + \lambda^2 \phi_i n_r^2 - \frac{1}{2Ca E_s} \phi_i \left[ u^{s2} t_r^2 + w^{s2} t_z^2 - \frac{1}{2}u t_r^2 - \frac{1}{2}w t_z^2 - \frac{1}{2}u^s t_r^2 - \frac{1}{2}w^s t_z^2 \right] t_r^2. \tag{4.41}
+\end{equation}
+
+Equivalently
+
+\begin{equation}
+\phi_i e_r\cdot P\cdot n^2 = \lambda^2 \phi_i n_r^2 + \left[ \frac{1}{4Ca E_s} + Be \right] \phi_i u t_r^2 t_r^2 + \left[ \frac{1}{4Ca E_s} + Be \right] \phi_i w t_r^2 t_z^2 + \left[ \frac{1}{4Ca E_s} - Be \right] \phi_i u^s t_r^2 t_r^2 + \left[ \frac{1}{4Ca E_s} - Be \right] \phi_i w^s t_r^2 t_z^2 - \frac{1}{2Ca E_s} \phi_i u^{s2} t_r^2 t_r^2 - \frac{1}{2Ca E_s} \phi_i w^{s2} t_r^2 t_z^2. \tag{4.42}
+\end{equation}
+
+We thus have
+
+\begin{equation}
+\begin{array}{l} M_i^{r,2} = -\int_{\partial \Omega^{2,f}} \phi_i n_r^2 \partial_r u - \int_{\partial \Omega^{2,f}} \phi_i n_z^2 \partial_r w + \int_{\partial \Omega^{2,f}} \lambda^2 \phi_i n_r^2 \\ + \left[ \frac{1}{4Ca E_s} + Be \right] \int_{\partial \Omega^{2,f}} \phi_i u t_r^2 t_r^2 + \left[ \frac{1}{4Ca E_s} + Be \right] \int_{\partial \Omega^{2,f}} \phi_i w t_r^2 t_z^2 \\ + \left[ \frac{1}{4Ca E_s} - Be \right] \int_{\partial \Omega^{2,f}} \phi_i u^s t_r^2 t_r^2 + \left[ \frac{1}{4Ca E_s} - Be \right] \int_{\partial \Omega^{2,f}} \phi_i w^s t_r^2 t_z^2 \\ - \frac{1}{2Ca E_s} \int_{\partial \Omega^{2,f}} \phi_i u^{s2} t_r^2 t_r^2 - \frac{1}{2Ca E_s} \int_{\partial \Omega^{2,f}} \phi_i w^{s2} t_r^2 t_z^2, \end{array} \tag{4.43}
+\end{equation}
+
+We consider now the term
+
+\begin{equation}
+\int_{\partial \Omega^{3}} \phi_i e_r\cdot P\cdot n^3, \tag{4.44}
+\end{equation}
+
+in equation (4.22) where we have
+
+\begin{equation}
+\phi_i e_r\cdot P\cdot n^3 = \phi_i e_r\cdot \underbrace{n^3\cdot P\cdot (I - n^3 n^3)}_{\gamma^3 t^3} + \phi_i e_r\cdot \underbrace{(n^3\cdot P\cdot n^3)}_{\lambda^3} n^3, \tag{4.45}
+\end{equation}
+
+where we have introduced \(\gamma^3\) and \(\lambda^3\), the tangential and normal stresses on boundary 3 (respectively).
+
+Hence, we have
+
+\begin{equation}
+\phi_i e_r\cdot P\cdot n^3 = \gamma^3 \phi_i e_r\cdot t^3 + \lambda^3 \phi_i e_r\cdot n^3, \tag{4.46}
+\end{equation}
+
+which yields
+
+\begin{equation}
+M_i^{r,3} = -\int_{\partial \Omega^{3}} \phi_i n_r^3 \partial_r u - \int_{\partial \Omega^{3}} \phi_i n_z^3 \partial_r w + \int_{\partial \Omega^{3}} \gamma^3 \phi_i t_r^3 + \int_{\partial \Omega^{3}} \lambda^3 \phi_i n_r^3. \tag{4.47}
+\end{equation}
+
+For equation (4.23) where we have
+
+\begin{equation}
+\phi_i e_r\cdot \pmb {P}\cdot n^{4} = \phi_i e_r\cdot \underbrace{n^{4}\cdot\pmb{P}\cdot(I - n^{4}n^{4})}_{\gamma^{4}t^{4}} + \phi_i e_r\cdot \underbrace{(n^{4}\cdot\pmb{P}\cdot n^{4})}_{\lambda^{4}}n^{4}, \tag{4.49}
+\end{equation}
+
+where we have introduced \(\gamma^{4}\) and \(\lambda^{4}\), the tangential and normal stresses on boundary 4 (respectively).
+
+Hence, we have
+
+\begin{equation}
+\phi_i e_r\cdot \pmb {P}\cdot n^{4} = \gamma^{4}\phi_i e_r\cdot t^{4} + \lambda^{4}\phi_i e_r\cdot n^{4}, \tag{4.50}
+\end{equation}
+
+which yields
+
+\begin{equation}
+M_i^{r,4} = -\int_{\partial \Omega^{4}}\phi_i n_r^{4}\partial_{r}u - \int_{\partial \Omega^{4}}\phi_i n_r^{4}\partial_{t}w + \int_{\partial \Omega^{5}}\gamma^{4}\phi_i t_{r}^{4} + \int_{\partial \Omega^{5}}\lambda^{4}\phi_i n_{r}^{4}. \tag{4.51}
+\end{equation}
+
+We now define \(\Delta_t^n = t_n - t_{n-1}\) and \(q_n = \Delta_t^n / \Delta_t^{n-1}\) and we make the following approximations
+
+\begin{equation}
+\partial_t u(t_n) \approx \frac{(1 + 2q_n)u(t_n) - (1 + q_n)^2 u(t_{n-1}) + q_n^2 u(t_{n-2})}{(1 + q_n)\Delta_t^n}, \tag{4.52}
+\end{equation}
+
+\begin{equation}
+\partial_t w(t_n) \approx \frac{(1 + 2q_n)w(t_n) - (1 + q_n)^2 w(t_{n-1}) + q_n^2 w(t_{n-2})}{(1 + q_n)\Delta_t^n}, \tag{4.53}
+\end{equation}
+
+\begin{equation}
+u^c(t_n) = \partial_t r^c(t_n) \approx \frac{(1 + 2q_n)r^c(t_n) - (1 + q_n)^2 r^c(t_{n-1}) + q_n^2 r^c(t_{n-2})}{(1 + q_n)\Delta_t^n}, \tag{4.54}
+\end{equation}
+
+\begin{equation}
+w^c(t_n) = \partial_t z^c(t_n) \approx \frac{(1 + 2q_n)z^c(t_n) - (1 + q_n)^2 z^c(t_{n-1}) + q_n^2 z^c(t_{n-2})}{(1 + q_n)\Delta_t^n}. \tag{4.55}
+\end{equation}
+
+Substituting these into (4.18) we obtain
+
+\begin{equation}
+\begin{array}{r l} & \mathfrak{M}_i^{r,0} = Re\int_{\Omega^f}\phi_i\frac{(1 + 2q_n)u(t_n) - (1 + q_n)^2 u(t_{n-1}) + q_n^2 u(t_{n-2})}{(1 + q_n)\Delta_t^n}\\ & \qquad + Re\int_{\Omega^f}\phi_i u\partial_r u + Re\int_{\Omega^f}\phi_i u\partial_z u\\ & \qquad - Re\int_{\Omega^f}\phi_i\frac{(1 + 2q_n)r^c(t_n) - (1 + q_n)^2 r^c(t_{n-1}) + q_n^2 r^c(t_{n-2})}{(1 + q_n)\Delta_t^n}\partial_r u\\ & \qquad - Re\int_{\Omega^f}\phi_i\frac{(1 + 2q_n)z^c(t_n) - (1 + q_n)^2 z^c(t_{n-1}) + q_n^2 z^c(t_{n-2})}{(1 + q_n)\Delta_t^n}\partial_z u\\ & \qquad - St\int_{\Omega^f}\phi_i\hat{g}_r - \int_{\Omega^f}p\partial_r\phi_i + \int_{\Omega^f}\partial_r u\partial_r\phi_i + \int_{\Omega^f}\partial_z u\partial_z\phi_i, \end{array} \tag{4.56}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,1} = -\int_{\partial \Omega^{1,f}} \phi_i n_r^1 \partial_r u - \int_{\partial \Omega^{1,f}} \phi_i n_z^1 \partial_r w - \int_{\partial \Omega^{1,f}} \phi_i p^g n_r^1 \\ - \frac{\sigma^1(r_{J1},z_{J1})\phi_i(r_{J1},z_{J1})}{Ca} m_r^{1,n}(r_{J1},z_{J1}) \\ + \frac{\sigma^1(r_a,z_a)\phi_i(r_a,z_a)}{Ca} m_r^{1}(r_a,z_a) + \frac{1}{Ca} \int_{\partial \Omega^{1,f}} t_r^1 \sigma^1 \partial_s \phi_i, \end{array} \tag{4.57}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,2} = -\int_{\partial \Omega^{2,f}} \phi_i n_r^2 \partial_r u - \int_{\partial \Omega^{2,f}} \phi_i n_z^2 \partial_r w + \int_{\partial \Omega^{2,f}} \lambda^2 \phi_i n_r^2 \\ + \left[ \frac{1}{4Ca E_s} + Be \right] \int_{\partial \Omega^{2,f}} \phi_i u t_r^2 t_r^2 + \left[ \frac{1}{4Ca E_s} + Be \right] \int_{\partial \Omega^{2,f}} \phi_i w t_r^2 t_z^2 \\ + \left[ \frac{1}{4Ca E_s} - Be \right] \int_{\partial \Omega^{2,f}} \phi_i u^s t_r^2 t_r^2 + \left[ \frac{1}{4Ca E_s} - Be \right] \int_{\partial \Omega^{2,f}} \phi_i w^s t_r^2 t_z^2 \\ - \frac{1}{2Ca E_s} \int_{\partial \Omega^{2,f}} \phi_i u^{s2} t_r^2 t_r^2 - \frac{1}{2Ca E_s} \int_{\partial \Omega^{2,f}} \phi_i w^{s2} t_r^2 t_z^2, \end{array} \tag{4.58}
+\end{equation}
+
+\begin{equation}
+M_i^{r,3} = -\int_{\partial \Omega^{3}} \phi_i n_r^3 \partial_r u - \int_{\partial \Omega^{3}} \phi_i n_z^3 \partial_r w + \int_{\partial \Omega^{3}} \gamma^3 \phi_i t_r^3 + \int_{\partial \Omega^{3}} \lambda^3 \phi_i n_r^3, \tag{4.59}
+\end{equation}
+
+and
+
+\begin{equation}
+M_i^{r,5} = -\int_{\partial \Omega^{5}} \phi_i n_r^5 \partial_r u - \int_{\partial \Omega^{5}} \phi_i n_z^5 \partial_r w + \int_{\partial \Omega^{5}} \gamma^5 \phi_i t_r^5 + \int_{\partial \Omega^{5}} \lambda^5 \phi_i n_r^5. \tag{4.60}
+\end{equation}
+
+Multiplying (4.56-4.60) by \(2\Delta_t/3\) and re-arranging terms we have
+
+\begin{equation}
+\begin{array}{l} M_i^{r,0}(t_n) = \frac{2(1 + 2q_n)}{3(1 + q_n)} Re \int_{\Omega^f} \phi_i u(r,z,t_n) \\ - \frac{2(1 + q_n)Re}{3} \int_{\Omega^f} \phi_i u(r,z,t_{n-1}) + \frac{2q_n^2 Re}{3(1 + q_n)} \int_{\Omega^f} \phi_i u(t_{n-2}) \\ + \frac{2\Delta_t Re}{3} \int_{\Omega^f} \phi_i u \partial_r u + \frac{2\Delta_t Re}{3} \int_{\Omega^f} \phi_i w \partial_z u \\ - \frac{2(1 + 2q_n)}{3(1 + q_n)} Re \int_{\Omega^f} \phi_i r^c(t_n) \partial_r u \\ + \frac{2(1 + q_n)Re}{3} \int_{\Omega^f} \phi_i r^c(t_{n-1}) \partial_r u - \frac{2q_n^2 Re}{3(1 + q_n)} \int_{\Omega^f} \phi_i r^c(t_{n-2}) \partial_r u \\ - \frac{2(1 + 2q_n)}{3(1 + q_n)} Re \int_{\Omega^f} \phi_i z^c(t_n) \partial_z u \\ + \frac{2(1 + q_n)Re}{3} \int_{\Omega^f} \phi_i z^c(t_{n-1}) \partial_z u - \frac{2q_n^2 Re}{3(1 + q_n)} \int_{\Omega^f} \phi_i z^c(t_{n-2}) \partial_z u \\ - \frac{2\Delta_t St}{3} \int_{\Omega^f} \phi_i \hat{g}_r - \frac{2\Delta_t}{3} \int_{\Omega^f} p \partial_r \phi_i + \frac{2\Delta_t}{3} \int_{\Omega^f} \partial_r u \partial_r \phi_i + \frac{2\Delta_t}{3} \int_{\Omega^f} \partial_z u \partial_z \phi_i, \end{array} \tag{4.61}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,1} = -\frac{2\Delta_t}{3} \int_{\partial \Omega^{1,f}} \phi_i n_r^1 \partial_r u - \frac{2\Delta_t}{3} \int_{\partial \Omega^{1,f}} \phi_i n_z^1 \partial_r w - \frac{2\Delta_t}{3} \int_{\partial \Omega^{1,f}} \phi_i p^g n_r^1 \\ - \frac{2\Delta_t \sigma^1(r_{J1},z_{J1})\phi_i(r_{J1},z_{J1})}{3Ca} m_r^{1,n}(r_{J1},z_{J1}) \\ + \frac{2\Delta_t \sigma^1(r_a,z_a)\phi_i(r_a,z_a)}{3Ca} m_r^{1}(r_a,z_a) + \frac{2\Delta_t}{3Ca} \int_{\partial \Omega^{1,f}} t_r^1 \sigma^1 \partial_s \phi_i, \end{array} \tag{4.62}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,2} = -\frac{2\Delta_t}{3} \int_{\partial \Omega^{2,f}} \phi_i n_r^2 \partial_r u - \frac{2\Delta_t}{3} \int_{\partial \Omega^{2,f}} \phi_i n_z^2 \partial_r w + \frac{2\Delta_t}{3} \int_{\partial \Omega^{2,f}} \lambda^2 \phi_i n_r^2 \\ + \left[ \frac{1 + 4Be Ca E_s}{6Ca E_s} \right] \Delta_t \int_{\partial \Omega^{2,f}} \phi_i u t_r^2 t_r^2 + \left[ \frac{1 + 4Be Ca E_s}{6Ca E_s} \right] \Delta_t \int_{\partial \Omega^{2,f}} \phi_i w t_r^2 t_z^2 \\ + \left[ \frac{1 - 4Be Ca E_s}{6Ca E_s} \right] \Delta_t \int_{\partial \Omega^{2,f}} \phi_i u^s t_r^2 t_r^2 + \left[ \frac{1 - 4Be Ca E_s}{6Ca E_s} \right] \Delta_t \int_{\partial \Omega^{2,f}} \phi_i w^s t_r^2 t_z^2 \\ - \frac{\Delta_t}{3Ca E_s} \int_{\partial \Omega^{2,f}} \phi_i u^{s2} t_r^2 t_r^2 - \frac{\Delta_t}{3Ca E_s} \int_{\partial \Omega^{2,f}} \phi_i w^{s2} t_r^2 t_z^2 + \frac{2\Delta_t}{3} \int_{\partial \Omega^{3}} \gamma^3 \phi_i t_r^3 \\ + \frac{2\Delta_t}{3} \int_{\partial \Omega^{3}} \lambda^3 \phi_i n_r^3 + \frac{2\Delta_t}{3} \int_{\partial \Omega^{4}} \gamma^4 \phi_i t_r^4 + \frac{2\Delta_t}{3} \int_{\partial \Omega^{5}} \lambda^4 \phi_i n_r^4, \end{array} \tag{4.63}
+\end{equation}
+
+\begin{equation}
+M_i^{r,3} = -\frac{2\Delta_t}{3} \int_{\partial \Omega^{3}} \phi_i n_r^3 \partial_r u - \frac{2\Delta_t}{3} \int_{\partial \Omega^{3}} \phi_i n_z^3 \partial_r w + \frac{2\Delta_t}{3} \int_{\partial \Omega^{3}} \gamma^3 \phi_i t_r^3 + \frac{2\Delta_t}{3} \int_{\partial \Omega^{3}} \lambda^3 \phi_i n_r^3, \tag{4.64}
+\end{equation}
+
+and
+
+\begin{equation}
+M_i^{r,5} = -\frac{2\Delta_t}{3} \int_{\partial \Omega^{5}} \phi_i n_r^5 \partial_r u - \frac{2\Delta_t}{3} \int_{\partial \Omega^{5}} \phi_i n_z^5 \partial_r w + \frac{2\Delta_t}{3} \int_{\partial \Omega^{5}} \gamma^5 \phi_i t_r^5 + \frac{2\Delta_t}{3} \int_{\partial \Omega^{5}} \lambda^5 \phi_i n_r^5, \tag{4.65}
+\end{equation}
+
+where all time dependent functions whose argument are not explicitly presented are to be evaluated at time \(t_n\).
+
+We now introduce the following approximations
+
+\begin{equation}
+u(r,z,t) \approx \sum_{j=1}^{n_v} u_j(t) \phi_j(r,z), \tag{4.66}
+\end{equation}
+
+\begin{equation}
+w(r,z,t) \approx \sum_{j=1}^{n_v} w_j(t) \phi_j(r,z), \tag{4.67}
+\end{equation}
+
+\begin{equation}
+r^c(r,z,t) \approx \sum_{j=1}^{n_v} r_j^c(t) \phi_j(r,z), \tag{4.68}
+\end{equation}
+
+\begin{equation}
+z^c(r,z,t) \approx \sum_{j=1}^{n_v} z_j^c(t) \phi_j(r,z), \tag{4.69}
+\end{equation}
+
+\begin{equation}
+p(r,z,t) \approx \sum_{j=1}^{n_p} p_j(t) \psi_j(r,z), \tag{4.70}
+\end{equation}
+
+\begin{equation}
+\sigma^1(r,z,t) \approx \sum_{j=1}^{n_v} \tilde{\sigma}_j^1(t) \phi_j^1(r,z), \tag{4.71}
+\end{equation}
+
+\begin{equation}
+\lambda^2(r,z,t) \approx \sum_{j=1}^{n_v} \tilde{\lambda}_j^2(t) \phi_j^2(r,z), \tag{4.72}
+\end{equation}
+
+\begin{equation}
+\lambda^3(r,z,t) \approx \sum_{j=1}^{n_v} \tilde{\lambda}_j^3(t) \phi_j^3(r,z), \tag{4.73}
+\end{equation}
+
+\begin{equation}
+\gamma^3(r,z,t) \approx \sum_{j=1}^{n_v} \tilde{\gamma}_j^3(t) \phi_j^3(r,z), \tag{4.74}
+\end{equation}
+
+\begin{equation}
+\lambda^4(r,z,t) \approx \sum_{j=1}^{n_v} \tilde{\lambda}_j^4(t) \phi_j^4(r,z), \tag{4.75}
+\end{equation}
+
+\begin{equation}
+\gamma^4(r,z,t) \approx \sum_{j=1}^{n_v} \tilde{\gamma}_j^4(t) \phi_j^4(r,z), \tag{4.76}
+\end{equation}
+
+\begin{equation}
+u^s(r,z,t) \approx \sum_{j=1}^{n_v} \tilde{u}_j^s(t) \phi_j(r,z), \tag{4.77}
+\end{equation}
+
+\begin{equation}
+w^s(r,z,t) \approx \sum_{j=1}^{n_v} \tilde{w}_j^s(t) \phi_j(r,z), \tag{4.78}
+\end{equation}
+
+\begin{equation}
+p^g(r,z,t) \approx \sum_{j=1}^{n_v} \tilde{p}_j^g(t) \phi_j^1(r,z), \tag{4.79}
+\end{equation}
+
+\begin{equation}
+\sigma^2(r,z,t) \approx \sum_{j=1}^{n_v} \tilde{\sigma}_j^2(t) \phi_j^2(r,z); \tag{4.80}
+\end{equation}
+
+where \(n_v\) is the number of nodes where velocity is calculated, \(n_p\) is the number of nodes where pressure is calculated, the \(j\) index indicates global node numbers that we will use in the Galerkin method (that is to say, \(\phi_j\) is the hat function centred at the \(j\)-th node), and \(\phi_j^k\) coincides on the \(k\)-th boundary with \(\phi_j\), and is identically null elsewhere. Moreover, functions \(\tilde{\sigma}_j^k\), \(\tilde{\lambda}_j^k\) and \(\tilde{\gamma}_j^k\) are identically null for all \(j\) such that \(\phi_j = 0\) on boundary \(k\); and functions \(\tilde{u}_j^s\) and \(\tilde{w}_j^s\) are identically null away from the solid boundary. Furthermore, functions \(p_j\) are numbered following the pressure-node numbering, which are a subset of the global node numbering. That is to say, there is a subset of all nodes, that have two numbers, their velocity-node number and their pressure-node number, how we decide which subset of the nodes are simultaneously velocity and pressure nodes and which subset of the nodes consists just of velocity nodes will be described later.
+
+We highlight that we are interpolating the gas pressure using the velocity-interpolating function rather than the pressure interpolating functions because what we actually need from the gas in the normal stress at the boundary, this just happens to be given by the gas pressure, had it been a non-ideal fluid, the correct quantity to insert here would be the normal stress which is interpolated by velocity-interpolating functions.
+
+Substituting these approximations into (4.56-4.60) we define
+
+\begin{equation}
+M_i^r = M_i^{r,0} + M_i^{r,1} + M_i^{r,2} + M_i^{r,3} \tag{4.81}
+\end{equation}
+
+where
+
+\begin{equation}
+\begin{array}{l} M_i^{r,0}(t_n) = a_n Re \int_{\Omega^f} \phi_i \left[ \sum_{j=1}^{n_v} u_j \phi_j \right] - a_{n-1} Re \int_{\Omega^f} \phi_i \left[ \sum_{j=1}^{n_v} u_j(t_{n-1}) \phi_j \right] \\ + a_{n-2} Re \int_{\Omega^f} \phi_i \left[ \sum_{j=1}^{n_v} u_j(t_{n-2}) \phi_j \right] + \frac{2\Delta_t Re}{3} \int_{\Omega^f} \phi_i \left[ \sum_{k=1}^{n_v} u_k \phi_k \right] \partial_r \left[ \sum_{j=1}^{n_v} u_j \phi_j \right] \\ + \frac{2\Delta_t Re}{3} \int_{\Omega^f} \phi_i \left[ \sum_{k=1}^{n_v} w_k \phi_k \right] \partial_z \left[ \sum_{j=1}^{n_v} u_j \phi_j \right] - a_n Re \int_{\Omega^f} \phi_i \left[ \sum_{k=1}^{n_v} r_k^c \phi_k \right] \partial_r \left[ \sum_{j=1}^{n_v} u_j \phi_j \right] \\ + a_{n-1} Re \int_{\Omega^f} \phi_i \left[ \sum_{k=1}^{n_v} r_k^c(t_{n-1}) \phi_k \right] \partial_r \left[ \sum_{j=1}^{n_v} u_j \phi_j \right] \\ - a_{n-2} Re \int_{\Omega^f} \phi_i \left[ \sum_{k=1}^{n_v} r_k^c(t_{n-2}) \phi_k \right] \partial_r \left[ \sum_{j=1}^{n_v} u_j \phi_j \right] \\ - a_n Re \int_{\Omega^f} \phi_i \left[ \sum_{k=1}^{n_v} z_k^c \phi_k \right] \partial_z \left[ \sum_{j=1}^{n_v} u_j \phi_j \right] \\ + a_{n-1} Re \int_{\Omega^f} \phi_i \left[ \sum_{k=1}^{n_v} z_k^c(t_{n-1}) \phi_k \right] \partial_z \left[ \sum_{j=1}^{n_v} u_j \phi_j \right] \\ - a_{n-2} Re \int_{\Omega^f} \phi_i \left[ \sum_{k=1}^{n_v} z_k^c(t_{n-2}) \phi_k \right] \partial_z \left[ \sum_{j=1}^{n_v} u_j \phi_j \right] \\ - \frac{2\Delta_t St}{3} \int_{\Omega^f} \phi_i \hat{g}_r - \frac{2\Delta_t}{3} \int_{\Omega^f} \left[ \sum_{j=1}^{n_p} p_j \psi_j \right] \partial_r \phi_i \\ + \frac{2\Delta_t}{3} \int_{\Omega^f} \partial_r \left[ \sum_{j=1}^{n_v} u_j \phi_j \right] \partial_r \phi_i + \frac{2\Delta_t}{3} \int_{\Omega^f} \partial_z \left[ \sum_{j=1}^{n_v} u_j \phi_j \right] \partial_z \phi_i, \end{array} \tag{4.82}
+\end{equation}
+
+\begin{figure}[h]
+\centering
+\begin{tabular}{|c|}
+\hline
+FIGURE 3. Example of domain partition into curve-sided triangular elements. Element and node numbering conventions used are also shown. The figure also shows that the number of elements along the first spines is increasing up to a given point, and then it is kept constant, so as to not make the resulting system of equations intractably large. The mesh used in this example has a single element at the contact line; however, in the implementation, 3 elements were used at the contact line. \\
+\hline
+\end{tabular}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\begin{tabular}{|c|}
+\hline
+FIGURE 4. Element and pressure-node numbering conventions shown. Pressure nodes are a subset of the velocity nodes (see figure 3). These nodes only correspond to the corners of the curve-sided triangular elements. That is to say, we have fewer \(\psi_k\) functions than \(\phi_i\) functions. \\
+\hline
+\end{tabular}
+\end{figure}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,1} = -\frac{2\Delta_t}{3} \int_{\partial \Omega^{1,f}} \phi_i n_r^1 \partial_r \left( \sum_{j=1}^{n_v} u_j \phi_j \right) - \frac{2\Delta_t}{3} \int_{\partial \Omega^{1,f}} \phi_i n_z^1 \partial_r \left( \sum_{j=1}^{n_v} w_j \phi_j \right) \\ - \frac{2\Delta_t}{3} \int_{\partial \Omega^{1,f}} \phi_i n_r^1 \left( \sum_{j=1}^{n_v} \tilde{p}_j^g \phi_j^1 \right) \\ - 2\Delta_t \frac{\sigma^1(r_{j1},z_{j1})\phi_i(r_{j1},z_{j1})}{3Ca} m_r^{1,n}(r_{j1},z_{j1}) \\ + 2\Delta_t \frac{\sigma^1(r_a,z_a)\phi_i(r_a,z_a)}{3Ca} m_r^{1}(r_a,z_a) + \frac{2\Delta_t}{3Ca} \int_{\partial \Omega^{1,f}} t_r^1 \left( \sum_{j=1}^{n_v} \tilde{\sigma}_j^1 \phi_j^1 \right) \partial_s \phi_i, \end{array} \tag{4.83}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,2} = -\frac{2\Delta_t}{3} \int_{\partial \Omega^{2,f}} \phi_i n_r^2 \partial_r \left[ \sum_{j=1}^{n_v} u_j \phi_j \right] - \frac{2\Delta_t}{3} \int_{\partial \Omega^{2,f}} \phi_i n_z^2 \partial_r \left[ \sum_{j=1}^{n_v} w_j \phi_j \right] \\ + \frac{2\Delta_t}{3} \int_{\partial \Omega^{2,f}} \phi_i n_r^2 \left[ \sum_{j=1}^{n_v} \tilde{\lambda}_j^2 \phi_j^2 \right] + \left[ \frac{1 + 4Be Ca E_s}{6Ca E_s} \right] \Delta_t \int_{\partial \Omega^{2,f}} \phi_i t_r^2 t_r^2 \left[ \sum_{j=1}^{n_v} u_j \phi_j \right] \\ + \left[ \frac{1 + 4Be Ca E_s}{6Ca E_s} \right] \Delta_t \int_{\partial \Omega^{2,f}} \phi_i t_r^2 t_z^2 \left[ \sum_{j=1}^{n_v} w_j \phi_j \right] \\ + \left[ \frac{1 - 4Be Ca E_s}{6Ca E_s} \right] \Delta_t \int_{\partial \Omega^{2,f}} \phi_i t_r^2 t_r^2 \left[ \sum_{j=1}^{n_v} \tilde{u}_j^s \phi_j \right] \\ + \left[ \frac{1 - 4Be Ca E_s}{6Ca E_s} \right] \Delta_t \int_{\partial \Omega^{2,f}} \phi_i t_r^2 t_z^2 \left[ \sum_{j=1}^{n_v} \tilde{w}_j^s \phi_j \right] \\ - \frac{\Delta_t}{3Ca E_s} \int_{\partial \Omega^{2,f}} \phi_i t_r^2 t_r^2 \left[ \sum_{j=1}^{n_v} \tilde{u}_j^{s2} \phi_j \right] - \frac{\Delta_t}{3Ca E_s} \int_{\partial \Omega^{2,f}} \phi_i t_r^2 t_z^2 \left[ \sum_{j=1}^{n_v} \tilde{w}_j^{s2} \phi_j \right], \end{array} \tag{4.84}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,3} = -\frac{2\Delta_t}{3} \int_{\partial \Omega^{3,f}} \phi_i n_r^3 \partial_r \left[ \sum_{j=1}^{n_v} u_j \phi_j \right] - \frac{2\Delta_t}{3} \int_{\partial \Omega^{3,f}} \phi_i n_z^3 \partial_r \left[ \sum_{j=1}^{n_v} w_j \phi_j \right] \\ + \frac{2\Delta_t}{3} \int_{\partial \Omega^{3}} \left[ \sum_{j=1}^{n_v} \tilde{\lambda}_j^3 \phi_j^3 \right] \phi_i n_r^3 + \frac{2\Delta_t}{3} \int_{\partial \Omega^{3}} \left[ \sum_{j=1}^{n_v} \tilde{\gamma}_j^3 \phi_j^3 \right] \phi_i t_r^3 \end{array} \tag{4.85}
+\end{equation}
+
+and
+
+\begin{equation}
+\begin{array}{l} M_i^{r,5} = -\frac{2\Delta_t}{3} \int_{\partial \Omega^{5,f}} \phi_i n_r^5 \partial_r \left[ \sum_{j=1}^{n_v} u_j \phi_j \right] - \frac{2\Delta_t}{3} \int_{\partial \Omega^{5,f}} \phi_i n_z^5 \partial_r \left[ \sum_{j=1}^{n_v} w_j \phi_j \right] \\ + \frac{2\Delta_t}{3} \int_{\partial \Omega^{5}} \left[ \sum_{j=1}^{n_v} \tilde{\lambda}_j^5 \phi_j^5 \right] \phi_i n_r^5 + \frac{2\Delta_t}{3} \int_{\partial \Omega^{5}} \left[ \sum_{j=1}^{n_v} \tilde{\gamma}_j^5 \phi_j^5 \right] \phi_i t_r^5 \end{array} \tag{4.86}
+\end{equation}
+
+Moving the integrals into the sums and re-arranging terms we have
+
+\begin{equation}
+\begin{array}{l} M_i^{r,0} = a_n Re \sum_{j=1}^{n_v} u_j \int_{\Omega^f} \phi_i \phi_j - a_{n-1} Re \sum_{j=1}^{n_v} u_j(t_{n-1}) \int_{\Omega^f} \phi_i \phi_j \\ + a_{n-2} Re \sum_{j=1}^{n_v} u_j(t_{n-2}) \int_{\Omega^f} \phi_i \phi_j \\ + \frac{2\Delta_t Re}{3} \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} u_k \int_{\Omega^f} \phi_i \phi_k \partial_r \phi_j + \frac{2\Delta_t Re}{3} \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} w_k \int_{\Omega^f} \phi_i \phi_k \partial_z \phi_j \\ - a_n Re \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} r_k^c \int_{\Omega^f} \phi_i \phi_k \partial_r \phi_j + a_{n-1} Re \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} r_k^c(t_{n-1}) \int_{\Omega^f} \phi_i \phi_k \partial_r \phi_j \\ - a_{n-2} Re \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} r_k^c(t_{n-2}) \int_{\Omega^f} \phi_i \phi_k \partial_r \phi_j \\ - a_n Re \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} z_k^c \int_{\Omega^f} \phi_i \phi_k \partial_z \phi_j + a_{n-1} Re \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} z_k^c(t_{n-1}) \int_{\Omega^f} \phi_i \phi_k \partial_z \phi_j \\ - a_{n-2} Re \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} z_k^c(t_{n-2}) \int_{\Omega^f} \phi_i \phi_k \partial_z \phi_j - \frac{2\Delta_t St}{3} \int_{\Omega^f} \phi_i \hat{g}_r \\ - \frac{2\Delta_t}{3} \sum_{j=1}^{n_p} p_j \int_{\Omega^f} \psi_j \partial_r \phi_i + \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j \int_{\Omega^f} \partial_r \phi_j \partial_r \phi_i + \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j \int_{\Omega^f} \partial_z \phi_j \partial_z \phi_i, \end{array} \tag{4.87}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,1} = -\frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j \int_{\partial \Omega^{1,f}} \phi_i n_r^1 \partial_r \phi_j - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} w_j \int_{\partial \Omega^{1,f}} \phi_i n_z^1 \partial_r \phi_j \\ - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} \tilde{p}_j^g \int_{\partial \Omega^{1,f}} \phi_i n_r^1 \phi_j^1 \\ - \frac{2\Delta_t \sigma^1(r_{J1},z_{J1})\phi_i(r_{J1},z_{J1})}{3Ca} m_r^{1,n}(r_{J1},z_{J1}) \\ + \frac{2\Delta_t \sigma^1(r_a,z_a)\phi_i(r_a,z_a)}{3Ca} m_r^{1}(r_a,z_a) + \frac{2\Delta_t}{3Ca} \sum_{j=1}^{n_v} \tilde{\sigma}_j^1 \int_{\partial \Omega^{1,f}} t_r^1 \phi_j^1 \partial_s \phi_i, \end{array} \tag{4.88}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,2} = -\frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j \int_{\partial \Omega^{2,f}} \phi_i n_r^1 \partial_r \phi_j - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} w_j \int_{\partial \Omega^{2,f}} \phi_i n_z^1 \partial_r \phi_j \\ + \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} \tilde{\lambda}_j^2 \int_{\partial \Omega^{2,f}} \phi_i \phi_j^2 n_r^2 + \left[ \frac{1 + 4Be Ca E_s}{6Ca E_s} \right] \Delta_t \sum_{j=1}^{n_v} u_j \int_{\partial \Omega^{2,f}} \phi_i \phi_j t_r^2 t_r^2 \\ + \left[ \frac{1 + 4Be Ca E_s}{6Ca E_s} \right] \Delta_t \sum_{j=1}^{n_v} w_j \int_{\partial \Omega^{2,f}} \phi_i \phi_j t_r^2 t_z^2 \\ + \left[ \frac{1 - 4Be Ca E_s}{6Ca E_s} \right] \Delta_t \sum_{j=1}^{n_v} \tilde{u}_j^s \int_{\partial \Omega^{2,f}} \phi_i \phi_j t_r^2 t_r^2 \\ + \left[ \frac{1 - 4Be Ca E_s}{6Ca E_s} \right] \Delta_t \sum_{j=1}^{n_v} \tilde{w}_j^s \int_{\partial \Omega^{2,f}} \phi_i \phi_j t_r^2 t_z^2 \\ - \frac{\Delta_t}{3Ca E_s} \sum_{j=1}^{n_v} \tilde{u}_j^{s2} \int_{\partial \Omega^{2,f}} \phi_i \phi_j t_r^2 t_r^2 - \frac{\Delta_t}{3Ca E_s} \sum_{j=1}^{n_v} \tilde{w}_j^{s2} \int_{\partial \Omega^{2,f}} \phi_i \phi_j t_r^2 t_z^2, \end{array} \tag{4.89}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,3} = -\frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j \int_{\partial \Omega^{3,f}} \phi_i n_r^1 \partial_r \phi_j - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} w_j \int_{\partial \Omega^{3,f}} \phi_i n_z^1 \partial_r \phi_j \\ + \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} \tilde{\lambda}_j^3 \int_{\partial \Omega^{3}} \phi_j^3 \phi_i n_r^3 + \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} \tilde{\gamma}_j^3 \int_{\partial \Omega^{3}} \phi_j^3 \phi_i t_r^3 \end{array} \tag{4.90}
+\end{equation}
+
+and
+
+\begin{equation}
+\begin{array}{l} M_i^{r,4} = -\frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j \int_{\partial \Omega^{4,f}} \phi_i n_r^1 \partial_r \phi_j - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} w_j \int_{\partial \Omega^{4,f}} \phi_i n_z^1 \partial_r \phi_j \\ + \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} \tilde{\lambda}_j^4 \int_{\partial \Omega^{4}} \phi_j^4 \phi_i n_r^4 + \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} \tilde{\gamma}_j^4 \int_{\partial \Omega^{4}} \phi_j^4 \phi_i t_r^4 \end{array} \tag{4.91}
+\end{equation}
+
+Re-arranging terms we have
+
+\begin{equation}
+\begin{array}{l} M_i^{r,0} = -\frac{2\Delta_t St}{3} \int_{\Omega^f} \phi_i \hat{g}_r \\ + \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j \int_{\Omega^f} \partial_r \phi_j \partial_r \phi_i + \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j \int_{\Omega^f} \partial_z \phi_j \partial_z \phi_i + a_n Re \sum_{j=1}^{n_v} u_j \int_{\Omega^f} \phi_i \phi_j \\ - a_{n-1} Re \sum_{j=1}^{n_v} u_j(t_{n-1}) \int_{\Omega^f} \phi_i \phi_j + a_{n-2} Re \sum_{j=1}^{n_v} u_j(t_{n-2}) \int_{\Omega^f} \phi_i \phi_j \\ + \frac{2\Delta_t Re}{3} \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} u_k \int_{\Omega^f} \phi_i \phi_k \partial_r \phi_j + \frac{2\Delta_t Re}{3} \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} w_k \int_{\Omega^f} \phi_i \phi_k \partial_z \phi_j \\ - a_n Re \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} r_k^c \int_{\Omega^f} \phi_i \phi_k \partial_r \phi_j + a_{n-1} Re \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} r_k^c(t_{n-1}) \int_{\Omega^f} \phi_i \phi_k \partial_r \phi_j \\ - a_{n-2} Re \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} r_k^c(t_{n-2}) \int_{\Omega^f} \phi_i \phi_k \partial_r \phi_j \\ - a_n Re \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} z_k^c \int_{\Omega^f} \phi_i \phi_k \partial_z \phi_j + a_{n-1} Re \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} z_k^c(t_{n-1}) \int_{\Omega^f} \phi_i \phi_k \partial_z \phi_j \\ - a_{n-2} Re \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} z_k^c(t_{n-2}) \int_{\Omega^f} \phi_i \phi_k \partial_z \phi_j \\ - \frac{2\Delta_t}{3} \sum_{j=1}^{n_p} p_j \int_{\Omega^f} \psi_j \partial_r \phi_i, \end{array} \tag{4.92}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,1} = -\frac{2\Delta_t \sigma^1(r_{J1},z_{J1})\phi_i(r_{J1},z_{J1})}{3Ca} m_r^{1,n}(r_{J1},z_{J1}) + \frac{2\Delta_t \sigma^1(r_a,z_a)\phi_i(r_a,z_a)}{3Ca} m_r^{1}(r_a,z_a) \\ + \frac{2\Delta_t}{3Ca} \sum_{j=1}^{n_v} \tilde{\sigma}_j^1 \int_{\partial \Omega^{1,f}} t_r^1 \phi_j^1 \partial_s \phi_i - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} \tilde{p}_j^g \int_{\partial \Omega^{1,f}} \phi_i n_r^1 \phi_j^1 \\ - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j \int_{\partial \Omega^{1,f}} \phi_i n_r^1 \partial_r \phi_j - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} w_j \int_{\partial \Omega^{1,f}} \phi_i n_z^1 \partial_r \phi_j, \end{array} \tag{4.93}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,2} = \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} \tilde{\lambda}_j^2 \int_{\partial \Omega^{2,f}} \phi_i \phi_j^2 n_r^2 + \left[ \frac{1 + 4Be Ca E_s}{6Ca E_s} \right] \Delta_t \sum_{j=1}^{n_v} u_j \int_{\partial \Omega^{2,f}} \phi_i \phi_j t_r^2 t_r^2 \\ + \left[ \frac{1 + 4Be Ca E_s}{6Ca E_s} \right] \Delta_t \sum_{j=1}^{n_v} w_j \int_{\partial \Omega^{2,f}} \phi_i \phi_j t_r^2 t_z^2 \\ + \left[ \frac{1 - 4Be Ca E_s}{6Ca E_s} \right] \Delta_t \sum_{j=1}^{n_v} \tilde{u}_j^s \int_{\partial \Omega^{2,f}} \phi_i \phi_j t_r^2 t_r^2 \\ + \left[ \frac{1 - 4Be Ca E_s}{6Ca E_s} \right] \Delta_t \sum_{j=1}^{n_v} \tilde{w}_j^s \int_{\partial \Omega^{2,f}} \phi_i \phi_j t_r^2 t_z^2 \\ - \frac{\Delta_t}{3Ca E_s} \sum_{j=1}^{n_v} \tilde{u}_j^{s2} \int_{\partial \Omega^{2,f}} \phi_i \phi_j t_r^2 t_r^2 - \frac{\Delta_t}{3Ca E_s} \sum_{j=1}^{n_v} \tilde{w}_j^{s2} \int_{\partial \Omega^{2,f}} \phi_i \phi_j t_r^2 t_z^2 \\ - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j \int_{\partial \Omega^{2,f}} \phi_i n_r^1 \partial_r \phi_j - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} w_j \int_{\partial \Omega^{2,f}} \phi_i n_z^1 \partial_r \phi_j, \end{array} \tag{4.94}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,3} = \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} \tilde{\lambda}_j^3 \int_{\partial \Omega^{3}} \phi_j^3 \phi_i n_r^3 + \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} \tilde{\gamma}_j^3 \int_{\partial \Omega^{3}} \phi_j^3 \phi_i t_r^3 \\ - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j \int_{\partial \Omega^{3,f}} \phi_i n_r^1 \partial_r \phi_j - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} w_j \int_{\partial \Omega^{3,f}} \phi_i n_z^1 \partial_r \phi_j \end{array} \tag{4.95}
+\end{equation}
+
+and
+
+\begin{equation}
+\begin{array}{l} M_i^{r,4} = \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} \tilde{\lambda}_j^4 \int_{\partial \Omega^{4}} \phi_j^4 \phi_i n_r^4 + \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} \tilde{\gamma}_j^4 \int_{\partial \Omega^{4}} \phi_j^4 \phi_i t_r^4 \\ - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j \int_{\partial \Omega^{4,f}} \phi_i n_r^1 \partial_r \phi_j - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} w_j \int_{\partial \Omega^{4,f}} \phi_i n_z^1 \partial_r \phi_j \end{array} \tag{4.96}
+\end{equation}
+
+We now partition the domain into a series of closed curve-sided triangular elements (see figure 3), whose interiors are disjoint, and proceed to decompose the integrals above in a sum of integrals over each element. The boundary integrals, are in turn converted into a sum of integrals over line elements in the boundary, i.e. those portions of the boundary of the triangular elements that lie on the domain boundary \(\partial\Omega\). Figure 4 shows that we have chosen only corner nodes of the elements to be pressure-and-velocity nodes, and illustrates the pressure-node numbering convention used.
+
+This yields
+
+\begin{equation}
+M_i^r = \underbrace{M_i^{r,0a} + M_i^{r,0b} + M_i^{r,0c} + M_i^{r,0d}}_{M_i^{r,0}} + M_i^{r,1} + M_i^{r,2} + M_i^{r,3} + M_i^{r,4}, \tag{4.97}
+\end{equation}
+
+where
+
+\begin{equation}
+M_i^{r,0a} = \sum_{e=1}^{n_{el}} \left[ -\frac{2\Delta_t St}{3} \int_{\Omega_e} \phi_i \hat{g}_r \right], \tag{4.98}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,0b} = \sum_{e=1}^{n_{el}} \left[ \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j \int \partial_r \phi_j \partial_r \phi_i + \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j \int \partial_z \phi_j \partial_z \phi_i + a_n Re \sum_{j=1}^{n_v} u_j \int \phi_i \phi_j \right. \\ \left. - a_{n-1} Re \sum_{j=1}^{n_v} u_j(t_{n-1}) \int \phi_i \phi_j + a_{n-2} Re \sum_{j=1}^{n_v} u_j(t_{n-2}) \int \phi_i \phi_j \right], \end{array} \tag{4.99}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,0c} = \sum_{e=1}^{n_{el}} \left[ \frac{2\Delta_t Re}{3} \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} u_k \int \phi_i \phi_k \partial_r \phi_j + \frac{2\Delta_t Re}{3} \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} w_k \int \phi_i \phi_k \partial_z \phi_j \right. \\ - a_n Re \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} r_k^c \int \phi_i \phi_k \partial_r \phi_j + a_{n-1} Re \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} r_k^c(t_{n-1}) \int \phi_i \phi_k \partial_r \phi_j \\ - a_{n-2} Re \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} r_k^c(t_{n-2}) \int \phi_i \phi_k \partial_r \phi_j - a_n Re \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} z_k^c \int \phi_i \phi_k \partial_z \phi_j \\ + a_{n-1} Re \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} z_k^c(t_{n-1}) \int \phi_i \phi_k \partial_z \phi_j \\ \left. - a_{n-2} Re \sum_{j=1}^{n_v} u_j \sum_{k=1}^{n_v} z_k^c(t_{n-2}) \int \phi_i \phi_k \partial_z \phi_j \right], \end{array} \tag{4.100}
+\end{equation}
+
+\begin{equation}
+M_i^{r,0d} = \sum_{e=1}^{n_{el}} \left[ -\frac{2\Delta_t}{3} \sum_{j=1}^{n_p} p_j \int_{\Omega_e} \psi_j \partial_r \phi_i \right], \tag{4.101}
+\end{equation}
+
+with \(\Omega_e\) being element number \(e\). Similarly, we have
+
+\begin{equation}
+\begin{array}{l} M_i^{r,1} = -2\Delta_t \frac{\sigma^1(r_{j1},z_{j1})\phi_i(r_{j1},z_{j1})}{3Ca} m_r^{1,n}(r_{j1},z_{j1}) + 2\Delta_t \frac{\sigma^1(r_a,z_a)\phi_i(r_a,z_a)}{3Ca} m_r^{1}(r_a,z_a) \\ + \sum_{e_1=1}^{n_{el}^{1,f}} \left[ \frac{2\Delta_t}{3Ca} \sum_{j=1}^{n_v} \tilde{\sigma}_j^1 \int_{\partial \Omega_{e_1}^{1,f}} t_r^1 \phi_j^1 \partial_s \phi_i - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} \tilde{p}_j^g \int_{\partial \Omega_{e_1}^{1,f}} \phi_i n_r^1 \phi_j^1 \right. \\ \left. - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j \int_{\partial \Omega_{e_1}^{1,f}} \phi_i n_r^1 \partial_r \phi_j - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} w_j \int_{\partial \Omega_{e_1}^{1,f}} \phi_i n_z^1 \partial_r \phi_j \right], \end{array} \tag{4.102}
+\end{equation}
+
+and for boundary 2
+
+\begin{equation}
+\begin{array}{l} M_i^{r,2} = \sum_{e_2=1}^{n_{el}^{2,f}} \left[ \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} \tilde{\lambda}_j^2 \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_j^2 n_r^2 + \left( \frac{1 + 4Be Ca E_s}{6Ca E_s} \right) \Delta_t \sum_{j=1}^{n_v} u_j \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_j t_r^2 t_r^2 \right. \\ + \left( \frac{1 + 4Be Ca E_s}{6Ca E_s} \right) \Delta_t \sum_{j=1}^{n_v} w_j \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_j t_r^2 t_z^2 \\ + \left( \frac{1 - 4Be Ca E_s}{6Ca E_s} \right) \Delta_t \sum_{j=1}^{n_v} \tilde{u}_j^s \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_j t_r^2 t_r^2 \\ + \left( \frac{1 - 4Be Ca E_s}{6Ca E_s} \right) \Delta_t \sum_{j=1}^{n_v} \tilde{w}_j^s \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_j t_r^2 t_z^2 \\ - \frac{\Delta_t}{3Ca E_s} \sum_{j=1}^{n_v} \tilde{u}_j^{s2} \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_j t_r^2 t_r^2 - \frac{\Delta_t}{3Ca E_s} \sum_{j=1}^{n_v} \tilde{w}_j^{s2} \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_j t_r^2 t_z^2 \\ - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j \int_{\partial \Omega_{e_2}^{2,f}} \phi_i n_r^1 \partial_r \phi_j - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} w_j \int_{\partial \Omega_{e_2}^{2,f}} \phi_i n_z^1 \partial_r \phi_j \right], \end{array} \tag{4.103}
+\end{equation}
+
+Similarly, for boundary 3
+
+\begin{equation}
+\begin{array}{l} M_i^{r,3} = \sum_{e_3=1}^{n_{el}^{3,f}} \left[ \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} \tilde{\lambda}_j^3 \int_{\partial \Omega_{e_3}^{3}} \phi_j^3 \phi_i n_r^3 + \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} \tilde{\gamma}_j^3 \int_{\partial \Omega_{e_3}^{3}} \phi_j^3 \phi_i t_r^3 \right. \\ \left. - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j \int_{\partial \Omega_{e_3}^{3,f}} \phi_i n_r^1 \partial_r \phi_j - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} w_j \int_{\partial \Omega_{e_3}^{3,f}} \phi_i n_z^1 \partial_r \phi_j \right], \end{array} \tag{4.104}
+\end{equation}
+
+and
+
+\begin{equation}
+\begin{array}{l} M_i^{r,4} = \sum_{e_4=1}^{n_{el}^{4}} \left[ \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} \tilde{\lambda}_j^4 \int_{\partial \Omega_{e_4}^{4}} \phi_j^4 \phi_i n_r^4 + \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} \tilde{\gamma}_j^4 \int_{\partial \Omega_{e_4}^{4}} \phi_j^4 \phi_i t_r^4 \right. \\ \left. - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j \int_{\partial \Omega_{e_4}^{4,f}} \phi_i n_r^1 \partial_r \phi_j - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} w_j \int_{\partial \Omega_{e_4}^{4,f}} \phi_i n_z^1 \partial_r \phi_j \right]; \end{array} \tag{4.105}
+\end{equation}
+
+where \(n_{el}\) is the number of triangular elements, \(n_{el}^k\) is the number of line elements on the \(k\)-th boundary and \(\partial \Omega_{e_k}^k\) is the part of \(\partial \Omega^k\) that is contained in \(e_k\).
+
+Now, we impose that each function \(\phi_j\), \(\psi_j\) will only be supported on the elements that contain node \(j\). Upon imposing this, we notice that the vast majority of the \(j\) and \(k\) indexed terms that are added in the sum on each element is identically null. This is, of course, because the integral of the product of these functions will be summing zero unless all functions involved are associated to (i.e. attain the value 1 in) some node on that element. Hence, it is more convenient to re-write the sum above as
+
+\begin{equation}
+M_i^{r,0a} = \sum_{e=1}^{n_{el}^f} \left[ -\frac{2\Delta_t St}{3} \int_{\Omega_e} \phi_i \hat{g}_r \right], \tag{4.106}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,0b} = \sum_{e=1}^{n_{el}^f} \left[ \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \int_{\Omega_e} \partial_r \phi_{l(e,jj)} \partial_r \phi_i + \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \int_{\Omega_e} \partial_z \phi_{l(e,jj)} \partial_z \phi_i \right. \\ + a_n Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \int_{\Omega_e} \phi_i \phi_{l(e,jj)} - a_{n-1} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)}(t_{n-1}) \int_{\Omega_e} \phi_i \phi_{l(e,jj)} \\ \left. + a_{n-2} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)}(t_{n-2}) \int_{\Omega_e} \phi_i \phi_{l(e,jj)} \right], \end{array} \tag{4.107}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,0c} = \sum_{e=1}^{n_{el}^f} \left[ \frac{2\Delta_t Re}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} u_{l(e,kk)} \int_{\Omega_e} \phi_i \phi_{l(e,kk)} \partial_r \phi_{l(e,jj)} \right. \\ + \frac{2\Delta_t Re}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} w_{l(e,kk)} \int_{\Omega_e} \phi_i \phi_{l(e,kk)} \partial_z \phi_{l(e,jj)} \\ - a_n Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} r_{l(e,kk)}^c \int_{\Omega_e} \phi_i \phi_{l(e,kk)} \partial_r \phi_{l(e,jj)} \\ + a_{n-1} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} r_{l(e,kk)}^c(t_{n-1}) \int_{\Omega_e} \phi_i \phi_{l(e,kk)} \partial_r \phi_{l(e,jj)} \\ - a_{n-2} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} r_{l(e,kk)}^c(t_{n-2}) \int_{\Omega_e} \phi_i \phi_{l(e,kk)} \partial_r \phi_{l(e,jj)} \\ - a_n Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} z_{l(e,kk)}^c \int_{\Omega_e} \phi_i \phi_{l(e,kk)} \partial_z \phi_{l(e,jj)} \\ + a_{n-1} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} z_{l(e,kk)}^c(t_{n-1}) \int_{\Omega_e} \phi_i \phi_{l(e,kk)} \partial_z \phi_{l(e,jj)} \\ \left. - a_{n-2} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} z_{l(e,kk)}^c(t_{n-2}) \int_{\Omega_e} \phi_i \phi_{l(e,kk)} \partial_z \phi_{l(e,jj)} \right], \end{array} \tag{4.108}
+\end{equation}
+
+\begin{equation}
+M_i^{r,0d} = \sum_{e=1}^{n_{el}^f} \left[ -\frac{2\Delta_t}{3} \sum_{jj=1}^{n_p^e} p_{l^p(e,jj)} \int_{\Omega_e} \psi_{l^p(e,jj)} \partial_r \phi_i \right], \tag{4.109}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,1} = -2\Delta_t \frac{\sigma^1(r_{j1},z_{j1})\phi_i(r_{j1},z_{j1})}{3Ca} m_r^{1,n}(r_{j1},z_{j1}) + 2\Delta_t \frac{\sigma^1(r_a,z_a)\phi_i(r_a,z_a)}{3Ca} m_r^{1}(r_a,z_a) \\ + \sum_{e_1=1}^{n_{el}^{1,f}} \left[ \frac{2\Delta_t}{3Ca} \sum_{j=1}^{n_v} \tilde{\sigma}_j^1 \int_{\partial \Omega^{1,f}} t_r^1 \phi_j^1 \partial_s \phi_i - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{1,e_1}} \tilde{p}_{l_1(e_1,jj)}^g \int_{\partial \Omega_{e_1}^{1,f}} \phi_i^1 \phi_{l_1(e_1,jj)}^1 n_r^1 \right] \\ - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j \int_{\partial \Omega^{1,f}} \phi_i n_r^1 \partial_r \phi_j - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} w_j \int_{\partial \Omega^{1,f}} \phi_i n_z^1 \partial_r \phi_j, \end{array} \tag{4.110}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,2} = \sum_{e_2=1}^{n_{el}^{2,f}} \left[ \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{2,e_2}} \tilde{\lambda}_{l_2(e_2,jj)}^2 \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_{l_2(e_2,jj)}^2 n_r^2 \right. \\ + \left( \frac{1 + 4Be Ca E_s}{6Ca E_s} \right) \Delta_t \sum_{jj=1}^{n_v^{2,e_2}} u_{l_2(e_2,jj)} \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_{l_2(e_2,jj)} t_r^2 t_r^2 \\ + \left( \frac{1 + 4Be Ca E_s}{6Ca E_s} \right) \Delta_t \sum_{jj=1}^{n_v^{2,e_2}} w_{l_2(e_2,jj)} \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_{l_2(e_2,jj)} t_r^2 t_z^2 \\ + \left( \frac{1 - 4Be Ca E_s}{6Ca E_s} \right) \Delta_t \sum_{jj=1}^{n_v^{2,e_2}} \tilde{u}_{l_2(e_2,jj)}^s \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_{l_2(e_2,jj)} t_r^2 t_r^2 \\ + \left( \frac{1 - 4Be Ca E_s}{6Ca E_s} \right) \Delta_t \sum_{jj=1}^{n_v^{2,e_2}} \tilde{w}_{l_2(e_2,jj)}^s \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_{l_2(e_2,jj)} t_r^2 t_z^2 \\ - \frac{\Delta_t}{3Ca E_s} \sum_{jj=1}^{n_v^{2,e_2}} \tilde{u}_{l_2(e_2,jj)}^{s2} \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_{l_2(e_2,jj)} t_r^2 t_r^2 \\ - \frac{\Delta_t}{3Ca E_s} \sum_{jj=1}^{n_v^{2,e_2}} \tilde{w}_{l_2(e_2,jj)}^{s2} \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_{l_2(e_2,jj)} t_r^2 t_z^2 \\ - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j \int_{\partial \Omega_{e_2}^{2,f}} \phi_i n_r^1 \partial_r \phi_j - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} w_j \int_{\partial \Omega_{e_2}^{2,f}} \phi_i n_z^1 \partial_r \phi_j \Bigg], \end{array} \tag{4.111}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,3} = \sum_{e_3=1}^{n_{el}^{3}} \left[ \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{3,e_3}} \tilde{\lambda}_{l_3(e_3,jj)}^3 \int_{\partial \Omega_{e_3}^{3}} \phi_{l_3(e_3,jj)}^3 \phi_i n_r^3 + \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{3,e_3}} \tilde{\gamma}_{l_3(e_3,jj)}^3 \int_{\partial \Omega_{e_3}^{3}} \phi_{l_3(e_3,jj)}^3 \phi_i t_r^3 \right. \\ \left. - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v} u_{l_3(e_3,jj)} \int_{\partial \Omega_{e_3}^{3,f}} \phi_i n_r^1 \partial_r \phi_j - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} w_j \int_{\partial \Omega_{e_3}^{3,f}} \phi_i n_z^1 \partial_r \phi_j \right], \end{array} \tag{4.112}
+\end{equation}
+
+and
+
+\begin{equation}
+\begin{array}{l} M_{e,ii}^{r,4} = \sum_{e_4=1}^{n_{el}^{4}} \left[ \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{4,e_4}} \tilde{\lambda}_{l_4(e_4,jj)}^4 \int_{\partial \Omega_{e_4}^{4}} \phi_{l_4(e_4,jj)}^4 \phi_i^4 n_r^4 + \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{4,e_4}} \tilde{\gamma}_{l_4(e_4,jj)}^4 \int_{\partial \Omega_{e_4}^{4}} \phi_{l_4(e_4,jj)}^4 \phi_i t_r^4 \right. \\ \left. - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j \int_{\partial \Omega_{e_4}^{4,f}} \phi_i n_r^1 \partial_r \phi_j - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} w_j \int_{\partial \Omega_{e_4}^{4,f}} \phi_i n_z^1 \partial_r \phi_j \right]; \end{array} \tag{4.113}
+\end{equation}
+
+where double-letter indices are used to reference local node numbers, \(n_v^e\) is the number of nodes where velocity is calculated in element \(e\), \(n_p^e\) is the number of nodes where pressure is calculated in element \(e\), \(n_v^{i,e_i}\) is the number of nodes where velocity is to be calculated on line element \(e_i\) of boundary \(i\), and \(l(e,jj) = j\), i.e. \(l(e,jj)\) maps the local number \(jj\) of a node in element \(e\) to its global number \(j\) (see figure 5), \(l^p(e,jj) = j\) maps the local node number \(jj\) of element \(e\) onto its pressure-node number \(j\) (see figure 6), and similarly \(l_k(e_k,jj) = j\) maps the local node number \(jj\) of line-element \(e_k\) in boundary \(k\) to its global node number \(j\) (see figures 7 and 8).
+
+We note that the terms that involve derivatives with respect to \(r\) and \(z\) in equations (4.110), (4.111), (4.112) and (4.113) did not change the \(j\) index for the \(l_x(e_x,jj)\). This is because, in these terms, we need to go through the bulk indexing, rather than the surface indexes, as bulk functions contribute to the derivatives.
+
+We now consider functions \(\tilde{u}_j^s\), \(\tilde{w}_j^s\), \(\tilde{\sigma}_j^1\), \(\tilde{\sigma}_j^2\), \(\tilde{\lambda}_j^2\) and \(\tilde{\lambda}_j^3\), and \(\tilde{p}_j^g\). We recall that for all \(j\) indices that correspond to nodes outside their respective boundaries these functions are identically zero. It is therefore more convenient to introduce functions \(u_j^s\), \(w_j^s\), \(\sigma_j^1\), \(\sigma_j^2\), \(\lambda_j^2\) and \(\lambda_j^3\), and \(p_j^g\) where \(j\) is the boundary numbering, i.e. a numbering of the nodes that lie on the corresponding boundary (boundary 2 in the case of functions with the super-index \(s\), and boundary 1 in the case of the function with the super index \(g\)). We also introduce function \(l_1^1(e_1,jj)\) which maps local node number \(jj\) on element \(e_1\) on boundary 1 to its corresponding boundary-node number, and the analogue functions \(l_2^2(e_2,jj)\) and \(l_3^3(e_3,jj)\) (see figure 9, and compare it to 7). The only difference between functions \(l_k(e_k,jj)\) and \(l_k^k(e_k,jj)\) is that the image of the latter is the node number in the boundary numbering and in the former it is the node number in the global numbering. In other words, \(\tilde{\sigma}_{l_1(e_1,jj)}^1 = \sigma_{l_1^1(e_1,jj)}^1\), though the second notation avoids numbering identically null functions.
+
+Re-writing the equations above under this new convention we have
+
+\begin{equation}
+M_i^{r,0a} = \sum_{e=1}^{n_{el}^f} \left[ -\frac{2\Delta_t St}{3} \int_{\Omega_e} \phi_i \hat{g}_r \right], \tag{4.114}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,0b} = \sum_{e=1}^{n_{el}^f} \left[ \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \int_{\Omega_e} \partial_r \phi_{l(e,jj)} \partial_r \phi_i + \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \int_{\Omega_e} \partial_z \phi_{l(e,jj)} \partial_z \phi_i \right. \\ + a_n Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \int_{\Omega_e} \phi_i \phi_{l(e,jj)} - a_{n-1} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)}(t_{n-1}) \int_{\Omega_e} \phi_i \phi_{l(e,jj)} \\ \left. + a_{n-2} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)}(t_{n-2}) \int_{\Omega_e} \phi_i \phi_{l(e,jj)} \right], \end{array} \tag{4.115}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,0c} = \sum_{e=1}^{n_{el}^f} \left[ \frac{2\Delta_t Re}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} u_{l(e,kk)} \int_{\Omega_e} \phi_i \phi_{l(e,kk)} \partial_r \phi_{l(e,jj)} \right. \\ + \frac{2\Delta_t Re}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} w_{l(e,kk)} \int_{\Omega_e} \phi_i \phi_{l(e,kk)} \partial_z \phi_{l(e,jj)} \\ - a_n Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} r_{l(e,kk)}^c \int_{\Omega_e} \phi_i \phi_{l(e,kk)} \partial_r \phi_{l(e,jj)} \\ + a_{n-1} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} r_{l(e,kk)}^c(t_{n-1}) \int_{\Omega_e} \phi_i \phi_{l(e,kk)} \partial_r \phi_{l(e,jj)} \\ - a_{n-2} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} r_{l(e,kk)}^c(t_{n-2}) \int_{\Omega_e} \phi_i \phi_{l(e,kk)} \partial_r \phi_{l(e,jj)} \\ - a_n Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} z_{l(e,kk)}^c \int_{\Omega_e} \phi_i \phi_{l(e,kk)} \partial_z \phi_{l(e,jj)} \\ + a_{n-1} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} z_{l(e,kk)}^c(t_{n-1}) \int_{\Omega_e} \phi_i \phi_{l(e,kk)} \partial_z \phi_{l(e,jj)} \\ \left. - a_{n-2} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} z_{l(e,kk)}^c(t_{n-2}) \int_{\Omega_e} \phi_i \phi_{l(e,kk)} \partial_z \phi_{l(e,jj)} \right], \end{array} \tag{4.116}
+\end{equation}
+
+\begin{equation}
+M_i^{r,0d} = \sum_{e=1}^{n_{el}^f} \left[ -\frac{2\Delta_t}{3} \sum_{jj=1}^{n_p^e} p_{l^p(e,jj)} \int_{\Omega_e} \psi_{l^p(e,jj)} \partial_r \phi_i \right], \tag{4.117}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,1} = -\frac{2\Delta_t \sigma^1(r_{J1},z_{J1})\phi_i(r_{J1},z_{J1})}{3Ca} m_r^{1,n}(r_{J1},z_{J1}) + \frac{2\Delta_t \sigma^1(r_a,z_a)\phi_i(r_a,z_a)}{3Ca} m_r^{1}(r_a,z_a) \\ + \sum_{e_1=1}^{n_{el}^{1,f}} \left[ \frac{2\Delta_t}{3Ca} \sum_{j=1}^{n_v} \tilde{\sigma}_j^1 \int_{\partial \Omega^{1,f}} t_r^1 \phi_j^1 \partial_s \phi_i - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{1,e_1}} p_{l_1^1(e_1,jj)}^g \int_{\partial \Omega_{e_1}^{1}} \phi_i^1 \phi_{l_1(e_1,jj)}^1 n_r^1 \right. \\ - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{1,e_1^T}} u_{l_1(e_1^T,jj)} \int_{\partial \Omega^{1,f}} \phi_i n_r^1 \partial_r \phi_{l_1(e_1^T,jj)} \\ \left. - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{1,e_1^T}} w_{l_1(e_1^T,jj)} \int_{\partial \Omega^{1,f}} \phi_i n_z^1 \partial_r \phi_{l_1(e_1^T,jj)} \right], \end{array} \tag{4.118}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,2} = \sum_{e_2=1}^{n_{el}^{2,f}} \left[ \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{2,e_2}} \tilde{\lambda}_{l_2(e_2,jj)}^2 \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_{l_2(e_2,jj)}^2 n_r^2 \right. \\ + \left( \frac{1 + 4Be Ca E_s}{6Ca E_s} \right) \Delta_t \sum_{jj=1}^{n_v^{2,e_2}} u_{l_2(e_2,jj)} \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_{l_2(e_2,jj)} t_r^2 t_r^2 \\ + \left( \frac{1 + 4Be Ca E_s}{6Ca E_s} \right) \Delta_t \sum_{jj=1}^{n_v^{2,e_2}} w_{l_2(e_2,jj)} \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_{l_2(e_2,jj)} t_r^2 t_z^2 \\ + \left( \frac{1 - 4Be Ca E_s}{6Ca E_s} \right) \Delta_t \sum_{jj=1}^{n_v^{2,e_2}} \tilde{u}_{l_2(e_2,jj)}^s \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_{l_2(e_2,jj)} t_r^2 t_r^2 \\ + \left( \frac{1 - 4Be Ca E_s}{6Ca E_s} \right) \Delta_t \sum_{jj=1}^{n_v^{2,e_2}} \tilde{w}_{l_2(e_2,jj)}^s \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_{l_2(e_2,jj)} t_r^2 t_z^2 \\ - \frac{\Delta_t}{3Ca E_s} \sum_{jj=1}^{n_v^{2,e_2}} \tilde{u}_{l_2(e_2,jj)}^{s2} \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_{l_2(e_2,jj)} t_r^2 t_r^2 \\ - \frac{\Delta_t}{3Ca E_s} \sum_{jj=1}^{n_v^{2,e_2}} \tilde{w}_{l_2(e_2,jj)}^{s2} \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_{l_2(e_2,jj)} t_r^2 t_z^2 \\ - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{2,e_2^T}} u_{l_2(e_2^T,jj)} \int_{\partial \Omega^{2,f}} \phi_i n_r^1 \partial_r \phi_{l_2(e_2^T,jj)} \\ \left. - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{2,e_2^T}} w_{l_2(e_2^T,jj)} \int_{\partial \Omega^{2,f}} \phi_i n_z^1 \partial_r \phi_{l_2(e_2^T,jj)} \right], \end{array} \tag{4.119}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,3} = \sum_{e_3=1}^{n_{el}^{3}} \left[ \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{3,e_3}} \tilde{\lambda}_{l_3(e_3,jj)}^3 \int_{\partial \Omega_{e_3}^{3}} \phi_{l_3(e_3,jj)}^3 \phi_i n_r^3 + \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{3,e_3}} \tilde{\gamma}_{l_3(e_3,jj)}^3 \int_{\partial \Omega_{e_3}^{3}} \phi_{l_3(e_3,jj)}^3 \phi_i t_r^3 \right. \\ \left. - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{3,e_3}} u_{l_3(e_3,jj)} \int_{\partial \Omega_{e_3}^{3,f}} \phi_i n_r^1 \partial_r \phi_{l_3(e_3^T,jj)} - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{3,e_3}} w_{l_3(e_3,jj)} \int_{\partial \Omega_{e_3}^{3,f}} \phi_i n_z^1 \partial_r \phi_{l_3(e_3^T,jj)} \right], \end{array} \tag{4.120}
+\end{equation}
+
+and
+
+\begin{equation}
+\begin{array}{l} M_{e,ii}^{r,4} = \sum_{e_4=1}^{n_{el}^{4}} \left[ \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{4,e_4}} \tilde{\lambda}_{l_4(e_4,jj)}^4 \int_{\partial \Omega_{e_4}^{4}} \phi_{l_4(e_4,jj)}^4 \phi_i^4 n_r^4 + \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{4,e_4}} \tilde{\gamma}_{l_5(e_5,jj)}^4 \int_{\partial \Omega_{e_4}^{4}} \phi_{l_4(e_4,jj)}^4 \phi_i t_r^4 \right. \\ \left. - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{4,e_4^T}} u_{l_4(e_4^T,jj)} \int_{\partial \Omega^{4,f}} \phi_i n_r^4 \partial_r \phi_{l_4(e_4^T,jj)} - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{4,e_4^T}} w_{l_4(e_4^T,jj)} \int_{\partial \Omega^{4,f}} \phi_i n_z^4 \partial_r \phi_{l_4(e_4^T,jj)} \right], \end{array} \tag{4.121}
+\end{equation}
+
+where \(n_v^{1,e_x^T,x}\) stands for the number of velocity nodes in the triangular element that contains the line element over which we are integrating and \(e_x^T\), use in \(l_x(e_x^T,jj)\), stands for the triangular element which contains line element \(e_x\).
+
+A form of index optimisation that is very similar to what was done with \(j\) can be done in terms of index \(i\). For a given index \(i\), only the integrals on the elements that contain this node can have a non-zero contribution to the \(i\)-th residual. Hence, it is more convenient to loop over each element's nodes and find the contribution to \(M_i^{r,l}\) for each of the \(i\)'s that are indices of the nodes in the element at hand, and to sum this contribution to each \(M_i^{r,l}\). Passing to local node number for index \(i\), we have
+
+\begin{equation}
+M_i^{r,0a} = \sum_{\substack{e=1 \\ i=l(e,ii)}}^{n_{el}^f} \left[ -\frac{2\Delta_t St}{3} \int_{\Omega_e} \phi_{l(e,ii)} \hat{g}_r \right], \tag{4.122}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,0b} = \sum_{\substack{e=1 \\ i=l(e,ii)}}^{n_{el}^f} \left[ \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \int_{\Omega_e} \partial_r \phi_{l(e,jj)} \partial_r \phi_{l(e,ii)} \right. \\ + \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \int_{\Omega_e} \partial_z \phi_{l(e,jj)} \partial_z \phi_{l(e,ii)} + a_n Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,jj)} \\ - a_{n-1} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)}(t_{n-1}) \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,jj)} \\ \left. + a_{n-2} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)}(t_{n-2}) \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,jj)} \right], \end{array} \tag{4.123}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,0c} = \sum_{\substack{e=1 \\ i=l(e,ii)}}^{n_{el}^f} \left[ \frac{2\Delta_t Re}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} u_{l(e,kk)} \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_r \phi_{l(e,jj)} \right. \\ + \frac{2\Delta_t Re}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} w_{l(e,kk)} \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_z \phi_{l(e,jj)} \\ - a_n Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} r_{l(e,kk)}^c \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_r \phi_{l(e,jj)} \\ + a_{n-1} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} r_{l(e,kk)}^c(t_{n-1}) \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_r \phi_{l(e,jj)} \\ - a_{n-2} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} r_{l(e,kk)}^c(t_{n-2}) \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_r \phi_{l(e,jj)} \\ - a_n Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} z_{l(e,kk)}^c \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_z \phi_{l(e,jj)} \\ + a_{n-1} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} z_{l(e,kk)}^c(t_{n-1}) \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_z \phi_{l(e,jj)} \\ \left. - a_{n-2} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} z_{l(e,kk)}^c(t_{n-2}) \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_z \phi_{l(e,jj)} \right], \end{array} \tag{4.124}
+\end{equation}
+
+\begin{equation}
+M_i^{r,0d} = \sum_{\substack{e=1 \\ i=l(e,ii)}}^{n_{el}^f} \left[ -\frac{2\Delta_t}{3} \sum_{jj=1}^{n_p^e} p_{l^p(e,jj)} \int_{\Omega_e} \psi_{l^p(e,jj)} \partial_r \phi_{l(e,ii)} \right], \tag{4.125}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,1} = -\frac{2\Delta_t \sigma^1(r_{J1},z_{J1})\phi_i(r_{J1},z_{J1})}{3Ca} m_r^{1,n}(r_{J1},z_{J1}) + \frac{2\Delta_t \sigma^1(r_a,z_a)\phi_i(r_a,z_a)}{3Ca} m_r^{1}(r_a,z_a) \\ + \sum_{e_1=1}^{n_{el}^{1,f}} \left[ \frac{2\Delta_t}{3Ca} \sum_{j=1}^{n_v} \tilde{\sigma}_j^1 \int_{\partial \Omega^{1,f}} t_r^1 \phi_j^1 \partial_s \phi_i - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{1,e_1}} p_{l_1^1(e_1,jj)}^g \int_{\partial \Omega_{e_1}^{1}} \phi_i^1 \phi_{l_1(e_1,jj)}^1 n_r^1 \right. \\ - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{1,e_1^T}} u_{l_1(e_1^T,jj)} \int_{\partial \Omega^{1,f}} \phi_i n_r^1 \partial_r \phi_{l_1(e_1^T,jj)} \\ \left. - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{1,e_1^T}} w_{l_1(e_1^T,jj)} \int_{\partial \Omega^{1,f}} \phi_i n_z^1 \partial_r \phi_{l_1(e_1^T,jj)} \right], \end{array} \tag{4.126}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,2} = \sum_{e_2=1}^{n_{el}^{2,f}} \left[ \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{2,e_2}} \lambda_{l_2^2(e_2,jj)}^2 \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_{l_2(e_2,jj)}^2 n_r^2 \right. \\ + \left( \frac{1 + 4Be Ca E_s}{6Ca E_s} \right) \Delta_t \sum_{jj=1}^{n_v^{2,e_2}} u_{l_2(e_2,jj)} \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_{l_2(e_2,jj)} t_r^2 t_r^2 \\ + \left( \frac{1 + 4Be Ca E_s}{6Ca E_s} \right) \Delta_t \sum_{jj=1}^{n_v^{2,e_2}} w_{l_2(e_2,jj)} \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_{l_2(e_2,jj)} t_r^2 t_z^2 \\ + \left( \frac{1 - 4Be Ca E_s}{6Ca E_s} \right) \Delta_t \sum_{jj=1}^{n_v^{2,e_2}} u_{l_2^2(e_2,jj)}^s \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_{l_2(e_2,jj)} t_r^2 t_r^2 \\ + \left( \frac{1 - 4Be Ca E_s}{6Ca E_s} \right) \Delta_t \sum_{jj=1}^{n_v^{2,e_2}} w_{l_2^2(e_2,jj)}^s \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_{l_2(e_2,jj)} t_r^2 t_z^2 \\ - \frac{\Delta_t}{3Ca E_s} \sum_{jj=1}^{n_v^{2,e_2}} u_{l_2^2(e_2,jj)}^{s2} \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_{l_2(e_2,jj)} t_r^2 t_r^2 \\ - \frac{\Delta_t}{3Ca E_s} \sum_{jj=1}^{n_v^{2,e_2}} w_{l_2^2(e_2,jj)}^{s2} \int_{\partial \Omega_{e_2}^{2,f}} \phi_i \phi_{l_2(e_2,jj)} t_r^2 t_z^2 \\ - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{2,e_2^T}} u_{l_2(e_2^T,jj)} \int_{\partial \Omega^{2,f}} \phi_i n_r^1 \partial_r \phi_{l_2(e_2^T,jj)} \\ \left. - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{2,e_2^T}} w_{l_2(e_2^T,jj)} \int_{\partial \Omega^{2,f}} \phi_i n_z^1 \partial_r \phi_{l_2(e_2^T,jj)} \right], \end{array} \tag{4.127}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_i^{r,3} = \sum_{e_3=1}^{n_{el}^{3}} \left[ \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{3,e_3}} \lambda_{l_3^3(e_3,jj)}^3 \int_{\partial \Omega_{e_3}^{3}} \phi_{l_3(e_3,jj)}^3 \phi_i n_r^3 + \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{3,e_3}} \gamma_{l_3^3(e_3,jj)}^3 \int_{\partial \Omega_{e_3}^{3}} \phi_{l_3(e_3,jj)}^3 \phi_i t_r^3 \right. \\ \left. - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{3,e_3}} u_{l_3(e_3,jj)} \int_{\partial \Omega_{e_3}^{3,f}} \phi_i n_r^1 \partial_r \phi_{l_3(e_3^T,jj)} - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{3,e_3}} w_{l_3(e_3,jj)} \int_{\partial \Omega_{e_3}^{3,f}} \phi_i n_z^1 \partial_r \phi_{l_3(e_3^T,jj)} \right], \end{array} \tag{4.128}
+\end{equation}
+
+and
+
+\begin{equation}
+\begin{array}{l} M_i^{r,4} = \sum_{e_4=1}^{n_{el}^{4}} \left[ \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{4,e_4}} \lambda_{l_4^4(e_4,jj)}^4 \int_{\partial \Omega_{e_4}^{4}} \phi_{l_4(e_4,jj)}^4 \phi_i^4 n_r^4 + \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{4,e_4}} \gamma_{l_4^4(e_4,jj)}^4 \int_{\partial \Omega_{e_4}^{4}} \phi_{l_4(e_4,jj)}^4 \phi_i t_r^4 \right. \\ \left. - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{4,e_4^T}} u_{l_4(e_4^T,jj)} \int_{\partial \Omega^{4,f}} \phi_i n_r^1 \partial_r \phi_{l_4(e_4^T,jj)} - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{4,e_4^T}} w_{l_4(e_4^T,jj)} \int_{\partial \Omega^{4,f}} \phi_i n_z^1 \partial_r \phi_{l_4(e_4^T,jj)} \right]; \end{array} \tag{4.129}
+\end{equation}
+
+We now introduce the decomposition
+
+\begin{equation}
+M_i^r = \sum_{\substack{e=1 \\ i=l(e,ii)}}^{\bar{n}_{el}} \left( M_{e,ii}^{r,0a} + M_{e,ii}^{r,0b} + M_{e,ii}^{r,0c} + M_{e,ii}^{r,0d} \right) + \underbrace{ \left( -\frac{2\Delta_t \sigma^1(r_{J1},z_{J1})\phi_i(r_{J1},z_{J1})}{3Ca} m_r^{1,n}(r_{J1},z_{J1}) + \frac{2\Delta_t \sigma^1(r_a,z_a)\phi_i(r_a,z_a)}{3Ca} m_r^{1}(r_a,z_a) \right) }_{M_i^{r,1}} + \sum_{\substack{e_1=1 \\ i=l_1(e,ii)}}^{\bar{n}_{el}^1} M_{e_1,ii}^{r,1} + \sum_{\substack{e_2=1 \\ i=l_2(e,ii)}}^{\bar{n}_{el}^2} \underbrace{M_{e,ii}^{r,2}}_{M_i^{r,2}} + \sum_{\substack{e_3=1 \\ i=l_3(e,ii)}}^{\bar{n}_{el}^3} \underbrace{M_{e_3,ii}^{r,3}}_{M_i^{r,3}} + \sum_{\substack{e_4=1 \\ i=l_4(e,ii)}}^{\bar{n}_{el}^4} \underbrace{M_{e_4,ii}^{r,4}}_{M_i^{r,4}}; \tag{4.130}
+\end{equation}
+
+where
+
+\begin{equation}
+M_i^{r,1} = -\frac{2\Delta_t \sigma^1(r_{J1},z_{J1})\phi_i(r_{J1},z_{J1})}{3Ca} m_r^{1,n}(r_{J1},z_{J1}) + \frac{2\Delta_t \sigma^1(r_a,z_a)\phi_i(r_a,z_a)}{3Ca} m_r^{1}(r_a,z_a) + \sum_{\substack{e_1=1 \\ i=l_1(e,ii)}}^{\bar{n}_{el}^1} M_{e_1,ii}^{r,1} \tag{4.131}
+\end{equation}
+
+and
+
+\begin{equation}
+M_{e,ii}^{r,0a} = \underbrace{ -\frac{2\Delta_t St}{3} \int_{\Omega_e} \phi_{l(e,ii)} \hat{g}_r }_{a_{ii,g_r}(e)}, \tag{4.132}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_{e,ii}^{r,0b} = \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \underbrace{ \int_{\Omega_e} \partial_r \phi_{l(e,ii)} \partial_r \phi_{l(e,jj)} }_{a_{ii,jj}^r(e)} + \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \underbrace{ \int_{\Omega_e} \partial_z \phi_{l(e,ii)} \partial_z \phi_{l(e,jj)} }_{a_{ii,jj}^z(e)} \\ + a_n Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \underbrace{ \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,jj)} }_{a_{ii,jj}(e)} - a_{n-1} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)}(t_{n-1}) \underbrace{ \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,jj)} }_{a_{ii,jj}(e)} \\ + a_{n-2} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)}(t_{n-2}) \underbrace{ \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,jj)} }_{a_{ii,jj}(e)}, \end{array} \tag{4.133}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_{e,ii}^{r,0c} = \frac{2\Delta_t Re}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} u_{l(e,kk)} \underbrace{ \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_r \phi_{l(e,jj)} }_{a_{ii,kk,jj}^r(e)} \\ + \frac{2\Delta_t Re}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} w_{l(e,kk)} \underbrace{ \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_z \phi_{l(e,jj)} }_{a_{ii,kk,jj}^z(e)} \\ - a_n Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} r_{l(e,kk)}^c \underbrace{ \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_r \phi_{l(e,jj)} }_{a_{ii,kk,jj}^r(e)} \\ + a_{n-1} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} r_{l(e,kk)}^c(t_{n-1}) \underbrace{ \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_r \phi_{l(e,jj)} }_{a_{ii,kk,jj}^r(e)} \\ - a_{n-2} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} r_{l(e,kk)}^c(t_{n-2}) \underbrace{ \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_r \phi_{l(e,jj)} }_{a_{ii,kk,jj}^r(e)} \\ - a_n Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} z_{l(e,kk)}^c \underbrace{ \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_z \phi_{l(e,jj)} }_{a_{ii,kk,jj}^z(e)} \\ + a_{n-1} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} z_{l(e,kk)}^c(t_{n-1}) \underbrace{ \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_z \phi_{l(e,jj)} }_{a_{ii,kk,jj}^z(e)} \\ - a_{n-2} Re \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} z_{l(e,kk)}^c(t_{n-2}) \underbrace{ \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_z \phi_{l(e,jj)} }_{a_{ii,kk,jj}^z(e)}, \end{array} \tag{4.134}
+\end{equation}
+
+and
+
+\begin{equation}
+M_{e,ii}^{0,d} = -\frac{2\Delta_t}{3} \sum_{jj=1}^{n_p^e} p_{l^p(e,jj)} \underbrace{ \int_{\Omega_e} \psi_{l^p(e,jj)} \partial_r \phi_{l(e,ii)} }_{b_{jj,ii}^r(e)}; \tag{4.135}
+\end{equation}
+
+We recall that for boundary 1 we have
+
+\begin{equation}
+\begin{array}{l} M_{e,ii}^{r,1} = \frac{2\Delta_t}{3Ca} \sum_{jj=1}^{n_v^{1,e_1}} \sigma_{l_1^1(e_1,jj)}^1 \underbrace{ \int_{\partial \Omega_{e_1}^{1}} t_r^1 \phi_{l_1(e_1,jj)}^1 \partial_s \phi_{l_1(e_1,ii)} }_{c_{jj,ii,t_r}(e_1)} \\ - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{1,e_1}} p_{l_1^1(e_1,jj)}^g \underbrace{ \int_{\partial \Omega_{e_1}^{1}} \phi_{l_1(e_1,ii)}^1 \phi_{l_1(e_1,jj)}^1 n_r^1 }_{c_{ii,jj,n_r}(e_1)} \\ - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{1,e_1^T}} u_{l_1(e_1^T,jj)} \underbrace{ \int_{\partial \Omega_{e_1}^{1}} \phi_{l_1(e_1,ii)} n_r^1 \partial_r \phi_{l_1(e_1^T,jj)} }_{c_{ii,jj,n_r}^r(e_1)} \\ - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{1,e_1^T}} w_{l_1(e_1^T,jj)} \underbrace{ \int_{\partial \Omega_{e_1}^{1}} \phi_{l_1(e_1,ii)} n_z^1 \partial_r \phi_{l_1(e_1^T,jj)} }_{c_{ii,jj,n_z}^r(e_1)}, \end{array} \tag{4.136}
+\end{equation}
+
+for boundary 2
+
+\begin{equation}
+\begin{array}{l} M_{e,ii}^{r,2} = \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{2,e_2}} \lambda_{l_2^2(e_2,jj)}^2 \underbrace{ \int_{\partial \Omega_{e_2}^{2,f}} \phi_{l_2(e_2,ii)}^2 \phi_{l_2(e_2,jj)}^2 n_r^2 }_{d_{ii,jj,n_r}(e_2)} \\ + \left( \frac{1 + 4Be Ca E_s}{6Ca E_s} \right) \Delta_t \sum_{jj=1}^{n_v^{2,e_2}} u_{l_2(e_2,jj)} \underbrace{ \int_{\partial \Omega_{e_2}^{2,f}} \phi_{l_2(e_2,ii)}^2 \phi_{l_2(e_2,jj)}^2 t_r^2 t_r^2 }_{d_{ii,jj,t_r,t_r}(e_2)} \\ + \left( \frac{1 + 4Be Ca E_s}{6Ca E_s} \right) \Delta_t \sum_{jj=1}^{n_v^{2,e_2}} w_{l_2(e_2,jj)} \underbrace{ \int_{\partial \Omega_{e_2}^{2,f}} \phi_{l_2(e_2,ii)}^2 \phi_{l_2(e_2,jj)}^2 t_r^2 t_z^2 }_{d_{ii,jj,t_r,t_z}(e_2)} \\ + \left( \frac{1 - 4Be Ca E_s}{6Ca E_s} \right) \Delta_t \sum_{jj=1}^{n_v^{2,e_2}} u_{l_2^2(e_2,jj)}^s \underbrace{ \int_{\partial \Omega_{e_2}^{2,f}} \phi_{l_2(e_2,ii)}^2 \phi_{l_2(e_2,jj)}^2 t_r^2 t_r^2 }_{d_{ii,jj,t_r,t_r}(e_2)} \\ + \left( \frac{1 - 4Be Ca E_s}{6Ca E_s} \right) \Delta_t \sum_{jj=1}^{n_v^{2,e_2}} w_{l_2^2(e_2,jj)}^s \underbrace{ \int_{\partial \Omega_{e_2}^{2,f}} \phi_{l_2(e_2,ii)}^2 \phi_{l_2(e_2,jj)}^2 t_r^2 t_z^2 }_{d_{ii,jj,t_r,t_z}(e_2)} \\ - \frac{\Delta_t}{3Ca E_s} \sum_{jj=1}^{n_v^{2,e_2}} u_{l_2^2(e_2,jj)}^{s2} \underbrace{ \int_{\partial \Omega_{e_2}^{2,f}} \phi_{l_2(e_2,ii)}^2 \phi_{l_2(e_2,jj)}^2 t_r^2 t_r^2 }_{d_{ii,jj,t_r,t_r}(e_2)} \\ - \frac{\Delta_t}{3Ca E_s} \sum_{jj=1}^{n_v^{2,e_2}} w_{l_2^2(e_2,jj)}^{s2} \underbrace{ \int_{\partial \Omega_{e_2}^{2,f}} \phi_{l_2(e_2,ii)}^2 \phi_{l_2(e_2,jj)}^2 t_r^2 t_z^2 }_{d_{ii,jj,t_r,t_z}(e_2)} \\ - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{2,e_2^T}} u_{l_2(e_2^T,jj)} \underbrace{ \int_{\partial \Omega_{e_2}^{2,f}} \phi_{l_2(e_2,ii)} n_r^1 \partial_r \phi_{l_2(e_2^T,jj)} }_{d_{ii,jj,n_r}^r(e_2)} \\ - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{2,e_2^T}} w_{l_2(e_2^T,jj)} \underbrace{ \int_{\partial \Omega_{e_2}^{2,f}} \phi_{l_2(e_2,ii)} n_z^1 \partial_r \phi_{l_2(e_2^T,jj)} }_{d_{ii,jj,n_z}^r(e_2)}, \end{array} \tag{4.137}
+\end{equation}
+
+for boundary 3
+
+\begin{equation}
+\begin{array}{l} M_{e,ii}^{r,3} = \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{3,e_3}} \lambda_{l_3^3(e_3,jj)}^3 \underbrace{ \int_{\partial \Omega_{e_3}^{3}} \phi_{l_3(e_3,ii)}^3 \phi_{l_3(e_3,jj)}^3 n_r^3 }_{f_{ii,jj,n_r}(e_3)} \\ + \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{3,e_3}} \gamma_{l_3^3(e_3,jj)}^3 \underbrace{ \int_{\partial \Omega_{e_3}^{3}} \phi_{l_3(e_3,ii)}^3 \phi_{l_3(e_3,jj)}^3 t_r^3 }_{f_{ii,jj,t_r}(e_3)} \\ - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{3,e_3^T}} u_{l_3(e_3^T,jj)} \underbrace{ \int_{\partial \Omega_{e_3}^{3}} \phi_{l_3(e_3,ii)}^3 n_r^1 \partial_r \phi_{l_3(e_3^T,jj)} }_{f_{ii,jj,n_r}^r(e_3)} \\ - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{3,e_3^T}} w_{l_3(e_3^T,jj)} \underbrace{ \int_{\partial \Omega_{e_3}^{3}} \phi_{l_3(e_3,ii)}^3 n_z^1 \partial_r \phi_{l_3(e_3^T,jj)} }_{f_{ii,jj,n_z}^r(e_3)} \end{array} \tag{4.138}
+\end{equation}
+
+and for boundary 4
+
+\begin{equation}
+\begin{array}{l} M_{e,ii}^{r,4} = \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{4,e_4}} \lambda_{l_4^4(e_4,jj)}^4 \underbrace{ \int_{\partial \Omega_{e_4}^{4}} \phi_{l_4(e_4,ii)}^4 \phi_{l_4(e_4,jj)}^4 n_r^4 }_{e_{ii,jj,n_r}(e_4)} \\ + \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{4,e_4}} \gamma_{l_4^4(e_4,jj)}^4 \underbrace{ \int_{\partial \Omega_{e_4}^{4}} \phi_{l_4(e_4,ii)}^4 \phi_{l_4(e_4,jj)}^4 t_r^4 }_{e_{ii,jj,t_r}(e_4)} \\ - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{4,e_4^T}} u_{l_4(e_4^T,jj)} \underbrace{ \int_{\partial \Omega_{e_4}^{4}} \phi_{l_4(e_4,ii)}^4 n_r^1 \partial_r \phi_{l_4(e_4^T,jj)} }_{e_{ii,jj,n_r}^r(e_4)} \\ - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{4,e_4^T}} w_{l_4(e_4^T,jj)} \underbrace{ \int_{\partial \Omega_{e_4}^{4}} \phi_{l_4(e_4,ii)}^4 n_z^1 \partial_r \phi_{l_4(e_4^T,jj)} }_{e_{ii,jj,n_z}^r(e_4)} \end{array} \tag{4.139}
+\end{equation}
+
+The names of the integral quantities above, are chosen so that \(a\) and \(b\) always stand for integrals in a triangular element, with \(a\) being integrals of the velocity-interpolating functions \(\phi\) and their spatial derivatives, and \(b\) being integrals of the pressure-interpolating functions \(\psi\) potentially multiplied by some \(\phi\) functions and/or their derivatives. Similarly, integrals identified as \(c\), \(d\) and \(f\) have a domain on the free, solid and inflow boundary, respectively. We also have \(g\) and \(e\) as integrals on boundary 4.
+
+We can also re-write the equations in a more compact notation as:
+
+\begin{equation}
+M_{e,ii}^{r,0a} = -\frac{2\Delta_t St}{3} a_{ii,g_r}(e), \tag{4.140}
+\end{equation}
+
+\begin{equation}
+M_{e,ii}^{r,0b} = \sum_{jj=1}^{n_v^e} \left[ \frac{2\Delta_t}{3} \left( a_{ii,jj}^r(e) + a_{ii,jj}^z(e) \right) + a_n Re \, a_{ii,jj}(e) \right] u_{l(e,jj)} - a_{n-1} Re \sum_{jj=1}^{n_v^e} a_{ii,jj}(e) u_{l(e,jj)}(t_{n-1}) + a_{n-2} Re \sum_{jj=1}^{n_v^e} a_{ii,jj}(e) u_{l(e,jj)}(t_{n-2}), \tag{4.141}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l} M_{e,ii}^{r,0c} = \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \left\{ \frac{2\Delta_t Re}{3} \sum_{kk=1}^{n_v^e} \left[ u_{l(e,kk)} a_{ii,kk,jj}^r(e) + w_{l(e,kk)} a_{ii,kk,jj}^z(e) \right] \right. \\ \left. - \sum_{kk=1}^{n_v^e} a_{ii,kk,jj}^r(e) \left[ a_n r_{l(e,kk)}^c - a_{n-1} r_{l(e,kk)}^c(t_{n-1}) + a_{n-2} r_{l(e,kk)}^c(t_{n-2}) \right] \right. \\ \left. - \sum_{kk=1}^{n_v^e} a_{ii,kk,jj}^z(e) \left[ a_n z_{l(e,kk)}^c - a_{n-1} z_{l(e,kk)}^c(t_{n-1}) + a_{n-2} z_{l(e,kk)}^c(t_{n-2}) \right] \right\}, \end{array} \tag{4.142}
+\end{equation}
+
+\begin{equation}
+M_{e,ii}^{0,d} = -\frac{2\Delta_t}{3} \sum_{jj=1}^{n_p^e} p_{l^p(e,jj)} b_{jj,ii}^r(e), \tag{4.143}
+\end{equation}
+
+For boundary 1 we have
+
+\begin{equation}
+\begin{array}{l} M_{e,ii}^{r,1} = \sum_{jj=1}^{n_v^{1,e_1}} \left\{ \frac{2\Delta_t}{3Ca} \sigma_{l_1^1(e_1,jj)}^1 c_{jj,ii,t_r}(e_1) - \frac{2\Delta_t}{3} p_{l_1^1(e_1,jj)}^g c_{ii,jj,n_r}(e_1) \right. \\ \left. - \frac{2\Delta_t}{3} u_{l_1(e_1^T,jj)} c_{ii,jj,n_r}^r - \frac{2\Delta_t}{3} w_{l_1(e_1^T,jj)} c_{ii,jj,n_z}^r \right\}; \end{array} \tag{4.144}
+\end{equation}
+
+for boundary 2
+
+\begin{equation}
+\begin{array}{l} M_{e,ii}^{r,2} = \sum_{jj=1}^{n_v^{2,e_2}} \left\{ \frac{2\Delta_t}{3} \lambda_{l_2^2(e_2,jj)}^2 d_{ii,jj,n_r}(e_2) \right. \\ + \left( \frac{1 + 4Be Ca E_s}{6Ca E_s} \right) \Delta_t \left[ u_{l_2(e_2,jj)} d_{ii,jj,t_r,t_r}(e_2) + w_{l_2(e_2,jj)} d_{ii,jj,t_r,t_z}(e_2) \right] \\ + \left( \frac{1 - 4Be Ca E_s}{6Ca E_s} \right) \Delta_t \left[ u_{l_2^2(e_2,jj)}^s d_{ii,jj,t_r,t_r}(e_2) + w_{l_2^2(e_2,jj)}^s d_{ii,jj,t_r,t_z}(e_2) \right] \\ - \frac{\Delta_t}{3Ca E_s} \left[ u_{l_2^2(e_2,jj)}^{s2} d_{ii,jj,t_r,t_r}(e_2) + w_{l_2^2(e_2,jj)}^{s2} d_{ii,jj,t_r,t_z}(e_2) \right] \\ - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j d_{ii,jj,n_r}^r - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} w_j d_{ii,jj,n_z}^r \left. \right\}; \end{array} \tag{4.145}
+\end{equation}
+
+for boundary 3
+
+\begin{equation}
+\begin{array}{l} M_{e,ii}^{r,3} = \sum_{jj=1}^{n_v^{3,e_3}} \left[ \lambda_{l_3^3(e_3,jj)}^3 f_{ii,jj,n_r}(e_3) + \gamma_{l_3^3(e_3,jj)}^3 f_{ii,jj,t_r}(e_3) \right. \\ \left. - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j f_{ii,jj,n_r}^r - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} w_j f_{ii,jj,n_z}^r \right]. \end{array} \tag{4.146}
+\end{equation}
+
+and for boundary 5
+
+\begin{equation}
+\begin{array}{l} M_{e,ii}^{r,5} = \sum_{jj=1}^{n_v^{5,e_5}} \left[ \lambda_{l_5^5(e_5,jj)}^5 e_{ii,jj,n_r}(e_5) + \gamma_{l_5^5(e_5,jj)}^5 e_{ii,jj,t_r}(e_5) \right. \\ \left. - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} u_j e_{ii,jj,n_r}^r - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} w_j e_{ii,jj,n_z}^r \right]. \end{array} \tag{4.147}
+\end{equation}
+
+In practice, we loop over the element nodes once again for index \(ii\) (i.e. the local index of the \(i\)-th residual component) defining and calculating \(M_{e,ii}^r\) for each local node \(ii\) on each element and then adding the contribution to the \(M^r\) vector at entry \(i = l(e,ii)\).
+
+\subsection{Jacobian terms}
+
+We now calculate the derivatives of \(M_i^r\) with respect to \(u_q\), \(w_q\), \(p_q\), \(\sigma_q^1\), \(\sigma_q^2\), \(\lambda_q^2\), \(\lambda_q^3\), \(\gamma_q^3\), \(\lambda_q^4\), \(\gamma_q^4\), and \(h_q\).
+
+\subsubsection{Derivatives of \(M_i^r\) with respect to \(u_q\)}
+
+This derivative has contribution from the bulk terms and boundary 2 terms.
+
+From equation (4.148)
+
+\begin{equation}
+\partial_{u_q} M_i^r = \sum_{\substack{e=1 \\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{u_q} \left( M_{e,ii}^{r,0a} + M_{e,ii}^{r,0b} + M_{e,ii}^{r,0c} + M_{e,ii}^{r,0d} \right) + \sum_{\substack{e_1=1 \\ i=l_1(e,ii)}}^{\bar{n}_{el}^1} \partial_{u_q} M_{e_1,ii}^{r,1} - \frac{2\Delta_t}{3} \partial_{u_q} \left( \frac{\sigma^1(r_{J1},z_{J1})\phi_i(r_{J1},z_{J1}) m_r^{1,n}(r_{J1},z_{J1})}{Ca} \right) + \frac{2\Delta_t}{3} \partial_{u_q} \left( \frac{\sigma^1(r_a,z_a)\phi_i(r_a,z_a) m_r^{1}(r_a,z_a)}{Ca} \right) + \sum_{\substack{e_2=1 \\ i=l_2(e,ii)}}^{\bar{n}_{el}^2} \partial_{u_q} M_{e,ii}^{r,2} + \sum_{\substack{e_3=1 \\ i=l_3(e,ii)}}^{\bar{n}_{el}^3} \partial_{u_q} M_{e_3,ii}^{r,3} + \sum_{\substack{e_4=1 \\ i=l_4(e,ii)}}^{\bar{n}_{el}^4} \partial_{u_q} M_{e_4,ii}^{r,4}. \tag{4.157}
+\end{equation}
+
+i.e.
+
+\begin{equation}
+\partial_{u_q} M_i^r = \sum_{\substack{e=1 \\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{u_q} M_{e,ii}^{r,0b} + \sum_{\substack{e=1 \\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{u_q} M_{e,ii}^{r,0c} + \sum_{\substack{e_1=1 \\ i=l_1(e,ii)}}^{\bar{n}_{el}^1} \partial_{u_q} M_{e,ii}^{r,1} + \sum_{\substack{e_2=1 \\ i=l_2(e,ii)}}^{\bar{n}_{el}^2} \partial_{u_q} M_{e,ii}^{r,2} + \sum_{\substack{e_3=1 \\ i=l_3(e,ii)}}^{\bar{n}_{el}^3} \partial_{u_q} M_{e,ii}^{r,3} + \sum_{\substack{e_4=1 \\ i=l_4(e,ii)}}^{\bar{n}_{el}^4} \partial_{u_q} M_{e,ii}^{r,4}. \tag{4.158}
+\end{equation}
+
+Now, from equation (4.141) we have
+
+\begin{equation}
+\partial_{u_q} M_{e,ii}^{r,0b} = +\frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^e} a_{ii,jj}^r(e) \partial_{u_q} u_{l(e,jj)} + \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^e} a_{ii,jj}^z(e) \partial_{u_q} u_{l(e,jj)} + Re \sum_{jj=1}^{n_v^e} a_{ii,jj}(e) \partial_{u_q} u_{l(e,jj)} - \frac{4Re}{3} \sum_{jj=1}^{n_v^e} a_{ii,jj}(e) \partial_{u_q} u_{l(e,jj)}(t_{n-1}) + \frac{Re}{3} \sum_{jj=1}^{n_v^e} a_{ii,jj}(e) \partial_{u_q} u_{l(e,jj)}(t_{n-2}), \tag{4.159}
+\end{equation}
+
+i.e.
+
+\begin{equation}
+\partial_{u_q} M_{e,ii}^{r,0b} = \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^e} a_{ii,jj}^r(e) + \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^e} a_{ii,jj}^z(e) + Re \sum_{jj=1}^{n_v^e} a_{ii,jj}(e), \tag{4.160}
+\end{equation}
+
+or equivalently
+
+\begin{equation}
+\partial_{u_q} M_{e,ii}^{r,0b} = \sum_{jj=1}^{n_v^e} \left[ \frac{2\Delta_t}{3} \left( a_{ii,jj}^r(e) + a_{ii,jj}^z(e) \right) + Re \, a_{ii,jj}(e) \right]. \tag{4.161}
+\end{equation}
+
+Similarly, from equation (4.142) we have
+
+\begin{equation}
+\begin{array}{l} \partial_{u_q} M_{e,ii}^{r,0c} = \frac{2\Delta_t Re}{3} \sum_{jj=1}^{n_v^e} \partial_{u_q} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} u_{l(e,kk)} a_{ii,kk,jj}^r(e) \\ + \frac{2\Delta_t Re}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} a_{ii,kk,jj}^r(e) \partial_{u_q} u_{l(e,kk)} \\ + \frac{2\Delta_t Re}{3} \sum_{jj=1}^{n_v^e} \partial_{u_q} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} w_{l(e,kk)} a_{ii,kk,jj}^z(e) \\ - Re \sum_{jj=1}^{n_v^e} \partial_{u_q} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} r_{l(e,kk)}^c a_{ii,kk,jj}^r(e) \\ + \frac{4Re}{3} \sum_{jj=1}^{n_v^e} \partial_{u_q} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} r_{l(e,kk)}^c(t_{n-1}) a_{ii,kk,jj}^r(e) \\ - \frac{Re}{3} \sum_{jj=1}^{n_v^e} \partial_{u_q} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} r_{l(e,kk)}^c(t_{n-2}) a_{ii,kk,jj}^r(e) \\ - Re \sum_{jj=1}^{n_v^e} \partial_{u_q} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} z_{l(e,kk)}^c a_{ii,kk,jj}^z(e) \\ + \frac{4Re}{3} \sum_{jj=1}^{n_v^e} \partial_{u_q} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} z_{l(e,kk)}^c(t_{n-1}) a_{ii,kk,jj}^z(e) \\ - \frac{Re}{3} \sum_{jj=1}^{n_v^e} \partial_{u_q} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} z_{l(e,kk)}^c(t_{n-2}) a_{ii,kk,jj}^z(e), \end{array} \tag{4.162}
+\end{equation}
+
+i.e.
+
+\begin{equation}
+\begin{array}{l} \partial_{u_q} M_{e,ii}^{r,0c} = \frac{2\Delta_t Re}{3} \sum_{\substack{kk=1 \\ q=l(e,jj)}}^{n_v^e} u_{l(e,kk)} a_{ii,kk,jj}^r(e) \\ + \frac{2\Delta_t Re}{3} \sum_{\substack{jj=1 \\ q=l(e,kk)}}^{n_v^e} u_{l(e,jj)} a_{ii,kk,jj}^r(e) + \frac{2\Delta_t Re}{3} \sum_{\substack{kk=1 \\ q=l(e,jj)}}^{n_v^e} w_{l(e,kk)} a_{ii,kk,jj}^z(e) \\ - Re \sum_{\substack{kk=1 \\ q=l(e,jj)}}^{n_v^e} r_{l(e,kk)}^c a_{ii,kk,jj}^r(e) + \frac{4Re}{3} \sum_{\substack{kk=1 \\ q=l(e,jj)}}^{n_v^e} r_{l(e,kk)}^c(t_{n-1}) a_{ii,kk,jj}^r(e) \\ - \frac{Re}{3} \sum_{\substack{kk=1 \\ q=l(e,jj)}}^{n_v^e} r_{l(e,kk)}^c(t_{n-2}) a_{ii,kk,jj}^r(e) \\ - Re \sum_{\substack{kk=1 \\ q=l(e,jj)}}^{n_v^e} z_{l(e,kk)}^c a_{ii,kk,jj}^z(e) + \frac{4Re}{3} \sum_{\substack{kk=1 \\ q=l(e,jj)}}^{n_v^e} z_{l(e,kk)}^c(t_{n-1}) a_{ii,kk,jj}^z(e) \\ - \frac{Re}{3} \sum_{\substack{kk=1 \\ q=l(e,jj)}}^{n_v^e} z_{l(e,kk)}^c(t_{n-2}) a_{ii,kk,jj}^z(e), \end{array} \tag{4.163}
+\end{equation}
+
+or, equivalently,
+
+\begin{equation}
+\begin{array}{l} \partial_{u_q} M_{e,ii}^{r,0c} = \sum_{\substack{jj=1 \\ q=l(e,kk)}}^{n_v^e} \frac{2\Delta_t Re}{3} a_{ii,kk,jj}^r(e) u_{l(e,jj)} \\ + \frac{2\Delta_t Re}{3} \sum_{\substack{kk=1 \\ q=l(e,jj)}}^{n_v^e} \left[ u_{l(e,kk)} a_{ii,kk,jj}^r(e) + w_{l(e,kk)} a_{ii,kk,jj}^z(e) \right] \\ - Re \sum_{\substack{kk=1 \\ q=l(e,jj)}}^{n_v^e} a_{ii,kk,jj}^r(e) \left[ r_{l(e,kk)}^c - \frac{4}{3} r_{l(e,kk)}^c(t_{n-1}) + \frac{1}{3} r_{l(e,kk)}^c(t_{n-2}) \right] \\ - Re \sum_{\substack{kk=1 \\ q=l(e,jj)}}^{n_v^e} a_{ii,kk,jj}^z(e) \left[ z_{l(e,kk)}^c - \frac{4}{3} z_{l(e,kk)}^c(t_{n-1}) + \frac{1}{3} z_{l(e,kk)}^c(t_{n-2}) \right], \end{array} \tag{4.164}
+\end{equation}
+
+From equation (4.144), we have
+
+\begin{equation}
+\partial_{u_q} M_{e,ii}^{r,1} = \frac{2\Delta_t}{3Ca} \sum_{jj=1}^{n_v^{1,e_1}} \partial_{u_q} \sigma_{l_1^1(e_1,jj)}^1 c_{jj,ii,t_r}(e_1) - \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{1,e_1}} \partial_{u_q} p_{l_1^1(e_1,jj)}^g c_{ii,jj,n_r}(e_1) - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} c_{ii,jj,n_r}^r \partial_{u_q} u_j - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} \partial_{u_q} w_j c_{ii,jj,n_z}^r, \tag{4.165}
+\end{equation}
+
+i.e.
+
+\begin{equation}
+\partial_{u_q} M_{e,ii}^{r,1} = -\frac{2\Delta_t}{3} c_{ii,jj,n_r}^r \big|_{q=l_1(e_1,jj)}. \tag{4.166}
+\end{equation}
+
+From equation (4.145), we have
+
+\begin{equation}
+\begin{array}{l} \partial_{u_q} M_{e,ii}^{r,2} = \frac{2\Delta_t Be}{3} \sum_{jj=1}^{n_v^{2,e_2}} d_{ii,jj,t_r,t_r}(e_2) \partial_{u_q} u_{l_2(e,jj)} + \frac{2\Delta_t Be}{3} \sum_{jj=1}^{n_v^{2,e_2}} d_{ii,jj,t_r,t_z}(e_2) \partial_{u_q} w_{l_2(e,jj)} \\ - \frac{2\Delta_t Be}{3} \sum_{jj=1}^{n_v^{2,e_2}} d_{ii,jj,t_r,t_r}(e_2) \partial_{u_q} u_{l_2^2(e,jj)}^s - \frac{2\Delta_t Be}{3} \sum_{jj=1}^{n_v^{2,e_2}} d_{ii,jj,t_r,t_z}(e_2) \partial_{u_q} w_{l_2^2(e,jj)}^s \\ + \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{2,e_2}} d_{ii,jj,n_r}(e_2) \partial_{u_q} \lambda_{l_2^2(e_2,jj)}^2 - \frac{\Delta_t}{3Ca} \sum_{jj=1}^{n_v^{2,e_2}} d_{ii,jj,t_r}^s(e_2) \partial_{u_q} \sigma_{l_2^2(e_2,jj)}^2 \\ - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} d_{ii,jj,n_r}^r \partial_{u_q} u_j - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} \partial_{u_q} w_j d_{ii,jj,n_z}^r, \end{array} \tag{4.167}
+\end{equation}
+
+i.e.
+
+\begin{equation}
+\partial_{u_q} M_{e,ii}^{r,2} = \frac{2\Delta_t}{3} \left[ Be \, d_{ii,jj,t_r,t_r}(e_2) - d_{ii,jj,n_r}^r(e_2) \right] \big|_{q=l_2(e_2,jj)}. \tag{4.168}
+\end{equation}
+
+From equation (4.146), we have
+
+\begin{equation}
+\begin{array}{l} \partial_{u_q} M_{e,ii}^{r,3} = \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{3,e_3}} \partial_{u_q} \lambda_{l_3^3(e_3,jj)}^3 f_{ii,jj,n_r}(e_3) + \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{3,e_3}} \partial_{u_q} \gamma_{l_3^3(e_3,jj)}^3 f_{ii,jj,t_r}(e_3) \\ - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} f_{ii,jj,n_r}^r \partial_{u_q} u_j - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} \partial_{u_q} w_j f_{ii,jj,n_z}^r \end{array} \tag{4.169}
+\end{equation}
+
+i.e.
+
+\begin{equation}
+\partial_{u_q} M_{e,ii}^{r,3} = -\frac{2\Delta_t}{3} f_{ii,jj,n_r}^r \big|_{q=l_3(e_3,jj)}. \tag{4.170}
+\end{equation}
+
+From equation (4.147), we have
+
+\begin{equation}
+\begin{array}{l} \partial_{u_q} M_{e,ii}^{r,4} = \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{4,e_4}} \partial_{u_q} \lambda_{l_4^4(e_3,jj)}^4 e_{ii,jj,n_r}(e_4) + \frac{2\Delta_t}{3} \sum_{jj=1}^{n_v^{4,e_4}} \partial_{u_q} \gamma_{l_4^4(e_4,jj)}^4 e_{ii,jj,t_r}(e_4) \\ - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} e_{ii,jj,n_r}^r \partial_{u_q} u_j - \frac{2\Delta_t}{3} \sum_{j=1}^{n_v} \partial_{u_q} w_j e_{ii,jj,n_z}^r \end{array} \tag{4.171}
+\end{equation}
+
+i.e.
+
+\begin{equation}
+\partial_{u_q} M_{e,ii}^{r,4} = -\frac{2\Delta_t}{3} e_{ii,jj,n_r}^r \big|_{q=l_4(e_4,jj)}. \tag{4.172}
+\end{equation}

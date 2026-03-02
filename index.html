@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FEM · Dynamic Wetting Equations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/ScrollToPlugin.min.js"></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Progress bar -->
+  <div id="progress-bar">
+    <div id="progress-fill"></div>
+  </div>
+
+  <!-- Header -->
+  <header id="header">
+    <div class="header-left">
+      <span class="logo">FEM</span>
+      <span class="subtitle">Dynamic Wetting · ALE · Navier-Stokes</span>
+    </div>
+    <div class="header-right">
+      <span id="eq-counter">1 / —</span>
+      <button id="btn-toc" title="Table of Contents">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Table of Contents sidebar -->
+  <aside id="toc-panel" class="hidden">
+    <div class="toc-header">
+      <h3>Contents</h3>
+      <button id="btn-toc-close">&times;</button>
+    </div>
+    <nav id="toc-list"></nav>
+  </aside>
+  <div id="toc-overlay" class="hidden"></div>
+
+  <!-- Main equation flow -->
+  <main id="equation-flow">
+    <!-- Equations will be injected here -->
+  </main>
+
+  <!-- Navigation -->
+  <nav id="bottom-nav">
+    <button id="btn-prev" disabled>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div id="timeline">
+      <div id="timeline-track">
+        <div id="timeline-progress"></div>
+      </div>
+      <div id="timeline-dots"></div>
+    </div>
+    <button id="btn-next">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </nav>
+
+  <!-- Back-reference thread line (SVG overlay) -->
+  <svg id="ref-lines" class="ref-lines-svg"></svg>
+
+  <script type="module" src="equations.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
