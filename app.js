@@ -26,6 +26,14 @@ const btnToc        = document.getElementById('btn-toc');
 const btnTocClose   = document.getElementById('btn-toc-close');
 const refLinesSvg   = document.getElementById('ref-lines');
 
+// Comparison panel
+const comparePanel   = document.getElementById('compare-panel');
+const compareOverlay = document.getElementById('compare-overlay');
+const compareLeft    = document.getElementById('compare-left');
+const compareRight   = document.getElementById('compare-right');
+const btnCompareClose = document.getElementById('btn-compare-close');
+const btnCompareGoto  = document.getElementById('btn-compare-goto');
+
 // ---- Wait for KaTeX to load ----
 function waitForKatex() {
   return new Promise(resolve => {
@@ -93,7 +101,7 @@ function renderEquation(eq, idx) {
       link.className = 'eq-ref-link';
       link.textContent = `(${refId})`;
       link.title = refEq ? refEq.label : `Equation ${refId}`;
-      link.addEventListener('click', () => highlightReference(refId));
+      link.addEventListener('click', (e) => { e.stopPropagation(); openComparison(eq, refId); });
       link.addEventListener('mouseenter', () => showRefLine(eq.id, refId));
       link.addEventListener('mouseleave', () => hideRefLines());
       refDiv.appendChild(link);
@@ -339,31 +347,73 @@ function closeTOC() {
   tocOverlay.classList.add('hidden');
 }
 
-// ---- Back-reference highlight ----
+// ---- Side-by-side comparison panel ----
+let compareTargetId = null;
+
+function openComparison(currentEq, refId) {
+  const refEq = equations.find(e => e.id === refId);
+  if (!refEq) return;
+  compareTargetId = refId;
+
+  // Fill left side (current equation)
+  fillCompareCard(compareLeft, currentEq, 'Current');
+  // Fill right side (referenced equation)
+  fillCompareCard(compareRight, refEq, 'Derives from');
+
+  // Arrow label
+  const arrowLabel = comparePanel.querySelector('.compare-arrow-label');
+  arrowLabel.textContent = 'builds on';
+
+  // Show panel
+  comparePanel.classList.remove('hidden');
+  compareOverlay.classList.remove('hidden');
+  requestAnimationFrame(() => {
+    comparePanel.classList.add('visible');
+    compareOverlay.classList.add('visible');
+  });
+}
+
+function fillCompareCard(container, eq, badgeText) {
+  const badge = container.querySelector('.compare-badge');
+  badge.textContent = badgeText;
+  badge.className = 'compare-badge' + (badgeText !== 'Current' ? ' ref' : '');
+
+  container.querySelector('.compare-eq-number').textContent = `(${eq.id})`;
+  container.querySelector('.compare-eq-label').textContent = eq.label || '';
+  container.querySelector('.compare-eq-desc').textContent = eq.description || '';
+
+  const mathDiv = container.querySelector('.compare-eq-math');
+  mathDiv.innerHTML = '';
+  try {
+    katex.render(eq.latex, mathDiv, {
+      displayMode: true,
+      throwOnError: false,
+      trust: true,
+      strict: false,
+    });
+  } catch (e) {
+    mathDiv.textContent = eq.latex;
+  }
+}
+
+function closeComparison() {
+  comparePanel.classList.remove('visible');
+  compareOverlay.classList.remove('visible');
+  setTimeout(() => {
+    comparePanel.classList.add('hidden');
+    compareOverlay.classList.add('hidden');
+  }, 400);
+  compareTargetId = null;
+}
+
+// ---- Back-reference highlight (for hover) ----
 function highlightReference(refId) {
   clearReferenceHighlight();
-
   const refCard = document.getElementById(`eq-${refId}`);
   if (!refCard) return;
-
   state.activeRef = refId;
   refCard.classList.add('referenced');
   refCard.classList.remove('faded');
-
-  // Scroll to the referenced equation
-  refCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-  // After a delay, scroll back to current and clear highlight
-  setTimeout(() => {
-    const currentCard = document.getElementById(`eq-${equations[state.currentIdx].id}`);
-    if (currentCard) {
-      currentCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-    // Keep the highlight visible for a moment after scrolling back
-    setTimeout(() => {
-      clearReferenceHighlight();
-    }, 1500);
-  }, 2000);
 }
 
 function clearReferenceHighlight() {
@@ -431,6 +481,7 @@ document.addEventListener('keydown', (e) => {
     e.preventDefault();
     prev();
   } else if (e.key === 'Escape') {
+    closeComparison();
     closeTOC();
     clearReferenceHighlight();
   }
@@ -442,6 +493,17 @@ btnPrev.addEventListener('click', prev);
 btnToc.addEventListener('click', openTOC);
 btnTocClose.addEventListener('click', closeTOC);
 tocOverlay.addEventListener('click', closeTOC);
+
+// Comparison panel
+btnCompareClose.addEventListener('click', closeComparison);
+compareOverlay.addEventListener('click', closeComparison);
+btnCompareGoto.addEventListener('click', () => {
+  if (compareTargetId) {
+    const idx = equations.findIndex(e => e.id === compareTargetId);
+    if (idx >= 0) goTo(idx);
+  }
+  closeComparison();
+});
 
 // ---- Scroll wheel navigation (optional) ----
 let scrollTimeout = null;

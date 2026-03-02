@@ -68,6 +68,41 @@
   <!-- Back-reference thread line (SVG overlay) -->
   <svg id="ref-lines" class="ref-lines-svg"></svg>
 
+  <!-- Comparison panel (side-by-side view) -->
+  <div id="compare-overlay" class="hidden"></div>
+  <div id="compare-panel" class="hidden">
+    <div class="compare-header">
+      <span class="compare-title">Comparing Equations</span>
+      <button id="btn-compare-close">&times;</button>
+    </div>
+    <div class="compare-body">
+      <div class="compare-card" id="compare-left">
+        <div class="compare-badge">Current</div>
+        <div class="compare-eq-number"></div>
+        <div class="compare-eq-label"></div>
+        <div class="compare-eq-math"></div>
+        <div class="compare-eq-desc"></div>
+      </div>
+      <div class="compare-arrow">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+        <span class="compare-arrow-label"></span>
+      </div>
+      <div class="compare-card" id="compare-right">
+        <div class="compare-badge ref">Derives from</div>
+        <div class="compare-eq-number"></div>
+        <div class="compare-eq-label"></div>
+        <div class="compare-eq-math"></div>
+        <div class="compare-eq-desc"></div>
+      </div>
+    </div>
+    <div class="compare-footer">
+      <button id="btn-compare-goto" class="compare-goto-btn">Jump to this equation</button>
+    </div>
+  </div>
+
   <script type="module" src="equations.js"></script>
   <script type="module" src="app.js"></script>
 </body>
