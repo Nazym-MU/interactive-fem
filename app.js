@@ -2,7 +2,10 @@
 // FEM Dynamic Wetting · Main Application Engine
 // ============================================================
 
-import { equations, sections } from './equations.js';
+import { equations as allEquations, sections } from './equations.js';
+
+// Filter out equations that shouldn't appear in the main flow (like jacobian entries)
+const equations = allEquations.filter(e => !e.hidden);
 
 // ---- State ----
 const state = {
@@ -29,8 +32,8 @@ const refLinesSvg   = document.getElementById('ref-lines');
 // Comparison panel
 const comparePanel   = document.getElementById('compare-panel');
 const compareOverlay = document.getElementById('compare-overlay');
-const compareLeft    = document.getElementById('compare-left');
-const compareRight   = document.getElementById('compare-right');
+const compareTop     = document.getElementById('compare-top');
+const compareBottom  = document.getElementById('compare-bottom');
 const btnCompareClose = document.getElementById('btn-compare-close');
 const btnCompareGoto  = document.getElementById('btn-compare-goto');
 
@@ -69,16 +72,86 @@ function renderEquation(eq, idx) {
   // Math
   const mathDiv = document.createElement('div');
   mathDiv.className = 'eq-math';
+  
+  let renderLatex = eq.latex;
+  if (eq.id === '18.1' || eq.id === '18.37') {
+    const jacobianMap = {
+      '\\partial_u \\hat{M}^r': '18.2', '\\partial_w \\hat{M}^r': '18.3', '\\partial_p \\hat{M}^r': '18.4', '\\partial_{\\omega^2} \\hat{M}^r': '18.5', '\\partial_h \\hat{M}^r': '18.8',
+      '\\partial_u \\hat{M}^z': '18.9', '\\partial_w \\hat{M}^z': '18.10', '\\partial_p \\hat{M}^z': '18.11', '\\partial_{\\omega^2} \\hat{M}^z': '18.12', '\\partial_{\\omega^3} \\hat{M}^z': '18.13', '\\partial_{\\epsilon^3} \\hat{M}^z': '18.14', '\\partial_h \\hat{M}^z': '18.15',
+      '\\partial_u \\hat{C}': '18.16', '\\partial_w \\hat{C}': '18.17', '\\partial_p \\hat{C}': '18.18', '\\partial_h \\hat{C}': '18.22',
+      '\\partial_u \\hat{K}': '18.23', '\\partial_w \\hat{K}': '18.24', '\\partial_p \\hat{K}': '18.25', '\\partial_h \\hat{K}': '18.29',
+      '\\partial_u \\hat{I}': '18.30', '\\partial_w \\hat{I}': '18.31', '\\partial_p \\hat{I}': '18.32', '\\partial_h \\hat{I}': '18.36'
+    };
+    for (const [key, id] of Object.entries(jacobianMap)) {
+      renderLatex = renderLatex.replace(key, `\\htmlId{jacob-${id}}{\\htmlClass{jacob-link}{${key}}}`);
+    }
+  }
+
   try {
-    katex.render(eq.latex, mathDiv, {
+    katex.render(renderLatex, mathDiv, {
       displayMode: true,
       throwOnError: false,
       trust: true,
       strict: false,
+      macros: {
+        "\\dt": "\\Delta_t",
+        "\\ca": "Ca",
+        "\\re": "Re",
+        "\\st": "St",
+        "\\be": "Be",
+        "\\es": "Es",
+        "\\cg": "Cg",
+        "\\cs": "Cs",
+        "\\omeg": "\\partial",
+        "\\vphi": "\\phi",
+        "\\vpsi": "\\psi",
+        "\\sigt": "\\sigma",
+        "\\eps": "\\varepsilon",
+        "\\gaml": "\\gamma",
+        "\\lam": "\\lambda",
+        "\\mcal": "\\mathcal",
+        "\\bfl": "\\boldsymbol{l}",
+        "\\bfn": "\\boldsymbol{n}",
+        "\\bft": "\\boldsymbol{t}",
+        "\\bfP": "\\boldsymbol{P}",
+        "\\bfu": "\\boldsymbol{u}",
+        "\\bfv": "\\boldsymbol{v}",
+        "\\bfc": "\\boldsymbol{c}",
+        "\\bfg": "\\boldsymbol{g}",
+        "\\bfhat": "\\hat{\\boldsymbol{#1}}",
+        "\\nablas": "\\nabla^s",
+        "\\nablasdot": "\\nabla^s \\cdot",
+        "\\pa": "\\partial",
+        "\\tf": "\\tilde",
+        "\\ov": "\\overline",
+        "\\un": "\\underline",
+        "\\del": "\\partial"
+      }
     });
   } catch (e) {
-    mathDiv.textContent = eq.latex;
+    mathDiv.textContent = renderLatex;
   }
+
+  // Attach event listeners for jacobian matrix items if any
+  if (eq.id === '18.1' || eq.id === '18.37') {
+    setTimeout(() => {
+      const links = mathDiv.querySelectorAll('[id^="jacob-"]');
+      links.forEach(link => {
+        const targetId = link.id.replace('jacob-', '');
+        if (targetId) {
+          link.classList.add('jacob-link-item');
+          link.style.cursor = 'pointer';
+          link.title = `View equation ${targetId}`;
+          link.addEventListener('click', (e) => {
+            e.stopPropagation();
+            // Show the matrix in Current, and the block in Derives From
+            openComparison(eq, targetId);
+          });
+        }
+      });
+    }, 0);
+  }
+
   card.appendChild(mathDiv);
 
   // Description
@@ -96,7 +169,7 @@ function renderEquation(eq, idx) {
     refDiv.style.marginTop = '10px';
     refDiv.innerHTML = '<span style="color:var(--fg-faint); font-size:0.75rem; font-family:var(--font-sans);">Builds on: </span>';
     eq.references.forEach((refId, i) => {
-      const refEq = equations.find(e => e.id === refId);
+      const refEq = allEquations.find(e => e.id === refId);
       const link = document.createElement('span');
       link.className = 'eq-ref-link';
       link.textContent = `(${refId})`;
@@ -351,18 +424,18 @@ function closeTOC() {
 let compareTargetId = null;
 
 function openComparison(currentEq, refId) {
-  const refEq = equations.find(e => e.id === refId);
+  const refEq = allEquations.find(e => e.id === refId);
   if (!refEq) return;
   compareTargetId = refId;
 
-  // Fill left side (current equation)
-  fillCompareCard(compareLeft, currentEq, 'Current');
-  // Fill right side (referenced equation)
-  fillCompareCard(compareRight, refEq, 'Derives from');
+  // Fill top side (referenced equation, older)
+  fillCompareCard(compareTop, refEq, 'Derives from');
+  // Fill bottom side (current equation, newer)
+  fillCompareCard(compareBottom, currentEq, 'Current');
 
   // Arrow label
   const arrowLabel = comparePanel.querySelector('.compare-arrow-label');
-  arrowLabel.textContent = 'builds on';
+  arrowLabel.textContent = 'builds to';
 
   // Show panel
   comparePanel.classList.remove('hidden');
@@ -500,7 +573,13 @@ compareOverlay.addEventListener('click', closeComparison);
 btnCompareGoto.addEventListener('click', () => {
   if (compareTargetId) {
     const idx = equations.findIndex(e => e.id === compareTargetId);
-    if (idx >= 0) goTo(idx);
+    if (idx >= 0) {
+      goTo(idx);
+    } else {
+      // If hidden jacobian entry, jump to the matrix
+      const matrixIdx = equations.findIndex(e => e.id === '18.37' || e.id === '18.1');
+      if (matrixIdx >= 0) goTo(matrixIdx);
+    }
   }
   closeComparison();
 });

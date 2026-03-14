@@ -193,7 +193,7 @@ body {
 
 /* ---- Main equation flow ---- */
 #equation-flow {
-  max-width: 720px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 100px 24px 60px;
 }
@@ -253,16 +253,16 @@ body {
 
 /* Equation label / title */
 .eq-label {
-  font-family: var(--font-serif);
-  font-size: 0.92rem;
-  color: var(--fg-muted);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--fg);
   margin-bottom: 12px;
-  font-style: italic;
 }
 
 /* Math container */
 .eq-math {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   overflow-x: auto;
   padding: 8px 0;
   text-align: center;
@@ -556,8 +556,8 @@ body {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%) translateY(100%);
-  width: min(96vw, 1100px);
-  max-height: 85vh;
+  width: min(96vw, 1400px);
+  max-height: 95vh;
   z-index: 300;
   background: var(--surface);
   border: 1px solid var(--border);
@@ -606,8 +606,9 @@ body {
 
 .compare-body {
   display: flex;
+  flex-direction: column;
   align-items: stretch;
-  gap: 0;
+  gap: 12px;
   padding: 24px;
   overflow-y: auto;
   flex: 1;
@@ -650,10 +651,10 @@ body {
   margin-top: 4px;
 }
 .compare-eq-label {
-  font-family: var(--font-serif);
-  font-size: 0.9rem;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.95rem;
   color: var(--fg);
-  font-style: italic;
 }
 .compare-eq-math {
   font-size: 1.05rem;
@@ -673,16 +674,16 @@ body {
 
 .compare-arrow {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 0 16px;
+  padding: 8px 0;
   color: var(--fg-faint);
   flex-shrink: 0;
 }
 .compare-arrow svg {
-  transform: rotate(180deg);
+  /* removed rotation */
 }
 .compare-arrow-label {
   font-size: 0.65rem;
@@ -690,8 +691,8 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--fg-faint);
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
+  writing-mode: horizontal-tb;
+  text-orientation: initial;
 }
 
 .compare-footer {
@@ -718,25 +719,20 @@ body {
   border-color: var(--accent);
 }
 
-/* Responsive: stack vertically on narrow screens */
+/* Responsive: vertical is default now */
 @media (max-width: 700px) {
-  .compare-body {
-    flex-direction: column;
-    gap: 12px;
-  }
-  .compare-arrow {
-    flex-direction: row;
-    padding: 8px 0;
-    writing-mode: horizontal-tb;
-  }
-  .compare-arrow svg {
-    transform: rotate(-90deg);
-  }
-  .compare-arrow-label {
-    writing-mode: horizontal-tb;
-    text-orientation: initial;
-  }
   #compare-panel {
     max-height: 92vh;
   }
 }
+
+.jacob-link-item {
+  transition: all 0.2s ease;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+.jacob-link-item:hover {
+  background: var(--accent-glow);
+  color: var(--accent);
+}
+

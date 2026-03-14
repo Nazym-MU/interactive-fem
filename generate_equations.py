@@ -8,12 +8,23 @@ with open('fem.tex', 'r') as f:
     tex = f.read()
 
 # ─── Extract section structure ───
-section_pattern = re.compile(r'\\(section|subsection|subsubsection)\{([^}]+)\}')
+section_pattern = re.compile(r'\\(section|subsection|subsubsection)\{((?:[^{}]|\{[^{}]*\})+)\}')
 sections_raw = []
 for m in section_pattern.finditer(tex):
     title = m.group(2).strip()
     title = re.sub(r'\\\(([^)]*)\\\)', r'\1', title)
-    title = title.replace(r'\(', '').replace(r'\)', '')
+    title = title.replace(r'\(', '').replace(r'\)', '').replace('$', '')
+    # Textual replacements for math commands in title
+    title = title.replace(r'\mathcal{M}', 'M')
+    title = title.replace(r'\mathcal{C}', 'C')
+    title = title.replace(r'\mathcal{S}', 'S')
+    title = title.replace(r'\mathcal{I}', 'I')
+    title = title.replace(r'\mathcal{K}', 'K')
+    title = title.replace(r'\dt', 'dt')
+    title = title.replace(r'\ca', 'Ca')
+    title = title.replace(r'\cM', 'M')
+    title = title.replace('\\', '')
+    title = title.replace('{', '').replace('}', '')
     sections_raw.append({
         'level': m.group(1),
         'title': title,
@@ -21,33 +32,56 @@ for m in section_pattern.finditer(tex):
     })
 
 # ─── Extract all equations ───
-eq_pattern = re.compile(
-    r'\\begin\{equation\}\s*(.*?)\s*\\end\{equation\}',
+env_pattern = re.compile(
+    r'\\begin\{(equation|align)\}\s*(.*?)\s*\\end\{\1\}',
     re.DOTALL
 )
 
+def _repl_space(m):
+    return ' ' * (m.end() - m.start())
+
+tex_clean = re.sub(r'\\begin\{[^}]*\}.*?\\end\{[^}]*\}', _repl_space, tex, flags=re.DOTALL)
+tex_clean = re.sub(r'\\\[.*?\\\]', _repl_space, tex_clean, flags=re.DOTALL)
+tex_clean = re.sub(r'\$\$.*?\$\$', _repl_space, tex_clean, flags=re.DOTALL)
+
 raw_equations = []
-for m in eq_pattern.finditer(tex):
-    body = m.group(1).strip()
-    tag_m = re.search(r'\\tag\{([^}]+)\}', body)
-    if not tag_m:
-        continue
-    tag = tag_m.group(1).strip()
-    latex = body[:tag_m.start()].strip()
+for m in env_pattern.finditer(tex):
+    env_type = m.group(1)
+    body = m.group(2).strip()
     
     start_pos = m.start()
     end_pos = m.end()
-    context_before = tex[max(0, start_pos - 600):start_pos]
-    context_after = tex[end_pos:end_pos + 300]
-    
-    raw_equations.append({
-        'tag': tag,
-        'latex_raw': latex,
-        'pos': start_pos,
-        'end_pos': end_pos,
-        'context_before': context_before,
-        'context_after': context_after,
-    })
+    context_before = tex_clean[max(0, start_pos - 600):start_pos]
+    context_after = tex_clean[end_pos:end_pos + 600]
+
+    tags = list(re.finditer(r'\\tag\{([^}]+)\}', body))
+    if not tags:
+        continue
+
+    last_index = 0
+    for i, tag_m in enumerate(tags):
+        tag = tag_m.group(1).strip()
+        chunk = body[last_index:tag_m.start()].strip()
+
+        # Clean up chunk boundaries
+        chunk = re.sub(r'\\nonumber\s*\\\\', '', chunk).strip()
+        chunk = re.sub(r'^\\\\', '', chunk).strip()
+        chunk = re.sub(r'\\nonumber$', '', chunk).strip()
+
+        if env_type == 'align':
+            latex = '\\begin{aligned}\n' + chunk + '\n\\end{aligned}'
+        else:
+            latex = chunk
+
+        raw_equations.append({
+            'tag': tag,
+            'latex_raw': latex,
+            'pos': start_pos, # keep original for context
+            'end_pos': end_pos,
+            'context_before': context_before,
+            'context_after': context_after,
+        })
+        last_index = tag_m.end()
 
 # ─── KaTeX conversion ───
 def convert_to_katex(latex):
@@ -128,12 +162,12 @@ for eq in raw_equations:
 
 # ─── Extract description from context ───
 def extract_description(ctx):
-    text = ctx
+    # ctx is already stripped of block math environments
+    text = ctx[-2000:] # only take the last 2000 chars
+
     # Remove inline math
     text = re.sub(r'\\\(.*?\\\)', '', text)
     text = re.sub(r'\$.*?\$', '', text)
-    # Remove environments
-    text = re.sub(r'\\begin\{[^}]*\}.*?\\end\{[^}]*\}', '', text, flags=re.DOTALL)
     # Remove LaTeX commands with arguments
     text = re.sub(r'\\[a-zA-Z]+\*?\{[^}]*\}', '', text)
     # Remove standalone LaTeX commands
@@ -147,12 +181,12 @@ def extract_description(ctx):
     # Collapse whitespace
     text = re.sub(r'\s+', ' ', text).strip()
     # Split into sentences
-    sentences = [s.strip() for s in re.split(r'(?<=[.;:])\s+', text) if len(s.strip()) > 20]
+    sentences = [s.strip() for s in re.split(r'(?<=[.;:!])\s+', text) if len(s.strip()) > 20]
     # Take the last sentence that looks like prose (has some letters)
     for s in reversed(sentences):
         # Must be mostly alphabetic
         alpha = sum(1 for c in s if c.isalpha())
-        if alpha < len(s) * 0.4:
+        if alpha < len(s) * 0.7:  # Stricter requirement to avoid math-only strings like Hii nr2 + [ 4Ca Es + Be ] 2,f
             continue
         desc = s.rstrip('.;:, ')
         desc = re.sub(r'^[^A-Za-z]*', '', desc)
@@ -565,6 +599,9 @@ for eq in raw_equations:
     latex = js_escape(eq['latex'])
     section_id = eq['section_id']
     
+    # Hide individual jacobian block equations from main flow
+    hidden = 'true' if (tag.startswith('18.') and tag not in ['18.1', '18.37']) else 'false'
+    
     lines.append('  {')
     lines.append(f"    id: '{tag}',")
     lines.append(f"    section: '{section_id}',")
@@ -573,6 +610,7 @@ for eq in raw_equations:
     lines.append(f"    description: {desc},")
     lines.append(f"    references: {refs},")
     lines.append(f"    transform: {transform_str},")
+    lines.append(f"    hidden: {hidden},")
     lines.append('  },')
 
 lines.append('];')
