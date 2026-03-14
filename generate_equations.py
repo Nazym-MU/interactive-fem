@@ -541,7 +541,29 @@ ref_overrides = {
 # ─── Apply overrides and build ───
 for eq in raw_equations:
     tag = eq['tag']
-    eq['label'] = label_overrides.get(tag, f'Equation {tag}')
+    if tag in label_overrides:
+        eq['label'] = label_overrides[tag]
+    else:
+        # Try to infer label from partial derivative for Jacobian components
+        # e.g., \partial_{w_q}\mathcal{M}_{e,ii}^{r,0b}
+        clean_latex = re.sub(r'\\begin\{aligned\}|\\end\{aligned\}|\\begin\{equation\}|\\end\{equation\}', '', eq['latex_raw']).strip()
+        clean_latex = clean_latex.replace('&', '')  # Remove any alignment & characters
+        m = re.search(r'^\\partial_\{([^\}]+)\}(?:\\mathcal|\\hat)\{?([A-Za-z]+)\}?_?\{?[^\}^=]*\}?\^?\{?([^\}^=]*)\}?', clean_latex.replace(' ', ''))
+        if m:
+            var = m.group(1).replace('_q', '')
+            # Convert greek letters to unicode for better readability
+            var = var.replace('\\sigma', 'σ').replace('\\lambda', 'λ').replace('\\gamma', 'γ').replace('\\omega', 'ω').replace('\\varpi', 'ω').replace('\\varepsilon', 'ε').replace('\\epsilon', 'ε')
+            var = var.replace('\\', '')
+            
+            sym = m.group(2)
+            sup = m.group(3)
+            if sup:
+                eq['label'] = f"∂{sym}^{{{sup}}}/∂{var}"
+            else:
+                eq['label'] = f"∂{sym}/∂{var}"
+        else:
+            eq['label'] = f'Equation {tag}'
+
     eq['latex'] = convert_to_katex(eq['latex_raw'])
     if tag in ref_overrides:
         eq['references'] = ref_overrides[tag]

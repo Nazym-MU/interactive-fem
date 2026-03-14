@@ -47,6 +47,41 @@ function waitForKatex() {
   });
 }
 
+const latexMacros = {
+  "\\dt": "\\Delta_t",
+  "\\ca": "Ca",
+  "\\re": "Re",
+  "\\st": "St",
+  "\\be": "Be",
+  "\\es": "Es",
+  "\\cg": "Cg",
+  "\\cs": "Cs",
+  "\\omeg": "\\partial",
+  "\\vphi": "\\phi",
+  "\\vpsi": "\\psi",
+  "\\sigt": "\\sigma",
+  "\\eps": "\\varepsilon",
+  "\\gaml": "\\gamma",
+  "\\lam": "\\lambda",
+  "\\mcal": "\\mathcal",
+  "\\bfl": "\\boldsymbol{l}",
+  "\\bfn": "\\boldsymbol{n}",
+  "\\bft": "\\boldsymbol{t}",
+  "\\bfP": "\\boldsymbol{P}",
+  "\\bfu": "\\boldsymbol{u}",
+  "\\bfv": "\\boldsymbol{v}",
+  "\\bfc": "\\boldsymbol{c}",
+  "\\bfg": "\\boldsymbol{g}",
+  "\\bfhat": "\\hat{\\boldsymbol{#1}}",
+  "\\nablas": "\\nabla^s",
+  "\\nablasdot": "\\nabla^s \\cdot",
+  "\\pa": "\\partial",
+  "\\tf": "\\tilde",
+  "\\ov": "\\overline",
+  "\\un": "\\underline",
+  "\\del": "\\partial"
+};
+
 // ---- Render a single equation card ----
 function renderEquation(eq, idx) {
   const card = document.createElement('div');
@@ -93,40 +128,7 @@ function renderEquation(eq, idx) {
       throwOnError: false,
       trust: true,
       strict: false,
-      macros: {
-        "\\dt": "\\Delta_t",
-        "\\ca": "Ca",
-        "\\re": "Re",
-        "\\st": "St",
-        "\\be": "Be",
-        "\\es": "Es",
-        "\\cg": "Cg",
-        "\\cs": "Cs",
-        "\\omeg": "\\partial",
-        "\\vphi": "\\phi",
-        "\\vpsi": "\\psi",
-        "\\sigt": "\\sigma",
-        "\\eps": "\\varepsilon",
-        "\\gaml": "\\gamma",
-        "\\lam": "\\lambda",
-        "\\mcal": "\\mathcal",
-        "\\bfl": "\\boldsymbol{l}",
-        "\\bfn": "\\boldsymbol{n}",
-        "\\bft": "\\boldsymbol{t}",
-        "\\bfP": "\\boldsymbol{P}",
-        "\\bfu": "\\boldsymbol{u}",
-        "\\bfv": "\\boldsymbol{v}",
-        "\\bfc": "\\boldsymbol{c}",
-        "\\bfg": "\\boldsymbol{g}",
-        "\\bfhat": "\\hat{\\boldsymbol{#1}}",
-        "\\nablas": "\\nabla^s",
-        "\\nablasdot": "\\nabla^s \\cdot",
-        "\\pa": "\\partial",
-        "\\tf": "\\tilde",
-        "\\ov": "\\overline",
-        "\\un": "\\underline",
-        "\\del": "\\partial"
-      }
+      macros: latexMacros
     });
   } catch (e) {
     mathDiv.textContent = renderLatex;
@@ -184,6 +186,16 @@ function renderEquation(eq, idx) {
     });
     card.appendChild(refDiv);
   }
+
+  // Make the entire card clickable to jump to it
+  card.style.cursor = 'pointer';
+  card.title = 'Click to focus this equation';
+  card.addEventListener('click', (e) => {
+    // Only go to if they didn't click on a ref link or jacobian link
+    if (!e.target.closest('.eq-ref-link') && !e.target.closest('.jacob-link-item')) {
+      goTo(idx);
+    }
+  });
 
   return card;
 }
@@ -463,6 +475,7 @@ function fillCompareCard(container, eq, badgeText) {
       throwOnError: false,
       trust: true,
       strict: false,
+      macros: latexMacros
     });
   } catch (e) {
     mathDiv.textContent = eq.latex;

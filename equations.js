@@ -2350,7 +2350,7 @@ export const equations = [
   {
     id: '4.173',
     section: 'derivatives_of_m_i_r_with_respect_to_w_q',
-    label: "Equation 4.173",
+    label: "\u2202M^{r}/\u2202w",
     latex: String.raw`\partial_{w_q}\mathcal{M}_i^r =
 \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{w_q} \left( \mathcal{M}_{e,ii}^{r,0a} + \mathcal{M}_{e,ii}^{r,0b} + \mathcal{M}_{e,ii}^{r,0c} + \mathcal{M}_{e,ii}^{r,0d} \right)
 + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{\bar{n}_{el}^1} \partial_{w_q} \mathcal{M}_{e_1,ii}^{r,1}
@@ -2367,7 +2367,7 @@ export const equations = [
   {
     id: '4.174',
     section: 'derivatives_of_m_i_r_with_respect_to_w_q',
-    label: "Equation 4.174",
+    label: "\u2202M^{r}/\u2202w",
     latex: String.raw`\partial_{w_q}\mathcal{M}_i^r =
 \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{w_q}\mathcal{M}_{e,ii}^{r,0b}
 + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{w_q}\mathcal{M}_{e,ii}^{r,0c}
@@ -2383,7 +2383,7 @@ export const equations = [
   {
     id: '4.175',
     section: 'derivatives_of_m_i_r_with_respect_to_w_q',
-    label: "Equation 4.175",
+    label: "\u2202M^{r,0b}/\u2202w",
     latex: String.raw`\begin{aligned}
 \partial_{w_q}\mathcal{M}_{e,ii}^{r,0b} &= \frac{2\dt}{3} \sum_{jj=1}^{n_v^e} a_{ii,jj}^{r,r}(e) \partial_{w_q} u_{l(e,jj)}
 + \frac{2\dt}{3} \sum_{jj=1}^{n_v^e} a_{ii,jj}^{z,z}(e) \partial_{w_q} u_{l(e,jj)}
@@ -2399,7 +2399,7 @@ export const equations = [
   {
     id: '4.176',
     section: 'derivatives_of_m_i_r_with_respect_to_w_q',
-    label: "Equation 4.176",
+    label: "\u2202M^{r,0b}/\u2202w",
     latex: String.raw`\partial_{w_q}\mathcal{M}_{e,ii}^{r,0b} = 0`,
     description: "",
     references: ["4.141"],
@@ -2409,7 +2409,7 @@ export const equations = [
   {
     id: '4.177',
     section: 'derivatives_of_m_i_r_with_respect_to_w_q',
-    label: "Equation 4.177",
+    label: "\u2202M^{r,0c}/\u2202w",
     latex: String.raw`\begin{aligned}
 \partial_{w_q}\mathcal{M}_{e,ii}^{r,0c} &= \frac{2\dt Re}{3} \partial_{w_q} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} u_{l(e,kk)} a_{ii,kk,jj}^r(e)
 &\quad + \frac{2\dt Re}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} a_{ii,kk,jj}^r(e) \partial_{w_q} w_{l(e,kk)}
@@ -2428,7 +2428,7 @@ export const equations = [
   {
     id: '4.178',
     section: 'derivatives_of_m_i_r_with_respect_to_w_q',
-    label: "Equation 4.178",
+    label: "\u2202M^{r,0c}/\u2202w",
     latex: String.raw`\partial_{w_q}\mathcal{M}_{e,ii}^{r,0c} = \sum_{kk=1}^{n_v^e} \frac{2\dt Re}{3} u_{l(e,jj)} a_{ii,kk,jj}^r(e)`,
     description: "",
     references: [],
@@ -2438,7 +2438,7 @@ export const equations = [
   {
     id: '4.179',
     section: 'derivatives_of_m_i_r_with_respect_to_w_q',
-    label: "Equation 4.179",
+    label: "\u2202M^{r,1}/\u2202w",
     latex: String.raw`\begin{aligned}
 \partial_{w_q}\mathcal{M}_{e_1,ii}^{r,1} &= \frac{2\dt}{3\ca} \sum_{jj=1}^{n_v^{1,e_1}} \partial_{w_q} \sigma_{l_1(e_1,jj)}^1 e_{jj,ii,t_r}(e_1)
 - \frac{2\dt}{3} \sum_{jj=1}^{n_v^{1,e_1}} \partial_{w_q} p_{l_1(e_1,jj)}^1 c_{ii,jj,n_r}(e_1)
@@ -2453,7 +2453,7 @@ export const equations = [
   {
     id: '4.180',
     section: 'derivatives_of_m_i_r_with_respect_to_w_q',
-    label: "Equation 4.180",
+    label: "\u2202M^{r,1}/\u2202w",
     latex: String.raw`\partial_{w_q}\mathcal{M}_{e_1,ii}^{r,1} = -\frac{2\dt}{3} c_{ii,jj,n_r}^r \big|_{q=l_1(e_1,jj)}`,
     description: "",
     references: ["4.145"],
@@ -2463,7 +2463,7 @@ export const equations = [
   {
     id: '4.181',
     section: 'derivatives_of_m_i_r_with_respect_to_w_q',
-    label: "Equation 4.181",
+    label: "\u2202M^{r,2}/\u2202w",
     latex: String.raw`\begin{aligned}
 \partial_{w_q}\mathcal{M}_{e_2,ii}^{r,2} &= \frac{2\dt Be}{3} \sum_{jj=1}^{n_v^{2,e_2}} d_{ii,jj,t_r,t_r}(e_2) \partial_{w_q} u_{l_2(e_2,jj)}
 + \frac{2\dt Be}{3} \sum_{jj=1}^{n_v^{2,e_2}} d_{ii,jj,t_r,t_z}(e_2) \partial_{w_q} w_{l_2(e_2,jj)}
@@ -2482,7 +2482,7 @@ export const equations = [
   {
     id: '4.182',
     section: 'derivatives_of_m_i_r_with_respect_to_w_q',
-    label: "Equation 4.182",
+    label: "\u2202M^{r,2}/\u2202w",
     latex: String.raw`\partial_{w_q}\mathcal{M}_{e_2,ii}^{r,2} = \frac{2\dt}{3} \left( Be\, d_{ii,jj,t_r,t_z}(e_2) - d_{ii,jj,n_z}^r \right) \big|_{q=l_2(e_2,jj)}`,
     description: "",
     references: [],
@@ -2492,7 +2492,7 @@ export const equations = [
   {
     id: '4.183',
     section: 'derivatives_of_m_i_r_with_respect_to_w_q',
-    label: "Equation 4.183",
+    label: "\u2202M^{r,3}/\u2202w",
     latex: String.raw`\begin{aligned}
 \partial_{w_q}\mathcal{M}_{e_3,ii}^{r,3} &= \frac{2\dt}{3} \sum_{jj=1}^{n_v^{3,e_3}} \partial_{w_q} \varpi_{l_3(e_3,jj)}^3 f_{ii,jj,n_r}(e_3)
 + \frac{2\dt}{3} \sum_{jj=1}^{n_v^{3,e_3}} \partial_{w_q} \varrho_{l_3(e_3,jj)}^3 f_{ii,jj,t_r}(e_3)
@@ -2507,7 +2507,7 @@ export const equations = [
   {
     id: '4.184',
     section: 'derivatives_of_m_i_r_with_respect_to_w_q',
-    label: "Equation 4.184",
+    label: "\u2202M^{r,3}/\u2202w",
     latex: String.raw`\partial_{w_q}\mathcal{M}_{e_3,ii}^{r,3} = -\frac{2\dt}{3} f_{ii,jj,n_z}^r \big|_{q=l_3(e_3,jj)}`,
     description: "",
     references: ["4.146"],
@@ -2517,7 +2517,7 @@ export const equations = [
   {
     id: '4.185',
     section: 'derivatives_of_m_i_r_with_respect_to_w_q',
-    label: "Equation 4.185",
+    label: "\u2202M^{r,4}/\u2202w",
     latex: String.raw`\begin{aligned}
 \partial_{w_q}\mathcal{M}_{e_4,ii}^{r,4} &= \frac{2\dt}{3} \sum_{jj=1}^{n_v^{4,e_4}} \partial_{w_q} \varpi_{l_4(e_4,jj)}^4 e_{ii,jj,n_r}(e_4)
 + \frac{2\dt}{3} \sum_{jj=1}^{n_v^{4,e_4}} \partial_{w_q} \varrho_{l_4(e_4,jj)}^4 e_{ii,jj,t_r}(e_4)
@@ -2532,7 +2532,7 @@ export const equations = [
   {
     id: '4.186',
     section: 'derivatives_of_m_i_r_with_respect_to_w_q',
-    label: "Equation 4.186",
+    label: "\u2202M^{r,4}/\u2202w",
     latex: String.raw`\partial_{w_q}\mathcal{M}_{e_4,ii}^{r,4} = -\frac{2\dt}{3} e_{ii,jj,n_z}^r \big|_{q=l_4(e_4,jj)}`,
     description: "",
     references: [],
@@ -2542,7 +2542,7 @@ export const equations = [
   {
     id: '4.187',
     section: 'derivatives_of_m_i_r_with_respect_to_p_q',
-    label: "Equation 4.187",
+    label: "\u2202M^{r}/\u2202p",
     latex: String.raw`\begin{aligned}
 \partial_{p_q}\mathcal{M}_i^r &= \sum_{e=1}^{\bar{n}_{el}} \partial_{p_q} \left[ \mathcal{M}_{e,ii}^{r,0a} + \mathcal{M}_{e,ii}^{r,0b} + \mathcal{M}_{e,ii}^{r,0c} + \mathcal{M}_{e,ii}^{r,0d} \right]
 &\quad + \sum_{e_1=1}^{\bar{n}_{el}^1} \partial_{p_q} \mathcal{M}_{e_1,ii}^{r,1}
@@ -2560,7 +2560,7 @@ export const equations = [
   {
     id: '4.188',
     section: 'derivatives_of_m_i_r_with_respect_to_p_q',
-    label: "Equation 4.188",
+    label: "\u2202M^{r}/\u2202p",
     latex: String.raw`\partial_{p_q}\mathcal{M}_i^r = \sum_{e=1}^{\bar{n}_{el}} \partial_{p_q} \mathcal{M}_{e,ii}^{r,0d}`,
     description: "",
     references: [],
@@ -2570,7 +2570,7 @@ export const equations = [
   {
     id: '4.189',
     section: 'derivatives_of_m_i_r_with_respect_to_p_q',
-    label: "Equation 4.189",
+    label: "\u2202M^{r,0d}/\u2202p",
     latex: String.raw`\partial_{p_q}\mathcal{M}_{e,ii}^{r,0d} = \sum_{jj=1}^{n_p^e} -\frac{2\dt}{3} b_{jj,ii}^r(e) \partial_{p_q} p_{l^p(e,jj)}`,
     description: "",
     references: [],
@@ -2580,7 +2580,7 @@ export const equations = [
   {
     id: '4.190',
     section: 'derivatives_of_m_i_r_with_respect_to_p_q',
-    label: "Equation 4.190",
+    label: "\u2202M^{r,0d}/\u2202p",
     latex: String.raw`\partial_{p_q}\mathcal{M}_{e,ii}^{r,0d} = -\frac{2\dt}{3} b_{jj,ii}^r(e) \big|_{q=l^p(e,jj)}`,
     description: "",
     references: [],
@@ -2590,7 +2590,7 @@ export const equations = [
   {
     id: '4.191',
     section: 'derivatives_of_m_i_r_with_respect_to_sig',
-    label: "Equation 4.191",
+    label: "\u2202M^{r}/\u2202\u03c3^1",
     latex: String.raw`\begin{aligned}
 \partial_{\sigma_q^1}\mathcal{M}_i^r &= \sum_{e=1}^{\bar{n}_{el}} \partial_{\sigma_q^1} \left[ \mathcal{M}_{e,ii}^{r,0a} + \mathcal{M}_{e,ii}^{r,0b} + \mathcal{M}_{e,ii}^{r,0c} + \mathcal{M}_{e,ii}^{r,0d} \right]
 &\quad + \sum_{e_1=1}^{\bar{n}_{el}^1} \partial_{\sigma_q^1} \mathcal{M}_{e_1,ii}^{r,1}
@@ -2608,7 +2608,7 @@ export const equations = [
   {
     id: '4.192',
     section: 'derivatives_of_m_i_r_with_respect_to_sig',
-    label: "Equation 4.192",
+    label: "\u2202M^{r}/\u2202\u03c3^1",
     latex: String.raw`\begin{aligned}
 \partial_{\sigma_q^1}\mathcal{M}_i^r &= \sum_{e_1=1}^{\bar{n}_{el}^1} \partial_{\sigma_q^1} \mathcal{M}_{e_1,ii}^{r,1}
 - \frac{2\dt}{3} \partial_{\sigma_q^1} \frac{\sigma^1(r_{j1},z_{j1}) \phi_i(r_{j1},z_{j1}) m_r^{1,n}(r_{j1},z_{j1})}{\ca}
@@ -2622,7 +2622,7 @@ export const equations = [
   {
     id: '4.193',
     section: 'derivatives_of_m_i_r_with_respect_to_sig',
-    label: "Equation 4.193",
+    label: "\u2202M^{r}/\u2202\u03c3^1",
     latex: String.raw`\partial_{\sigma_q^1}\mathcal{M}_i^r = \sum_{e_1=1}^{\bar{n}_{el}^1} \partial_{\sigma_q^1} \mathcal{M}_{e_1,ii}^{r,1}
 - \frac{2\dt}{3} \frac{m_r^{1,n}(r_{j1},z_{j1})}{\ca} \delta_{i,j} \delta_{q,j}
 + \frac{2\dt}{3} \frac{m_r^{1}(r_a,z_a)}{\ca} \delta_{i,a} \delta_{q,a}`,
@@ -2634,7 +2634,7 @@ export const equations = [
   {
     id: '4.194',
     section: 'derivatives_of_m_i_r_with_respect_to_sig',
-    label: "Equation 4.194",
+    label: "\u2202M^{r,1}/\u2202\u03c3^1",
     latex: String.raw`\partial_{\sigma_q^1}\mathcal{M}_{e_1,ii}^{r,1} = \frac{2\dt}{3\ca} \sum_{jj=1}^{n_v^{1,e_1}} c_{jj,ii,t_r}^s(e_1) \partial_{\sigma_q^1} \sigma_{l_1(e_1,jj)}^1
 - \frac{2\dt}{3} \sum_{jj=1}^{n_v^{1,e_1}} c_{ii,jj,n_r}(e_1) \partial_{\sigma_q^1} p_{l_1(e_1,jj)}^1`,
     description: "",
@@ -2645,7 +2645,7 @@ export const equations = [
   {
     id: '4.195',
     section: 'derivatives_of_m_i_r_with_respect_to_sig',
-    label: "Equation 4.195",
+    label: "\u2202M^{r,1}/\u2202\u03c3^1",
     latex: String.raw`\partial_{\sigma_q^1}\mathcal{M}_{e_1,ii}^{r,1} = \frac{2\dt}{3\ca} c_{jj,ii,t_r}^s(e_1) \big|_{q=l_1(e_1,jj)}`,
     description: "",
     references: ["4.144"],
@@ -2655,7 +2655,7 @@ export const equations = [
   {
     id: '4.196',
     section: 'derivatives_of_m_i_r_with_respect_to_var',
-    label: "Equation 4.196",
+    label: "\u2202M^{r}/\u2202\u03b5^2",
     latex: String.raw`\begin{aligned}
 \partial_{\varepsilon_q^2}\mathcal{M}_i^r &= \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\varepsilon_q^2} \left( \mathcal{M}_{e,ii}^{r,0a} + \mathcal{M}_{e,ii}^{r,0b} + \mathcal{M}_{e,ii}^{r,0c} + \mathcal{M}_{e,ii}^{r,0d} \right)
 &\quad + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{\bar{n}_{el}^1} \partial_{\varepsilon_q^2} \mathcal{M}_{e_1,ii}^{r,1}
@@ -2673,7 +2673,7 @@ export const equations = [
   {
     id: '4.197',
     section: 'derivatives_of_m_i_r_with_respect_to_var',
-    label: "Equation 4.197",
+    label: "\u2202M^{r}/\u2202\u03b5^2",
     latex: String.raw`\partial_{\varepsilon_q^2}\mathcal{M}_i^r = \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{\bar{n}_{el}^2} \partial_{\varepsilon_q^2} \mathcal{M}_{e_2,ii}^{r,2}`,
     description: "",
     references: [],
@@ -2683,7 +2683,7 @@ export const equations = [
   {
     id: '4.198',
     section: 'derivatives_of_m_i_r_with_respect_to_var',
-    label: "Equation 4.198",
+    label: "\u2202M^{r,2}/\u2202\u03b5^2",
     latex: String.raw`\begin{aligned}
 \partial_{\varepsilon_q^2}\mathcal{M}_{e_2,ii}^{r,2} &= \frac{2\dt Be}{3} \sum_{jj=1}^{n_v^{2,e_2}} d_{ii,jj,t_r,t_r}(e_2) \partial_{\varepsilon_q^2} u_{l_2(e_2,jj)}
 + \frac{2\dt Be}{3} \sum_{jj=1}^{n_v^{2,e_2}} d_{ii,jj,t_r,t_z}(e_2) \partial_{\varepsilon_q^2} w_{l_2(e_2,jj)}
@@ -2700,7 +2700,7 @@ export const equations = [
   {
     id: '4.199',
     section: 'derivatives_of_m_i_r_with_respect_to_var',
-    label: "Equation 4.199",
+    label: "\u2202M^{r,2}/\u2202\u03b5^2",
     latex: String.raw`\partial_{\varepsilon_q^2}\mathcal{M}_{e_2,ii}^{r,2} = -\frac{\dt}{3\ca} d_{ii,jj,t_r}^s(e_2) \big|_{q=l_2^2(e_2,jj)}`,
     description: "",
     references: [],
@@ -2710,7 +2710,7 @@ export const equations = [
   {
     id: '4.200',
     section: 'derivatives_of_m_i_r_with_respect_to_var',
-    label: "Equation 4.200",
+    label: "\u2202M^{r}/\u2202\u03c9^2",
     latex: String.raw`\begin{aligned}
 \partial_{\varpi_q^2}\mathcal{M}_i^r &= \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\varpi_q^2} \left( \mathcal{M}_{e,ii}^{r,0a} + \mathcal{M}_{e,ii}^{r,0b} + \mathcal{M}_{e,ii}^{r,0c} + \mathcal{M}_{e,ii}^{r,0d} \right)
 &\quad + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{\bar{n}_{el}^1} \partial_{\varpi_q^2} \mathcal{M}_{e_1,ii}^{r,1}
@@ -2728,7 +2728,7 @@ export const equations = [
   {
     id: '4.201',
     section: 'derivatives_of_m_i_r_with_respect_to_var',
-    label: "Equation 4.201",
+    label: "\u2202M^{r}/\u2202\u03c9^2",
     latex: String.raw`\partial_{\varpi_q^2}\mathcal{M}_i^r = \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{\bar{n}_{el}^2} \partial_{\varpi_q^2} \mathcal{M}_{e_2,ii}^{r,2}`,
     description: "",
     references: [],
@@ -2738,7 +2738,7 @@ export const equations = [
   {
     id: '4.202',
     section: 'derivatives_of_m_i_r_with_respect_to_var',
-    label: "Equation 4.202",
+    label: "\u2202M^{r,2}/\u2202\u03c9^2",
     latex: String.raw`\begin{aligned}
 \partial_{\varpi_q^2}\mathcal{M}_{e_2,ii}^{r,2} &= \frac{2\dt Be}{3} \sum_{jj=1}^{n_v^{2,e_2}} d_{ii,jj,t_r,t_r}(e_2) \partial_{\varpi_q^2} u_{l_2(e_2,jj)}
 + \frac{2\dt Be}{3} \sum_{jj=1}^{n_v^{2,e_2}} d_{ii,jj,t_r,t_z}(e_2) \partial_{\varpi_q^2} w_{l_2(e_2,jj)}
@@ -2755,7 +2755,7 @@ export const equations = [
   {
     id: '4.203',
     section: 'derivatives_of_m_i_r_with_respect_to_var',
-    label: "Equation 4.203",
+    label: "\u2202M^{r,2}/\u2202\u03c9^2",
     latex: String.raw`\partial_{\varpi_q^2}\mathcal{M}_{e_2,ii}^{r,2} = \frac{2\dt}{3} d_{ii,jj,n_r}(e_2) \big|_{q=l_2^2(e_2,jj)}`,
     description: "",
     references: [],
@@ -2765,7 +2765,7 @@ export const equations = [
   {
     id: '4.204',
     section: 'derivatives_of_m_i_r_with_respect_to_lam',
-    label: "Equation 4.204",
+    label: "\u2202M^{r}/\u2202\u03bb^3",
     latex: String.raw`\begin{aligned}
 \partial_{\lambda_q^3}\mathcal{M}_i^r &= \sum_{e=1}^{\bar{n}_{el}} \partial_{\lambda_q^3} \left[ \mathcal{M}_{e,ii}^{r,0a} + \mathcal{M}_{e,ii}^{r,0b} + \mathcal{M}_{e,ii}^{r,0c} + \mathcal{M}_{e,ii}^{r,0d} \right]
 &\quad + \sum_{e_1=1}^{\bar{n}_{el}^1} \partial_{\lambda_q^3} \mathcal{M}_{e_1,ii}^{r,1}
@@ -2783,7 +2783,7 @@ export const equations = [
   {
     id: '4.205',
     section: 'derivatives_of_m_i_r_with_respect_to_lam',
-    label: "Equation 4.205",
+    label: "\u2202M^{r}/\u2202\u03bb^3",
     latex: String.raw`\partial_{\lambda_q^3}\mathcal{M}_i^r = \sum_{e_3=1}^{\bar{n}_{el}^3} \partial_{\lambda_q^3} \mathcal{M}_{e_3,ii}^{r,3}`,
     description: "",
     references: [],
@@ -2793,7 +2793,7 @@ export const equations = [
   {
     id: '4.206',
     section: 'derivatives_of_m_i_r_with_respect_to_lam',
-    label: "Equation 4.206",
+    label: "\u2202M^{r,3}/\u2202\u03bb^3",
     latex: String.raw`\partial_{\lambda_q^3}\mathcal{M}_{e_3,ii}^{r,3} = \frac{2\dt}{3} \sum_{jj=1}^{n_v^{3,e_3}} f_{ii,jj,n_r}(e_3) \partial_{\lambda_q^3} \lambda_{l_3(e_3,jj)}^3
 + \frac{2\dt}{3} \sum_{jj=1}^{n_v^{3,e_3}} f_{ii,jj,t_r}(e_3) \partial_{\lambda_q^3} \gamma_{l_3(e_3,jj)}^3`,
     description: "",
@@ -2804,7 +2804,7 @@ export const equations = [
   {
     id: '4.207',
     section: 'derivatives_of_m_i_r_with_respect_to_lam',
-    label: "Equation 4.207",
+    label: "\u2202M^{r,3}/\u2202\u03bb^3",
     latex: String.raw`\partial_{\lambda_q^3}\mathcal{M}_{e_3,ii}^{r,3} = \frac{2\dt}{3} f_{ii,jj,n_r}(e_3) \big|_{q=l_3(e_3,jj)}`,
     description: "",
     references: ["4.146"],
@@ -2814,7 +2814,7 @@ export const equations = [
   {
     id: '4.208',
     section: 'derivatives_of_m_i_r_with_respect_to_gam',
-    label: "Equation 4.208",
+    label: "\u2202M^{r}/\u2202\u03b3^3",
     latex: String.raw`\begin{aligned}
 \partial_{\gamma_q^3}\mathcal{M}_i^r &= \sum_{e=1}^{\bar{n}_{el}} \partial_{\gamma_q^3} \left[ \mathcal{M}_{e,ii}^{r,0a} + \mathcal{M}_{e,ii}^{r,0b} + \mathcal{M}_{e,ii}^{r,0c} + \mathcal{M}_{e,ii}^{r,0d} \right]
 &\quad + \sum_{e_1=1}^{\bar{n}_{el}^1} \partial_{\gamma_q^3} \mathcal{M}_{e_1,ii}^{r,1}
@@ -2832,7 +2832,7 @@ export const equations = [
   {
     id: '4.209',
     section: 'derivatives_of_m_i_r_with_respect_to_gam',
-    label: "Equation 4.209",
+    label: "\u2202M^{r}/\u2202\u03b3^3",
     latex: String.raw`\partial_{\gamma_q^3}\mathcal{M}_i^r = \sum_{e_3=1}^{\bar{n}_{el}^3} \partial_{\gamma_q^3} \mathcal{M}_{e_3,ii}^{r,3}`,
     description: "",
     references: [],
@@ -2842,7 +2842,7 @@ export const equations = [
   {
     id: '4.210',
     section: 'derivatives_of_m_i_r_with_respect_to_gam',
-    label: "Equation 4.210",
+    label: "\u2202M^{r,3}/\u2202\u03b3^3",
     latex: String.raw`\partial_{\gamma_q^3}\mathcal{M}_{e_3,ii}^{r,3} = \frac{2\dt}{3} \sum_{jj=1}^{n_v^{3,e_3}} f_{ii,jj,n_r}(e_3) \partial_{\gamma_q^3} \lambda_{l_3(e_3,jj)}^3
 + \frac{2\dt}{3} \sum_{jj=1}^{n_v^{3,e_3}} f_{ii,jj,t_r}(e_3) \partial_{\gamma_q^3} \gamma_{l_3(e_3,jj)}^3`,
     description: "",
@@ -2853,7 +2853,7 @@ export const equations = [
   {
     id: '4.211',
     section: 'derivatives_of_m_i_r_with_respect_to_gam',
-    label: "Equation 4.211",
+    label: "\u2202M^{r,3}/\u2202\u03b3^3",
     latex: String.raw`\partial_{\gamma_q^3}\mathcal{M}_{e_3,ii}^{r,3} = \frac{2\dt}{3} f_{ii,jj,t_r}(e_3) \big|_{q=l_3(e_3,jj)}`,
     description: "",
     references: ["4.146"],
@@ -2863,7 +2863,7 @@ export const equations = [
   {
     id: '4.212',
     section: 'derivatives_of_m_i_r_with_respect_to_lam',
-    label: "Equation 4.212",
+    label: "\u2202M^{r}/\u2202\u03bb^4",
     latex: String.raw`\begin{aligned}
 \partial_{\lambda_q^4}\mathcal{M}_i^r &= \sum_{e=1}^{\bar{n}_{el}} \partial_{\lambda_q^4} \left[ \mathcal{M}_{e,ii}^{r,0a} + \mathcal{M}_{e,ii}^{r,0b} + \mathcal{M}_{e,ii}^{r,0c} + \mathcal{M}_{e,ii}^{r,0d} \right]
 &\quad + \sum_{e_1=1}^{\bar{n}_{el}^1} \partial_{\lambda_q^4} \mathcal{M}_{e_1,ii}^{r,1}
@@ -2881,7 +2881,7 @@ export const equations = [
   {
     id: '4.213',
     section: 'derivatives_of_m_i_r_with_respect_to_lam',
-    label: "Equation 4.213",
+    label: "\u2202M^{r}/\u2202\u03bb^4",
     latex: String.raw`\partial_{\lambda_q^4}\mathcal{M}_i^r = \sum_{e_4=1}^{\bar{n}_{el}^4} \partial_{\lambda_q^4} \mathcal{M}_{e_4,ii}^{r,4}`,
     description: "",
     references: [],
@@ -2891,7 +2891,7 @@ export const equations = [
   {
     id: '4.214',
     section: 'derivatives_of_m_i_r_with_respect_to_lam',
-    label: "Equation 4.214",
+    label: "\u2202M^{r,4}/\u2202\u03bb^4",
     latex: String.raw`\partial_{\lambda_q^4}\mathcal{M}_{e_4,ii}^{r,4} = \frac{2\dt}{3} \sum_{jj=1}^{n_v^{4,e_4}} e_{ii,jj,n_r}(e_4) \partial_{\lambda_q^4} \lambda_{l_4(e_4,jj)}^4
 + \frac{2\dt}{3} \sum_{jj=1}^{n_v^{4,e_4}} e_{ii,jj,t_r}(e_4) \partial_{\lambda_q^4} \gamma_{l_4(e_4,jj)}^4`,
     description: "",
@@ -2902,7 +2902,7 @@ export const equations = [
   {
     id: '4.215',
     section: 'derivatives_of_m_i_r_with_respect_to_lam',
-    label: "Equation 4.215",
+    label: "\u2202M^{r,4}/\u2202\u03bb^4",
     latex: String.raw`\partial_{\lambda_q^4}\mathcal{M}_{e_4,ii}^{r,4} = \frac{2\dt}{3} e_{ii,jj,n_r}(e_4) \big|_{q=l_4(e_4,jj)}`,
     description: "",
     references: [],
@@ -2912,7 +2912,7 @@ export const equations = [
   {
     id: '4.216',
     section: 'derivatives_of_m_i_r_with_respect_to_gam',
-    label: "Equation 4.216",
+    label: "\u2202M^{r}/\u2202\u03b3^4",
     latex: String.raw`\begin{aligned}
 \partial_{\gamma_q^4}\mathcal{M}_i^r &= \sum_{e=1}^{\bar{n}_{el}} \partial_{\gamma_q^4} \left[ \mathcal{M}_{e,ii}^{r,0a} + \mathcal{M}_{e,ii}^{r,0b} + \mathcal{M}_{e,ii}^{r,0c} + \mathcal{M}_{e,ii}^{r,0d} \right]
 &\quad + \sum_{e_1=1}^{\bar{n}_{el}^1} \partial_{\gamma_q^4} \mathcal{M}_{e_1,ii}^{r,1}
@@ -2930,7 +2930,7 @@ export const equations = [
   {
     id: '4.217',
     section: 'derivatives_of_m_i_r_with_respect_to_gam',
-    label: "Equation 4.217",
+    label: "\u2202M^{r}/\u2202\u03b3^4",
     latex: String.raw`\partial_{\gamma_q^4}\mathcal{M}_i^r = \sum_{e_4=1}^{\bar{n}_{el}^4} \partial_{\gamma_q^4} \mathcal{M}_{e_4,ii}^{r,4}`,
     description: "",
     references: [],
@@ -2940,7 +2940,7 @@ export const equations = [
   {
     id: '4.218',
     section: 'derivatives_of_m_i_r_with_respect_to_gam',
-    label: "Equation 4.218",
+    label: "\u2202M^{r,4}/\u2202\u03b3^4",
     latex: String.raw`\partial_{\gamma_q^4}\mathcal{M}_{e_4,ii}^{r,4} = \frac{2\dt}{3} \sum_{jj=1}^{n_v^{4,e_4}} e_{ii,jj,n_r}(e_4) \partial_{\gamma_q^4} \lambda_{l_4(e_4,jj)}^4
 + \frac{2\dt}{3} \sum_{jj=1}^{n_v^{4,e_4}} e_{ii,jj,t_r}(e_4) \partial_{\gamma_q^4} \gamma_{l_4(e_4,jj)}^4`,
     description: "",
@@ -2951,7 +2951,7 @@ export const equations = [
   {
     id: '4.219',
     section: 'derivatives_of_m_i_r_with_respect_to_gam',
-    label: "Equation 4.219",
+    label: "\u2202M^{r,4}/\u2202\u03b3^4",
     latex: String.raw`\partial_{\gamma_q^4}\mathcal{M}_{e_4,ii}^{r,4} = \frac{2\dt}{3} e_{ii,jj,t_r}(e_4) \big|_{q=l_4(e_4,jj)}`,
     description: "",
     references: [],
@@ -2961,7 +2961,7 @@ export const equations = [
   {
     id: '4.220',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.220",
+    label: "\u2202M^{r}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_i^r &= \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{h_q} \left( \mathcal{M}_{e,ii}^{r,0a} + \mathcal{M}_{e,ii}^{r,0b} + \mathcal{M}_{e,ii}^{r,0c} + \mathcal{M}_{e,ii}^{r,0d} \right)
 &\quad + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{\bar{n}_{el}^1} \partial_{h_q} \mathcal{M}_{e_1,ii}^{r,1}
@@ -2979,7 +2979,7 @@ export const equations = [
   {
     id: '4.221',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.221",
+    label: "\u2202M^{r}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_i^r &= \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{h_q} \mathcal{M}_{e,ii}^{r,0a}
 + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{h_q} \mathcal{M}_{e,ii}^{r,0b}
@@ -3000,7 +3000,7 @@ export const equations = [
   {
     id: '4.222',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.222",
+    label: "\u2202M^{r,0a}/\u2202h",
     latex: String.raw`\partial_{h_q}\mathcal{M}_{e,ii}^{r,0a} = -\frac{2\dt St}{3} \partial_{h_q} a_{ii,g_r}(e)`,
     description: "",
     references: ["4.140"],
@@ -3010,7 +3010,7 @@ export const equations = [
   {
     id: '4.224',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.224",
+    label: "\u2202M^{r,0b}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e,ii}^{r,0b} &= \frac{2\dt}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \partial_{h_q} a_{ii,jj}^{r,r}(e)
 + \frac{2\dt}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \partial_{h_q} a_{ii,jj}^{z,z}(e)
@@ -3026,7 +3026,7 @@ export const equations = [
   {
     id: '4.225',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.225",
+    label: "\u2202M^{r,0b}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e,ii}^{r,0b} &= \sum_{jj=1}^{n_v^e} \frac{2\dt}{3} u_{l(e,jj)} \left( \partial_{h_q} a_{ii,jj}^{r,r}(e) + \partial_{h_q} a_{ii,jj}^{z,z}(e) \right)
 &\quad + Re \sum_{jj=1}^{n_v^e} \partial_{h_q} a_{ii,jj}(e) \left[ u_{l(e,jj)} - \frac{4}{3} u_{l(e,jj)}(t_{n-1}) + \frac{1}{3} u_{l(e,jj)}(t_{n-2}) \right],
@@ -3039,7 +3039,7 @@ export const equations = [
   {
     id: '4.226',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.226",
+    label: "\u2202M^{r,0b}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e,ii}^{r,0b} &= \sum_{jj=1}^{n_v^e} \frac{2\dt}{3} u_{l(e,jj)} \left( \partial_{h_{S(e,qq)}} a_{ii,jj}^{r,r}(e) + \partial_{h_{S(e,qq)}} a_{ii,jj}^{z,z}(e) \right)
 &\quad + Re \sum_{jj=1}^{n_v^e} \partial_{h_{S(e,qq)}} a_{ii,jj}(e) \left[ u_{l(e,jj)} - \frac{4}{3} u_{l(e,jj)}(t_{n-1}) + \frac{1}{3} u_{l(e,jj)}(t_{n-2}) \right].
@@ -3052,7 +3052,7 @@ export const equations = [
   {
     id: '4.227',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.227",
+    label: "\u2202M^{r,0c}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e,ii}^{r,0c} &= \frac{2\dt Re}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} u_{l(e,kk)} \partial_{h_q} a_{ii,kk,jj}^r(e)
 &\quad + \frac{2\dt Re}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \sum_{kk=1}^{n_v^e} w_{l(e,kk)} \partial_{h_q} a_{ii,kk,jj}^r(e)
@@ -3073,7 +3073,7 @@ export const equations = [
   {
     id: '4.228',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.228",
+    label: "\u2202M^{r,0c}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e,ii}^{r,0c} = \sum_{jj=1}^{n_v^e} Re\, u_{l(e,jj)} \Bigg\{ &\frac{2\dt}{3} \sum_{kk=1}^{n_v^e} \left( u_{l(e,kk)} \partial_{h_q} a_{ii,kk,jj}^r(e) + w_{l(e,kk)} \partial_{h_q} a_{ii,kk,jj}^r(e) \right)
 &- \sum_{kk=1}^{n_v^e} \left[ a_{ii,kk,jj}^r(e) \partial_{h_q} r_{l(e,kk)}^r + \partial_{h_q} a_{ii,kk,jj}^r(e) \left( r_{l(e,kk)}^r - \frac{4}{3} r_{l(e,kk)}^r(t_{n-1}) + \frac{1}{3} r_{l(e,kk)}^r(t_{n-2}) \right) \right]
@@ -3087,7 +3087,7 @@ export const equations = [
   {
     id: '4.229',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.229",
+    label: "\u2202M^{r,0c}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e,ii}^{r,0c} &= \sum_{\substack{jj=1\\ q=S(e,qq)}}^{n_v^e} Re\, u_{l(e,jj)} \Bigg\{ \frac{2\dt}{3} \sum_{kk=1}^{n_v^e} \left( u_{l(e,kk)} \partial_{h_{S(e,qq)}} a_{ii,kk,jj}^r(e) + w_{l(e,kk)} \partial_{h_{S(e,qq)}} a_{ii,kk,jj}^r(e) \right)
 &\quad - \sum_{kk=1}^{n_v^e} \left[ a_{ii,kk,jj}^r(e) \partial_{h_{S(e,qq)}} r_{l(e,kk)}^r + \partial_{h_{S(e,qq)}} a_{ii,kk,jj}^r(e) \left( r_{l(e,kk)}^r - \frac{4}{3} r_{l(e,kk)}^r(t_{n-1}) + \frac{1}{3} r_{l(e,kk)}^r(t_{n-2}) \right) \right]
@@ -3101,7 +3101,7 @@ export const equations = [
   {
     id: '4.230',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.230",
+    label: "\u2202M^{r,0d}/\u2202h",
     latex: String.raw`\partial_{h_q}\mathcal{M}_{e,ii}^{r,0d} = \sum_{jj=1}^{n_p^e} -\frac{2\dt}{3} p_{l^p(e,jj)} \partial_{h_q} b_{jj,ii}^r(e)`,
     description: "",
     references: [],
@@ -3111,7 +3111,7 @@ export const equations = [
   {
     id: '4.231',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.231",
+    label: "\u2202M^{r,0d}/\u2202h",
     latex: String.raw`\partial_{h_q}\mathcal{M}_{e,ii}^{r,0d} = \sum_{\substack{jj=1\\ q=S(e,qq)}}^{n_p^e} -\frac{2\dt}{3} p_{l^p(e,jj)} \partial_{h_{S(e,qq)}} b_{jj,ii}^r(e)`,
     description: "From equation (4.152), we have and using local spine numbers",
     references: [],
@@ -3121,7 +3121,7 @@ export const equations = [
   {
     id: '4.232',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.232",
+    label: "\u2202M^{r,1}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_1,ii}^{r,1} &= \frac{2\dt}{3\ca} \sum_{jj=1}^{n_v^{1,e_1}} \varepsilon_{l_1(e_1,jj)}^1 \partial_{h_q} c_{jj,ii,t_r}(e_1)
 - \frac{2\dt}{3} \sum_{jj=1}^{n_v^{1,e_1}} p_{l_1(e_1,jj)}^g \partial_{h_q} c_{ii,jj,n_r}(e_1)
@@ -3136,7 +3136,7 @@ export const equations = [
   {
     id: '4.233',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.233",
+    label: "\u2202M^{r,1}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_1,ii}^{r,1} &= \sum_{jj=1}^{n_v^{1,e_1}} \frac{2\dt}{3} \left( \frac{1}{\ca} \varepsilon_{l_1(e_1,jj)}^1 \partial_{h_q} c_{jj,ii,t_r}(e_1) - p_{l_1(e_1,jj)}^g \partial_{h_q} c_{ii,jj,n_r}(e_1) \right)
 &\quad - \frac{2\dt}{3} \sum_{j=1}^{n_v} u_j \partial_{h_q} c_{ii,jj,n_r}^r
@@ -3150,7 +3150,7 @@ export const equations = [
   {
     id: '4.234',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.234",
+    label: "\u2202M^{r,1}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_1,ii}^{r,1} &= \sum_{\substack{jj=1\\ q=S_1(e_1,qq)}}^{n_v^{1,e_1}} \frac{2\dt}{3} \left( \frac{1}{\ca} \varepsilon_{l_1(e_1,jj)}^1 \partial_{h_{S_1(e_1,qq)}} c_{jj,ii,t_r}(e_1) - p_{l_1(e_1,jj)}^g \partial_{h_{S_1(e_1,qq)}} c_{ii,jj,n_r}(e_1) \right)
 &\quad - \frac{2\dt}{3} \sum_{j=1}^{n_v} u_j \partial_{h_{S_1(e_1,qq)}} c_{ii,jj,n_r}^r
@@ -3164,7 +3164,7 @@ export const equations = [
   {
     id: '4.235',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.235",
+    label: "\u2202M^{r,2}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_2,ii}^{r,2} &= \frac{2\dt Be}{3} \sum_{jj=1}^{n_v^{2,e_2}} u_{l_2(e_2,jj)} \partial_{h_q} d_{ii,jj,t_r,t_r}(e_2)
 + \frac{2\dt Be}{3} \sum_{jj=1}^{n_v^{2,e_2}} w_{l_2(e_2,jj)} \partial_{h_q} d_{ii,jj,t_r,t_z}(e_2)
@@ -3183,7 +3183,7 @@ export const equations = [
   {
     id: '4.236',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.236",
+    label: "\u2202M^{r,2}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_2,ii}^{r,2} &= \sum_{jj=1}^{n_v^{2,e_2}} \frac{2\dt}{3} \Bigg[ Be \left( \partial_{h_q} d_{ii,jj,t_r,t_r}(e_2) \{ u_{l_2(e_2,jj)} - u_{l_2^2(e_2,jj)}^s \}
 + \partial_{h_q} d_{ii,jj,t_r,t_z}(e_2) \{ w_{l_2(e_2,jj)} - w_{l_2^2(e_2,jj)}^s \} \right)
@@ -3200,7 +3200,7 @@ export const equations = [
   {
     id: '4.237',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.237",
+    label: "\u2202M^{r,2}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_2,ii}^{r,2} &= \sum_{jj=1}^{n_v^{2,e_2}} \frac{2\dt}{3} \Bigg[ Be \left( \partial_{h_q} d_{ii,jj,t_r,t_r}(e_2) \{ u_{l_2(e_2,jj)} - u_{l_2^2(e_2,jj)}^s \}
 + \partial_{h_q} d_{ii,jj,t_r,t_z}(e_2) \{ w_{l_2(e_2,jj)} - w_{l_2^2(e_2,jj)}^s \} \right)
@@ -3217,7 +3217,7 @@ export const equations = [
   {
     id: '4.238',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.238",
+    label: "\u2202M^{r,2}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_2,ii}^{r,2} &= \sum_{\substack{jj=1\\ q=S_2(e_2,qq)}}^{n_v^{2,e_2}} \frac{2\dt}{3} \Bigg[ Be \left( \partial_{h_{S_2(e_2,qq)}} d_{ii,jj,t_r,t_r}(e_2) \{ u_{l_2(e_2,jj)} - u_{l_2^2(e_2,jj)}^s \}
 + \partial_{h_{S_2(e_2,qq)}} d_{ii,jj,t_r,t_z}(e_2) \{ w_{l_2(e_2,jj)} - w_{l_2^2(e_2,jj)}^s \} \right)
@@ -3234,7 +3234,7 @@ export const equations = [
   {
     id: '4.239',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.239",
+    label: "\u2202M^{r,3}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_3,ii}^{r,3} &= \frac{2\dt}{3} \sum_{jj=1}^{n_v^{3,e_3}} \lambda_{l_3(e_3,jj)}^3 \partial_{h_q} f_{ii,jj,n_r}(e_3)
 + \frac{2\dt}{3} \sum_{jj=1}^{n_v^{3,e_3}} \gamma_{l_3(e_3,jj)}^3 \partial_{h_q} f_{ii,jj,t_r}(e_3)
@@ -3249,7 +3249,7 @@ export const equations = [
   {
     id: '4.240',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.240",
+    label: "\u2202M^{r,3}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_3,ii}^{r,3} &= \sum_{jj=1}^{n_v^{3,e_3}} \frac{2\dt}{3} \left[ \lambda_{l_3(e_3,jj)}^3 \partial_{h_q} f_{ii,jj,n_r}(e_3) + \gamma_{l_3(e_3,jj)}^3 \partial_{h_q} f_{ii,jj,t_r}(e_3) \right]
 &\quad - \frac{2\dt}{3} \sum_{j=1}^{n_v} u_j \partial_{h_q} f_{ii,jj,n_r}^r
@@ -3263,7 +3263,7 @@ export const equations = [
   {
     id: '4.241',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.241",
+    label: "\u2202M^{r,3}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_3,ii}^{r,3} &= \sum_{\substack{jj=1\\ q=S_3(e_3,qq)}}^{n_v^{3,e_3}} \frac{2\dt}{3} \left[ \lambda_{l_3(e_3,jj)}^3 \partial_{h_{S_3(e_3,qq)}} f_{ii,jj,n_r}(e_3) + \gamma_{l_3(e_3,jj)}^3 \partial_{h_{S_3(e_3,qq)}} f_{ii,jj,t_r}(e_3) \right]
 &\quad - \frac{2\dt}{3} \sum_{j=1}^{n_v} u_j \partial_{h_{S_3(e_3,qq)}} f_{ii,jj,n_r}^r
@@ -3277,7 +3277,7 @@ export const equations = [
   {
     id: '4.242',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.242",
+    label: "\u2202M^{r,4}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_4,ii}^{r,4} &= \frac{2\dt}{3} \sum_{jj=1}^{n_v^{4,e_4}} \lambda_{l_4(e_4,jj)}^4 \partial_{h_q} e_{ii,jj,n_r}(e_4)
 + \frac{2\dt}{3} \sum_{jj=1}^{n_v^{4,e_4}} \gamma_{l_4(e_4,jj)}^4 \partial_{h_q} e_{ii,jj,t_r}(e_4)
@@ -3292,7 +3292,7 @@ export const equations = [
   {
     id: '4.243',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.243",
+    label: "\u2202M^{r,4}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_4,ii}^{r,4} &= \sum_{jj=1}^{n_v^{4,e_4}} \frac{2\dt}{3} \left[ \lambda_{l_4(e_4,jj)}^4 \partial_{h_q} e_{ii,jj,n_r}(e_4) + \gamma_{l_4(e_4,jj)}^4 \partial_{h_q} e_{ii,jj,t_r}(e_4) \right]
 &\quad - \frac{2\dt}{3} \sum_{j=1}^{n_v} u_j \partial_{h_q} e_{ii,jj,n_r}^r
@@ -3306,7 +3306,7 @@ export const equations = [
   {
     id: '4.244',
     section: 'derivatives_of_m_i_r_with_respect_to_h_q',
-    label: "Equation 4.244",
+    label: "\u2202M^{r,4}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_4,ii}^{r,4} &= \sum_{\substack{jj=1\\ q=S_4(e_4,qq)}}^{n_v^{4,e_4}} \frac{2\dt}{3} \left[ \lambda_{l_4(e_4,jj)}^4 \partial_{h_{S_4(e_4,qq)}} e_{ii,jj,n_r}(e_4) + \gamma_{l_4(e_4,jj)}^4 \partial_{h_{S_4(e_4,qq)}} e_{ii,jj,t_r}(e_4) \right]
 &\quad - \frac{2\dt}{3} \sum_{j=1}^{n_v} u_j \partial_{h_{S_4(e_4,qq)}} e_{ii,jj,n_r}^r
@@ -4653,7 +4653,7 @@ export const equations = [
   {
     id: '5.107',
     section: 'derivatives_of_m_i_z_with_respect_to_u_q',
-    label: "Equation 5.107",
+    label: "\u2202M^{z}/\u2202u",
     latex: String.raw`\begin{aligned}
 \partial_{u_q}\mathcal{M}_i^z &= \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{u_q} \mathcal{M}_{e,ii}^{z,0a} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{u_q} \mathcal{M}_{e,ii}^{z,0b} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{u_q} \mathcal{M}_{e,ii}^{z,0c} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{u_q} \mathcal{M}_{e,ii}^{z,0d}
 &\quad + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{\bar{n}_{el}^1} \partial_{u_q} \mathcal{M}_{e_1,ii}^{z,1} + \frac{2\dt}{3} \partial_{u_q} \frac{\sigma^1(r_{J1},z_{J1}) \phi_i(r_{J1},z_{J1}) m_z^{1,n}(r_{J1},z_{J1})}{\ca}
@@ -4668,7 +4668,7 @@ export const equations = [
   {
     id: '5.108',
     section: 'derivatives_of_m_i_z_with_respect_to_u_q',
-    label: "Equation 5.108",
+    label: "\u2202M^{z}/\u2202u",
     latex: String.raw`\partial_{u_q}\mathcal{M}_i^z = \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{u_q} \mathcal{M}_{e,ii}^{z,0b} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{u_q} \mathcal{M}_{e,ii}^{z,0c} + \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{\bar{n}_{el}^2} \partial_{u_q} \mathcal{M}_{e_2,ii}^{z,2}`,
     description: "",
     references: [],
@@ -4678,7 +4678,7 @@ export const equations = [
   {
     id: '5.109',
     section: 'derivatives_of_m_i_z_with_respect_to_u_q',
-    label: "Equation 5.109",
+    label: "\u2202M^{z,0b}/\u2202u",
     latex: String.raw`\begin{aligned}
 \partial_{u_q}\mathcal{M}_{e,ii}^{z,0b} &= \frac{2\dt}{3} \sum_{jj=1}^{n_v^e} a_{ii,jj}^{r,z}(e) \partial_{u_q} u_{l(e,jj)} + \sum_{jj=1}^{n_v^e} \frac{2\dt}{3} a_{ii,jj}^{r,r}(e) \partial_{u_q} w_{l(e,jj)}
 &\quad + \frac{4\dt}{3} \sum_{jj=1}^{n_v^e} a_{ii,jj}^{z,z}(e) \partial_{u_q} w_{l(e,jj)} + Re \sum_{jj=1}^{n_v^e} a_{ii,jj}(e) \partial_{u_q} w_{l(e,jj)}
@@ -4692,7 +4692,7 @@ export const equations = [
   {
     id: '5.110',
     section: 'derivatives_of_m_i_z_with_respect_to_u_q',
-    label: "Equation 5.110",
+    label: "\u2202M^{z,0b}/\u2202u",
     latex: String.raw`\partial_{u_q}\mathcal{M}_{e,ii}^{z,0b} = \frac{2\dt}{3} a_{ii,jj}^{r,z}(e) \big|_{q=l(e,jj)}`,
     description: "",
     references: [],
@@ -4702,7 +4702,7 @@ export const equations = [
   {
     id: '5.111',
     section: 'derivatives_of_m_i_z_with_respect_to_u_q',
-    label: "Equation 5.111",
+    label: "\u2202M^{z,0c}/\u2202u",
     latex: String.raw`\begin{aligned}
 \partial_{u_q}\mathcal{M}_{e,ii}^{z,0c} &= \frac{2\dt Re}{3} \sum_{jj=1}^{n_v^e} w_{l(e,jj)} \sum_{kk=1}^{n_v^e} \partial_{u_q} u_{l(e,kk)} a_{ii,kk,jj}^r(e)
 &\quad + \frac{2\dt Re}{3} \sum_{jj=1}^{n_v^e} w_{l(e,jj)} \sum_{kk=1}^{n_v^e} \partial_{u_q} w_{l(e,kk)} a_{ii,kk,jj}^z(e)
@@ -4721,7 +4721,7 @@ export const equations = [
   {
     id: '5.112',
     section: 'derivatives_of_m_i_z_with_respect_to_u_q',
-    label: "Equation 5.112",
+    label: "\u2202M^{z,0c}/\u2202u",
     latex: String.raw`\partial_{u_q}\mathcal{M}_{e,ii}^{z,0c} = \frac{2\dt Re}{3} \sum_{jj=1}^{n_v^e} w_{l(e,jj)} a_{ii,kk,jj}^r(e) \big|_{q=l(e,kk)}`,
     description: "",
     references: [],
@@ -4731,7 +4731,7 @@ export const equations = [
   {
     id: '5.113',
     section: 'derivatives_of_m_i_z_with_respect_to_u_q',
-    label: "Equation 5.113",
+    label: "\u2202M^{z,2}/\u2202u",
     latex: String.raw`\begin{aligned}
 \partial_{u_q}\mathcal{M}_{e_2,ii}^{z,2} &= \frac{2\dt \be}{3} \sum_{jj=1}^{n_v^{2,e_2}} d_{ii,jj,t_r,t_z}(e_2) \partial_{u_q} u_{l_2(e_2,jj)}
 &\quad + \frac{2\dt \be}{3} \sum_{jj=1}^{n_v^{2,e_2}} d_{ii,jj,t_z,t_z}(e_2) \partial_{u_q} w_{l_2(e_2,jj)}
@@ -4747,7 +4747,7 @@ export const equations = [
   {
     id: '5.114',
     section: 'derivatives_of_m_i_z_with_respect_to_u_q',
-    label: "Equation 5.114",
+    label: "\u2202M^{z,2}/\u2202u",
     latex: String.raw`\partial_{u_q}\mathcal{M}_{e_2,ii}^{z,2} = \frac{2\dt \be}{3} d_{ii,jj,t_r,t_z}(e_2) \big|_{q=l_2(e_2,jj)}`,
     description: "",
     references: [],
@@ -4757,7 +4757,7 @@ export const equations = [
   {
     id: '5.115',
     section: 'derivatives_of_m_i_z_with_respect_to_w_q',
-    label: "Equation 5.115",
+    label: "\u2202M^{z}/\u2202w",
     latex: String.raw`\begin{aligned}
 \partial_{w_q}\mathcal{M}_i^z &= \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{w_q} \mathcal{M}_{e,ii}^{z,0a} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{w_q} \mathcal{M}_{e,ii}^{z,0b} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{w_q} \mathcal{M}_{e,ii}^{z,0c} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{w_q} \mathcal{M}_{e,ii}^{z,0d}
 &\quad + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{\bar{n}_{el}^1} \partial_{w_q} \mathcal{M}_{e_1,ii}^{z,1} + \frac{2\dt}{3} \partial_{w_q} \frac{\sigma^1(r_{J1},z_{J1}) \phi_i(r_{J1},z_{J1}) m_z^{1,n}(r_{J1},z_{J1})}{\ca}
@@ -4772,7 +4772,7 @@ export const equations = [
   {
     id: '5.116',
     section: 'derivatives_of_m_i_z_with_respect_to_w_q',
-    label: "Equation 5.116",
+    label: "\u2202M^{z}/\u2202w",
     latex: String.raw`\partial_{w_q}\mathcal{M}_i^z = \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{w_q} \mathcal{M}_{e,ii}^{z,0b} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{w_q} \mathcal{M}_{e,ii}^{z,0c} + \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{\bar{n}_{el}^2} \partial_{w_q} \mathcal{M}_{e_2,ii}^{z,2}`,
     description: "",
     references: [],
@@ -4782,7 +4782,7 @@ export const equations = [
   {
     id: '5.117',
     section: 'derivatives_of_m_i_z_with_respect_to_w_q',
-    label: "Equation 5.117",
+    label: "\u2202M^{z,0b}/\u2202w",
     latex: String.raw`\begin{aligned}
 \partial_{w_q}\mathcal{M}_{e,ii}^{z,0b} &= \frac{2\dt}{3} \sum_{jj=1}^{n_v^e} a_{ii,jj}^{r,z}(e) \partial_{w_q} u_{l(e,jj)} + \sum_{jj=1}^{n_v^e} \frac{2\dt}{3} a_{ii,jj}^{r,r}(e) \partial_{w_q} w_{l(e,jj)}
 &\quad + \frac{4\dt}{3} \sum_{jj=1}^{n_v^e} a_{ii,jj}^{z,z}(e) \partial_{w_q} w_{l(e,jj)} + Re \sum_{jj=1}^{n_v^e} a_{ii,jj}(e) \partial_{w_q} w_{l(e,jj)}
@@ -4796,7 +4796,7 @@ export const equations = [
   {
     id: '5.118',
     section: 'derivatives_of_m_i_z_with_respect_to_w_q',
-    label: "Equation 5.118",
+    label: "\u2202M^{z,0b}/\u2202w",
     latex: String.raw`\partial_{w_q}\mathcal{M}_{e,ii}^{z,0b} = \frac{2\dt}{3} a_{ii,jj}^{r,r}(e) \big|_{q=l(e,jj)} + \frac{4\dt}{3} a_{ii,jj}^{z,z}(e) \big|_{q=l(e,jj)} + Re\, a_{ii,jj}(e) \big|_{q=l(e,jj)}`,
     description: "",
     references: [],
@@ -4806,7 +4806,7 @@ export const equations = [
   {
     id: '5.119',
     section: 'derivatives_of_m_i_z_with_respect_to_w_q',
-    label: "Equation 5.119",
+    label: "\u2202M^{z,0b}/\u2202w",
     latex: String.raw`\partial_{w_q}\mathcal{M}_{e,ii}^{z,0b} = \frac{2\dt}{3} \left( Re\, a_{ii,jj}(e) + a_{ii,jj}^{r,r}(e) + 2 a_{ii,jj}^{z,z}(e) \right) \big|_{q=l(e,jj)}`,
     description: "",
     references: [],
@@ -4816,7 +4816,7 @@ export const equations = [
   {
     id: '5.120',
     section: 'derivatives_of_m_i_z_with_respect_to_w_q',
-    label: "Equation 5.120",
+    label: "\u2202M^{z,0c}/\u2202w",
     latex: String.raw`\begin{aligned}
 \partial_{w_q}\mathcal{M}_{e,ii}^{z,0c} &= \frac{2\dt Re}{3} \sum_{jj=1}^{n_v^e} \partial_{w_q} w_{l(e,jj)} \sum_{kk=1}^{n_v^e} u_{l(e,kk)} a_{ii,kk,jj}^r(e)
 &\quad + \frac{2\dt Re}{3} \sum_{jj=1}^{n_v^e} \partial_{w_q} w_{l(e,jj)} \sum_{kk=1}^{n_v^e} w_{l(e,kk)} a_{ii,kk,jj}^z(e)
@@ -4836,7 +4836,7 @@ export const equations = [
   {
     id: '5.121',
     section: 'derivatives_of_m_i_z_with_respect_to_w_q',
-    label: "Equation 5.121",
+    label: "\u2202M^{z,0c}/\u2202w",
     latex: String.raw`\begin{aligned}
 \partial_{w_q}\mathcal{M}_{e,ii}^{z,0c} &= \frac{2\dt Re}{3} \sum_{kk=1}^{n_v^e} \big|_{q=l(e,jj)} u_{l(e,kk)} a_{ii,kk,jj}^r(e) + \frac{2\dt Re}{3} \sum_{kk=1}^{n_v^e} \big|_{q=l(e,jj)} w_{l(e,kk)} a_{ii,kk,jj}^z(e)
 &\quad + \frac{2\dt Re}{3} \sum_{jj=1}^{n_v^e} \big|_{q=l(e,kk)} w_{l(e,jj)} a_{ii,kk,jj}^z(e)
@@ -4853,7 +4853,7 @@ export const equations = [
   {
     id: '5.122',
     section: 'derivatives_of_m_i_z_with_respect_to_w_q',
-    label: "Equation 5.122",
+    label: "\u2202M^{z,0c}/\u2202w",
     latex: String.raw`\begin{aligned}
 \partial_{w_q}\mathcal{M}_{e,ii}^{z,0c} &= \sum_{jj=1}^{n_v^e} \Bigg[ \frac{2\dt Re}{3} \sum_{\substack{kk=1\\ q=l(e,jj)}}^{n_v^e} w_{l(e,jj)} a_{ii,kk,jj}^z(e)
 &\quad + \frac{2\dt Re}{3} \sum_{\substack{kk=1\\ q=l(e,jj)}}^{n_v^e} \left( u_{l(e,kk)} a_{ii,kk,jj}^r(e) + w_{l(e,kk)} a_{ii,kk,jj}^z(e) \right)
@@ -4868,7 +4868,7 @@ export const equations = [
   {
     id: '5.123',
     section: 'derivatives_of_m_i_z_with_respect_to_w_q',
-    label: "Equation 5.123",
+    label: "\u2202M^{z,2}/\u2202w",
     latex: String.raw`\begin{aligned}
 \partial_{w_q}\mathcal{M}_{e_2,ii}^{z,2} &= \frac{2\dt \be}{3} \sum_{jj=1}^{n_v^{2,e_2}} d_{ii,jj,t_r,t_z}(e_2) \partial_{w_q} u_{l_2(e_2,jj)}
 &\quad + \frac{2\dt \be}{3} \sum_{jj=1}^{n_v^{2,e_2}} d_{ii,jj,t_z,t_z}(e_2) \partial_{w_q} w_{l_2(e_2,jj)}
@@ -4884,7 +4884,7 @@ export const equations = [
   {
     id: '5.124',
     section: 'derivatives_of_m_i_z_with_respect_to_w_q',
-    label: "Equation 5.124",
+    label: "\u2202M^{z,2}/\u2202w",
     latex: String.raw`\partial_{w_q}\mathcal{M}_{e_2,ii}^{z,2} = \frac{2\dt \be}{3} d_{ii,jj,t_z,t_z}(e_2) \big|_{q=l_2(e_2,jj)}`,
     description: "",
     references: [],
@@ -4894,7 +4894,7 @@ export const equations = [
   {
     id: '5.125',
     section: 'derivatives_of_m_i_z_with_respect_to_p_q',
-    label: "Equation 5.125",
+    label: "\u2202M^{z}/\u2202p",
     latex: String.raw`\begin{aligned}
 \partial_{p_q}\mathcal{M}_i^z &= \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{p_q} \mathcal{M}_{e,ii}^{z,0a} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{p_q} \mathcal{M}_{e,ii}^{z,0b} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{p_q} \mathcal{M}_{e,ii}^{z,0c} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{p_q} \mathcal{M}_{e,ii}^{z,0d}
 &\quad + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{\bar{n}_{el}^1} \partial_{p_q} \mathcal{M}_{e_1,ii}^{z,1} + \frac{2\dt}{3} \partial_{p_q} \frac{\sigma^1(r_{J1},z_{J1}) \phi_i(r_{J1},z_{J1}) m_z^{1,n}(r_{J1},z_{J1})}{\ca}
@@ -4909,7 +4909,7 @@ export const equations = [
   {
     id: '5.126',
     section: 'derivatives_of_m_i_z_with_respect_to_p_q',
-    label: "Equation 5.126",
+    label: "\u2202M^{z}/\u2202p",
     latex: String.raw`\partial_{p_q}\mathcal{M}_i^z = \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{p_q} \mathcal{M}_{e,ii}^{z,0d}`,
     description: "",
     references: [],
@@ -4919,7 +4919,7 @@ export const equations = [
   {
     id: '5.127',
     section: 'derivatives_of_m_i_z_with_respect_to_p_q',
-    label: "Equation 5.127",
+    label: "\u2202M^{z,0d}/\u2202p",
     latex: String.raw`\partial_{p_q}\mathcal{M}_{e,ii}^{z,0d} = -\frac{2\dt}{3} \sum_{jj=1}^{n_p^e} b_{jj,ii}^z(e) \partial_{p_q} p_{l^p(e,jj)}`,
     description: "",
     references: ["5.93"],
@@ -4929,7 +4929,7 @@ export const equations = [
   {
     id: '5.128',
     section: 'derivatives_of_m_i_z_with_respect_to_p_q',
-    label: "Equation 5.128",
+    label: "\u2202M^{z,0d}/\u2202p",
     latex: String.raw`\partial_{p_q}\mathcal{M}_{e,ii}^{z,0d} = -\frac{2\dt}{3} b_{jj,ii}^z(e) \big|_{q=l^p(e,jj)}`,
     description: "",
     references: ["5.93"],
@@ -4939,7 +4939,7 @@ export const equations = [
   {
     id: '5.129',
     section: 'derivatives_of_m_i_z_with_respect_to_sig',
-    label: "Equation 5.129",
+    label: "\u2202M^{z}/\u2202\u03c3^1",
     latex: String.raw`\begin{aligned}
 \partial_{\sigma_q^1}\mathcal{M}_i^z &= \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\sigma_q^1} \mathcal{M}_{e,ii}^{z,0a} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\sigma_q^1} \mathcal{M}_{e,ii}^{z,0b} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\sigma_q^1} \mathcal{M}_{e,ii}^{z,0c} + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{\bar{n}_{el}^1} \partial_{\sigma_q^1} \mathcal{M}_{e_1,ii}^{z,0d}
 &\quad + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{\bar{n}_{el}^1} \partial_{\sigma_q^1} \mathcal{M}_{e_1,ii}^{z,1} + \frac{2\dt}{3} \partial_{\sigma_q^1} \frac{\sigma^1(r_{J1},z_{J1}) \phi_i(r_{J1},z_{J1}) m_z^{1,n}(r_{J1},z_{J1})}{\ca}
@@ -4954,7 +4954,7 @@ export const equations = [
   {
     id: '5.130',
     section: 'derivatives_of_m_i_z_with_respect_to_sig',
-    label: "Equation 5.130",
+    label: "\u2202M^{z}/\u2202\u03c3^1",
     latex: String.raw`\begin{aligned}
 \partial_{\sigma_q^1}\mathcal{M}_i^z &= \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{\bar{n}_{el}^1} \partial_{\sigma_q^1} \mathcal{M}_{e_1,ii}^{z,1}
 &\quad + \frac{2\dt}{3} \frac{\phi_i(r_{J1},z_{J1}) m_z^{1,n}(r_{J1},z_{J1})}{\ca} \partial_{\sigma_q^1} \sigma^1(r_{J1},z_{J1})
@@ -4968,7 +4968,7 @@ export const equations = [
   {
     id: '5.131',
     section: 'derivatives_of_m_i_z_with_respect_to_sig',
-    label: "Equation 5.131",
+    label: "\u2202M^{z}/\u2202\u03c3^1",
     latex: String.raw`\begin{aligned}
 \partial_{\sigma_q^1}\mathcal{M}_i^z &= \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{\bar{n}_{el}^1} \partial_{\sigma_q^1} \mathcal{M}_{e_1,ii}^{z,1}
 &\quad + \frac{2\dt}{3} \frac{\phi_i(r_{J1},z_{J1}) m_z^{1,n}(r_{J1},z_{J1})}{\ca} \big|_{q=J1} + \frac{2\dt}{3} \frac{\phi_i(r_a,z_a) m_z^{1}(r_a,z_a)}{\ca} \big|_{q=a}.
@@ -4981,7 +4981,7 @@ export const equations = [
   {
     id: '5.132',
     section: 'derivatives_of_m_i_z_with_respect_to_sig',
-    label: "Equation 5.132",
+    label: "\u2202M^{z,1}/\u2202\u03c3^1",
     latex: String.raw`\begin{aligned}
 \partial_{\sigma_q^1}\mathcal{M}_{e_1,ii}^{z,1} &= \frac{2\dt}{3\ca} \sum_{jj=1}^{n_v^{1,e_1}} c_{jj,ii,t_z}^s \partial_{\sigma_q^1} \sigma_{l_1(e_1,jj)}^1 - \frac{2\dt}{3} \sum_{jj=1}^{n_v^{1,e_1}} c_{ii,jj,n_z}(e_1) \partial_{\sigma_q^1} p_{l_1(e_1,jj)}^g,
 \end{aligned}`,
@@ -4993,7 +4993,7 @@ export const equations = [
   {
     id: '5.133',
     section: 'derivatives_of_m_i_z_with_respect_to_sig',
-    label: "Equation 5.133",
+    label: "\u2202M^{z,1}/\u2202\u03c3^1",
     latex: String.raw`\partial_{\sigma_q^1}\mathcal{M}_{e_1,ii}^{z,1} = \frac{2\dt}{3\ca} c_{jj,ii,t_z}^s \big|_{q=l_1(e_1,jj)}`,
     description: "",
     references: ["5.94"],
@@ -5003,7 +5003,7 @@ export const equations = [
   {
     id: '5.134',
     section: 'derivatives_of_m_i_z_with_respect_to_var',
-    label: "Equation 5.134",
+    label: "\u2202M^{z}/\u2202\u03b5^2",
     latex: String.raw`\begin{aligned}
 \partial_{\varepsilon_q^2}\mathcal{M}_i^z &= \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\varepsilon_q^2} \mathcal{M}_{e,ii}^{z,0a} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\varepsilon_q^2} \mathcal{M}_{e,ii}^{z,0b} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\varepsilon_q^2} \mathcal{M}_{e,ii}^{z,0c} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\varepsilon_q^2} \mathcal{M}_{e,ii}^{z,0d}
 &\quad + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{\bar{n}_{el}^1} \partial_{\varepsilon_q^2} \mathcal{M}_{e_1,ii}^{z,1} + \frac{2\dt}{3} \partial_{\varepsilon_q^2} \frac{\sigma^1(r_{J1},z_{J1}) \phi_i(r_{J1},z_{J1}) m_z^{1,n}(r_{J1},z_{J1})}{\ca}
@@ -5018,7 +5018,7 @@ export const equations = [
   {
     id: '5.135',
     section: 'derivatives_of_m_i_z_with_respect_to_var',
-    label: "Equation 5.135",
+    label: "\u2202M^{z}/\u2202\u03b5^2",
     latex: String.raw`\partial_{\varepsilon_q^2}\mathcal{M}_i^z = \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{\bar{n}_{el}^2} \partial_{\varepsilon_q^2} \mathcal{M}_{e_2,ii}^{z,2}`,
     description: "",
     references: [],
@@ -5028,7 +5028,7 @@ export const equations = [
   {
     id: '5.136',
     section: 'derivatives_of_m_i_z_with_respect_to_var',
-    label: "Equation 5.136",
+    label: "\u2202M^{z,2}/\u2202\u03b5^2",
     latex: String.raw`\begin{aligned}
 \partial_{\varepsilon_q^2}\mathcal{M}_{e_2,ii}^{z,2} &= \frac{2\dt \be}{3} \sum_{jj=1}^{n_v^{2,e_2}} d_{ii,jj,t_r,t_z}(e_2) \partial_{\varepsilon_q^2} u_{l_2(e_2,jj)}
 &\quad + \frac{2\dt \be}{3} \sum_{jj=1}^{n_v^{2,e_2}} d_{ii,jj,t_z,t_z}(e_2) \partial_{\varepsilon_q^2} w_{l_2(e_2,jj)}
@@ -5044,7 +5044,7 @@ export const equations = [
   {
     id: '5.137',
     section: 'derivatives_of_m_i_z_with_respect_to_var',
-    label: "Equation 5.137",
+    label: "\u2202M^{z,2}/\u2202\u03b5^2",
     latex: String.raw`\partial_{\varepsilon_q^2}\mathcal{M}_{e_2,ii}^{z,2} = -\frac{\dt}{3\ca} d_{ii,jj,t_z}^s(e_2) \big|_{q=l_2^2(e_2,jj)}`,
     description: "",
     references: [],
@@ -5054,7 +5054,7 @@ export const equations = [
   {
     id: '5.138',
     section: 'derivatives_of_m_i_z_with_respect_to_var',
-    label: "Equation 5.138",
+    label: "\u2202M^{z}/\u2202\u03c9^2",
     latex: String.raw`\begin{aligned}
 \partial_{\varpi_q^2}\mathcal{M}_i^z &= \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\varpi_q^2} \mathcal{M}_{e,ii}^{z,0a} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\varpi_q^2} \mathcal{M}_{e,ii}^{z,0b} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\varpi_q^2} \mathcal{M}_{e,ii}^{z,0c} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\varpi_q^2} \mathcal{M}_{e,ii}^{z,0d}
 &\quad + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{\bar{n}_{el}^1} \partial_{\varpi_q^2} \mathcal{M}_{e_1,ii}^{z,1} + \frac{2\dt}{3} \partial_{\varpi_q^2} \frac{\sigma^1(r_{J1},z_{J1}) \phi_i(r_{J1},z_{J1}) m_z^{1,n}(r_{J1},z_{J1})}{\ca}
@@ -5069,7 +5069,7 @@ export const equations = [
   {
     id: '5.139',
     section: 'derivatives_of_m_i_z_with_respect_to_var',
-    label: "Equation 5.139",
+    label: "\u2202M^{z}/\u2202\u03c9^2",
     latex: String.raw`\partial_{\varpi_q^2}\mathcal{M}_i^z = \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{\bar{n}_{el}^2} \partial_{\varpi_q^2} \mathcal{M}_{e_2,ii}^{z,2}`,
     description: "",
     references: [],
@@ -5079,7 +5079,7 @@ export const equations = [
   {
     id: '5.140',
     section: 'derivatives_of_m_i_z_with_respect_to_var',
-    label: "Equation 5.140",
+    label: "\u2202M^{z,2}/\u2202\u03c9^2",
     latex: String.raw`\begin{aligned}
 \partial_{\varpi_q^2}\mathcal{M}_{e_2,ii}^{z,2} &= \frac{2\dt \be}{3} \sum_{jj=1}^{n_v^{2,e_2}} d_{ii,jj,t_r,t_z}(e_2) \partial_{\varpi_q^2} u_{l_2(e_2,jj)}
 &\quad + \frac{2\dt \be}{3} \sum_{jj=1}^{n_v^{2,e_2}} d_{ii,jj,t_z,t_z}(e_2) \partial_{\varpi_q^2} w_{l_2(e_2,jj)}
@@ -5095,7 +5095,7 @@ export const equations = [
   {
     id: '5.141',
     section: 'derivatives_of_m_i_z_with_respect_to_var',
-    label: "Equation 5.141",
+    label: "\u2202M^{z,2}/\u2202\u03c9^2",
     latex: String.raw`\partial_{\varpi_q^2}\mathcal{M}_{e_2,ii}^{z,2} = \frac{2\dt}{3} d_{ii,jj,n_z}(e_2) \big|_{q=l_2^2(e_2,jj)}`,
     description: "",
     references: [],
@@ -5105,7 +5105,7 @@ export const equations = [
   {
     id: '5.142',
     section: 'derivatives_of_m_i_z_with_respect_to_lam',
-    label: "Equation 5.142",
+    label: "\u2202M^{z}/\u2202\u03bb^3",
     latex: String.raw`\begin{aligned}
 \partial_{\lambda_q^3}\mathcal{M}_i^z &= \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\lambda_q^3} \mathcal{M}_{e,ii}^{z,0a} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\lambda_q^3} \mathcal{M}_{e,ii}^{z,0b} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\lambda_q^3} \mathcal{M}_{e,ii}^{z,0c} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\lambda_q^3} \mathcal{M}_{e,ii}^{z,0d}
 &\quad + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{\bar{n}_{el}^1} \partial_{\lambda_q^3} \mathcal{M}_{e_1,ii}^{z,1} + \frac{2\dt}{3} \partial_{\lambda_q^3} \frac{\sigma^1(r_{J1},z_{J1}) \phi_i(r_{J1},z_{J1}) m_z^{1,n}(r_{J1},z_{J1})}{\ca}
@@ -5120,7 +5120,7 @@ export const equations = [
   {
     id: '5.143',
     section: 'derivatives_of_m_i_z_with_respect_to_lam',
-    label: "Equation 5.143",
+    label: "\u2202M^{z}/\u2202\u03bb^3",
     latex: String.raw`\partial_{\lambda_q^3}\mathcal{M}_i^z = \sum_{\substack{e_3=1\\ i=l_3(e_3,ii)}}^{\bar{n}_{el}^3} \partial_{\lambda_q^3} \mathcal{M}_{e_3,ii}^{z,3}`,
     description: "",
     references: [],
@@ -5130,7 +5130,7 @@ export const equations = [
   {
     id: '5.144',
     section: 'derivatives_of_m_i_z_with_respect_to_lam',
-    label: "Equation 5.144",
+    label: "\u2202M^{z,3}/\u2202\u03bb^3",
     latex: String.raw`\begin{aligned}
 \partial_{\lambda_q^3}\mathcal{M}_{e_3,ii}^{z,3} &= \frac{2\dt}{3} \sum_{jj=1}^{n_v^{3,e_3}} f_{ii,jj,n_z}(e_3) \partial_{\lambda_q^3} \lambda_{l_3(e_3,jj)}^3
 &\quad + \frac{2\dt}{3} \sum_{jj=1}^{n_v^{3,e_3}} f_{ii,jj,t_z}(e_3) \partial_{\lambda_q^3} \gamma_{l_3(e_3,jj)}^3,
@@ -5143,7 +5143,7 @@ export const equations = [
   {
     id: '5.145',
     section: 'derivatives_of_m_i_z_with_respect_to_lam',
-    label: "Equation 5.145",
+    label: "\u2202M^{z,3}/\u2202\u03bb^3",
     latex: String.raw`\partial_{\lambda_q^3}\mathcal{M}_{e_3,ii}^{z,3} = \frac{2\dt}{3} f_{ii,jj,n_z}(e_3) \big|_{q=l_3(e_3,jj)}`,
     description: "",
     references: ["5.96"],
@@ -5153,7 +5153,7 @@ export const equations = [
   {
     id: '5.146',
     section: 'derivatives_of_m_i_z_with_respect_to_gam',
-    label: "Equation 5.146",
+    label: "\u2202M^{z}/\u2202\u03b3^3",
     latex: String.raw`\begin{aligned}
 \partial_{\gamma_q^3}\mathcal{M}_i^z &= \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\gamma_q^3} \mathcal{M}_{e,ii}^{z,0a} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\gamma_q^3} \mathcal{M}_{e,ii}^{z,0b} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\gamma_q^3} \mathcal{M}_{e,ii}^{z,0c} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\gamma_q^3} \mathcal{M}_{e,ii}^{z,0d}
 &\quad + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{\bar{n}_{el}^1} \partial_{\gamma_q^3} \mathcal{M}_{e_1,ii}^{z,1} + \frac{2\dt}{3} \partial_{\gamma_q^3} \frac{\sigma^1(r_{J1},z_{J1}) \phi_i(r_{J1},z_{J1}) m_z^{1,n}(r_{J1},z_{J1})}{\ca}
@@ -5168,7 +5168,7 @@ export const equations = [
   {
     id: '5.147',
     section: 'derivatives_of_m_i_z_with_respect_to_gam',
-    label: "Equation 5.147",
+    label: "\u2202M^{z}/\u2202\u03b3^3",
     latex: String.raw`\partial_{\gamma_q^3}\mathcal{M}_i^z = \sum_{\substack{e_3=1\\ i=l_3(e_3,ii)}}^{\bar{n}_{el}^3} \partial_{\gamma_q^3} \mathcal{M}_{e_3,ii}^{z,3}`,
     description: "",
     references: [],
@@ -5178,7 +5178,7 @@ export const equations = [
   {
     id: '5.148',
     section: 'derivatives_of_m_i_z_with_respect_to_gam',
-    label: "Equation 5.148",
+    label: "\u2202M^{z,3}/\u2202\u03b3^3",
     latex: String.raw`\begin{aligned}
 \partial_{\gamma_q^3}\mathcal{M}_{e_3,ii}^{z,3} &= \frac{2\dt}{3} \sum_{jj=1}^{n_v^{3,e_3}} f_{ii,jj,n_z}(e_3) \partial_{\gamma_q^3} \lambda_{l_3(e_3,jj)}^3
 &\quad + \frac{2\dt}{3} \sum_{jj=1}^{n_v^{3,e_3}} f_{ii,jj,t_z}(e_3) \partial_{\gamma_q^3} \gamma_{l_3(e_3,jj)}^3,
@@ -5191,7 +5191,7 @@ export const equations = [
   {
     id: '5.149',
     section: 'derivatives_of_m_i_z_with_respect_to_gam',
-    label: "Equation 5.149",
+    label: "\u2202M^{z,3}/\u2202\u03b3^3",
     latex: String.raw`\partial_{\gamma_q^3}\mathcal{M}_{e_3,ii}^{z,3} = \frac{2\dt}{3} f_{ii,jj,t_z}(e_3) \big|_{q=l_3(e_3,jj)}`,
     description: "",
     references: ["5.96"],
@@ -5201,7 +5201,7 @@ export const equations = [
   {
     id: '5.150',
     section: 'derivatives_of_m_i_z_with_respect_to_lam',
-    label: "Equation 5.150",
+    label: "\u2202M^{z}/\u2202\u03bb^4",
     latex: String.raw`\begin{aligned}
 \partial_{\lambda_q^4}\mathcal{M}_i^z &= \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\lambda_q^4} \mathcal{M}_{e,ii}^{z,0a} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\lambda_q^4} \mathcal{M}_{e,ii}^{z,0b} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\lambda_q^4} \mathcal{M}_{e,ii}^{z,0c} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\lambda_q^4} \mathcal{M}_{e,ii}^{z,0d}
 &\quad + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{\bar{n}_{el}^1} \partial_{\lambda_q^4} \mathcal{M}_{e_1,ii}^{z,1} + \frac{2\dt}{3} \partial_{\lambda_q^4} \frac{\sigma^1(r_{J1},z_{J1}) \phi_i(r_{J1},z_{J1}) m_z^{1,n}(r_{J1},z_{J1})}{\ca}
@@ -5216,7 +5216,7 @@ export const equations = [
   {
     id: '5.151',
     section: 'derivatives_of_m_i_z_with_respect_to_lam',
-    label: "Equation 5.151",
+    label: "\u2202M^{z}/\u2202\u03bb^4",
     latex: String.raw`\partial_{\lambda_q^4}\mathcal{M}_i^z = \sum_{\substack{e_4=1\\ i=l_4(e_4,ii)}}^{\bar{n}_{el}^4} \partial_{\lambda_q^4} \mathcal{M}_{e_4,ii}^{z,4}`,
     description: "",
     references: [],
@@ -5226,7 +5226,7 @@ export const equations = [
   {
     id: '5.152',
     section: 'derivatives_of_m_i_z_with_respect_to_lam',
-    label: "Equation 5.152",
+    label: "\u2202M^{z,4}/\u2202\u03bb^4",
     latex: String.raw`\begin{aligned}
 \partial_{\lambda_q^4}\mathcal{M}_{e_4,ii}^{z,4} &= \frac{2\dt}{3} \sum_{jj=1}^{n_v^{4,e_4}} e_{ii,jj,n_z}(e_4) \partial_{\lambda_q^4} \lambda_{l_4(e_4,jj)}^4
 &\quad + \frac{2\dt}{3} \sum_{jj=1}^{n_v^{4,e_4}} e_{ii,jj,t_z}(e_4) \partial_{\lambda_q^4} \gamma_{l_4(e_4,jj)}^4,
@@ -5239,7 +5239,7 @@ export const equations = [
   {
     id: '5.153',
     section: 'derivatives_of_m_i_z_with_respect_to_lam',
-    label: "Equation 5.153",
+    label: "\u2202M^{z,4}/\u2202\u03bb^4",
     latex: String.raw`\partial_{\lambda_q^4}\mathcal{M}_{e_4,ii}^{z,4} = \frac{2\dt}{3} e_{ii,jj,n_z}(e_4) \big|_{q=l_4(e_4,jj)}`,
     description: "",
     references: ["5.97"],
@@ -5249,7 +5249,7 @@ export const equations = [
   {
     id: '5.154',
     section: 'derivatives_of_m_i_z_with_respect_to_gam',
-    label: "Equation 5.154",
+    label: "\u2202M^{z}/\u2202\u03b3^4",
     latex: String.raw`\begin{aligned}
 \partial_{\gamma_q^4}\mathcal{M}_i^z &= \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\gamma_q^4} \mathcal{M}_{e,ii}^{z,0a} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\gamma_q^4} \mathcal{M}_{e,ii}^{z,0b} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{\gamma_q^4} \mathcal{M}_{e,ii}^{z,0c} + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{\bar{n}_{el}^1} \partial_{\gamma_q^4} \mathcal{M}_{e_1,ii}^{z,0d}
 &\quad + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{\bar{n}_{el}^1} \partial_{\gamma_q^4} \mathcal{M}_{e_1,ii}^{z,1} + \frac{2\dt}{3} \partial_{\gamma_q^4} \frac{\sigma^1(r_{J1},z_{J1}) \phi_i(r_{J1},z_{J1}) m_z^{1,n}(r_{J1},z_{J1})}{\ca}
@@ -5264,7 +5264,7 @@ export const equations = [
   {
     id: '5.155',
     section: 'derivatives_of_m_i_z_with_respect_to_gam',
-    label: "Equation 5.155",
+    label: "\u2202M^{z}/\u2202\u03b3^4",
     latex: String.raw`\partial_{\gamma_q^4}\mathcal{M}_i^z = \sum_{\substack{e_4=1\\ i=l_4(e_4,ii)}}^{\bar{n}_{el}^4} \partial_{\gamma_q^4} \mathcal{M}_{e_4,ii}^{z,4}`,
     description: "",
     references: [],
@@ -5274,7 +5274,7 @@ export const equations = [
   {
     id: '5.156',
     section: 'derivatives_of_m_i_z_with_respect_to_gam',
-    label: "Equation 5.156",
+    label: "\u2202M^{z,4}/\u2202\u03b3^4",
     latex: String.raw`\begin{aligned}
 \partial_{\gamma_q^4}\mathcal{M}_{e_4,ii}^{z,4} &= \frac{2\dt}{3} \sum_{jj=1}^{n_v^{4,e_4}} e_{ii,jj,n_z}(e_4) \partial_{\gamma_q^4} \lambda_{l_4(e_4,jj)}^4
 &\quad + \frac{2\dt}{3} \sum_{jj=1}^{n_v^{4,e_4}} e_{ii,jj,t_z}(e_4) \partial_{\gamma_q^4} \gamma_{l_4(e_4,jj)}^4,
@@ -5287,7 +5287,7 @@ export const equations = [
   {
     id: '5.157',
     section: 'derivatives_of_m_i_z_with_respect_to_gam',
-    label: "Equation 5.157",
+    label: "\u2202M^{z,4}/\u2202\u03b3^4",
     latex: String.raw`\partial_{\gamma_q^4}\mathcal{M}_{e_4,ii}^{z,4} = \frac{2\dt}{3} e_{ii,jj,t_z}(e_4) \big|_{q=l_4(e_4,jj)}`,
     description: "",
     references: ["5.97"],
@@ -5297,7 +5297,7 @@ export const equations = [
   {
     id: '5.158',
     section: 'derivatives_of_m_i_z_with_respect_to_h_q',
-    label: "Equation 5.158",
+    label: "\u2202M^{z}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_i^z &= \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{h_q} \mathcal{M}_{e,ii}^{z,0a} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{h_q} \mathcal{M}_{e,ii}^{z,0b} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{h_q} \mathcal{M}_{e,ii}^{z,0c} + \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \partial_{h_q} \mathcal{M}_{e,ii}^{z,0d}
 &\quad + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{\bar{n}_{el}^1} \partial_{h_q} \mathcal{M}_{e_1,ii}^{z,1} + \frac{2\dt}{3} \frac{\sigma^1(r_{j1},z_{j1}) \phi_i(r_{j1},z_{j1})}{\ca} \partial_{h_q} m_z^{1,n}(r_{j1},z_{j1})
@@ -5312,7 +5312,7 @@ export const equations = [
   {
     id: '5.159',
     section: 'derivatives_of_m_i_z_with_respect_to_h_q',
-    label: "Equation 5.159",
+    label: "\u2202M^{z,0a}/\u2202h",
     latex: String.raw`\partial_{h_q}\mathcal{M}_{e,ii}^{z,0a} = -\frac{2\dt St}{3} \partial_{h_q} a_{ii,g_z}(e)`,
     description: "",
     references: ["5.90"],
@@ -5322,7 +5322,7 @@ export const equations = [
   {
     id: '5.160',
     section: 'derivatives_of_m_i_z_with_respect_to_h_q',
-    label: "Equation 5.160",
+    label: "\u2202M^{z,0a}/\u2202h",
     latex: String.raw`\partial_{h_q}\mathcal{M}_{e,ii}^{z,0a} = -\frac{2\dt St}{3} \partial_{h_{S(e,qq)}} a_{ii,g_z}(e) \big|_{q=S(e,qq)}`,
     description: "From equation (5.90) and passing to local spine numbers",
     references: ["5.90"],
@@ -5332,7 +5332,7 @@ export const equations = [
   {
     id: '5.161',
     section: 'derivatives_of_m_i_z_with_respect_to_h_q',
-    label: "Equation 5.161",
+    label: "\u2202M^{z,0b}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e,ii}^{z,0b} &= \frac{2\dt}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} \partial_{h_q} a_{ii,jj}^{r,z}(e) + \sum_{jj=1}^{n_v^e} \frac{2\dt}{3} w_{l(e,jj)} \partial_{h_q} a_{ii,jj}^{r,r}(e)
 &\quad + \frac{4\dt}{3} \sum_{jj=1}^{n_v^e} w_{l(e,jj)} \partial_{h_q} a_{ii,jj}^{z,z}(e) + Re \sum_{jj=1}^{n_v^e} w_{l(e,jj)} \partial_{h_q} a_{ii,jj}(e)
@@ -5346,7 +5346,7 @@ export const equations = [
   {
     id: '5.162',
     section: 'derivatives_of_m_i_z_with_respect_to_h_q',
-    label: "Equation 5.162",
+    label: "\u2202M^{z,0b}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e,ii}^{z,0b} &= \sum_{jj=1}^{n_v^e} \Bigg\{ \frac{2\dt}{3} \left[ u_{l(e,jj)} \partial_{h_q} a_{ii,jj}^{r,z}(e) + w_{l(e,jj)} \left( \partial_{h_q} a_{ii,jj}^{r,r}(e) + 2 \partial_{h_q} a_{ii,jj}^{z,z}(e) \right) \right]
 &\quad + Re\, \partial_{h_q} a_{ii,jj}(e) \left[ w_{l(e,jj)} - \frac{4}{3} w_{l(e,jj)}(t_{n-1}) + \frac{1}{3} w_{l(e,jj)}(t_{n-2}) \right] \Bigg\},
@@ -5359,7 +5359,7 @@ export const equations = [
   {
     id: '5.163',
     section: 'derivatives_of_m_i_z_with_respect_to_h_q',
-    label: "Equation 5.163",
+    label: "\u2202M^{z,0b}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e,ii}^{z,0b} &= \sum_{\substack{jj=1\\ q=S(e,qq)}}^{n_v^e} \Bigg\{ \frac{2\dt}{3} \left[ u_{l(e,jj)} \partial_{h_{S(e,qq)}} a_{ii,jj}^{r,z}(e) \right.
 &\quad \left. + w_{l(e,jj)} \left( \partial_{h_{S(e,qq)}} a_{ii,jj}^{r,r}(e) + 2 \partial_{h_{S(e,qq)}} a_{ii,jj}^{z,z}(e) \right) \right]
@@ -5373,7 +5373,7 @@ export const equations = [
   {
     id: '5.164',
     section: 'derivatives_of_m_i_z_with_respect_to_h_q',
-    label: "Equation 5.164",
+    label: "\u2202M^{z,0c}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e,ii}^{z,0c} &= \frac{2\dt Re}{3} \sum_{jj=1}^{n_v^e} w_{l(e,jj)} \sum_{kk=1}^{n_v^e} u_{l(e,kk)} \partial_{h_q} a_{ii,kk,jj}^r(e)
 &\quad + \frac{2\dt Re}{3} \sum_{jj=1}^{n_v^e} w_{l(e,jj)} \sum_{kk=1}^{n_v^e} w_{l(e,kk)} \partial_{h_q} a_{ii,kk,jj}^z(e)
@@ -5394,7 +5394,7 @@ export const equations = [
   {
     id: '5.165',
     section: 'derivatives_of_m_i_z_with_respect_to_h_q',
-    label: "Equation 5.165",
+    label: "\u2202M^{z,0c}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e,ii}^{z,0c} &= \sum_{jj=1}^{n_v^e} Re\, w_{l(e,jj)} \Bigg\{ \frac{2\dt}{3} \sum_{kk=1}^{n_v^e} \left( u_{l(e,kk)} \partial_{h_q} a_{ii,kk,jj}^r(e) + w_{l(e,kk)} \partial_{h_q} a_{ii,kk,jj}^z(e) \right)
 &\quad - \sum_{kk=1}^{n_v^e} \left[ a_{ii,kk,jj}^r(e) \partial_{h_q} r_{l(e,kk)}^c + \partial_{h_q} a_{ii,kk,jj}^r(e) \left( r_{l(e,kk)}^c - \frac{4}{3} r_{l(e,kk)}^c(t_{n-1}) + \frac{1}{3} r_{l(e,kk)}^c(t_{n-2}) \right) \right]
@@ -5408,7 +5408,7 @@ export const equations = [
   {
     id: '5.166',
     section: 'derivatives_of_m_i_z_with_respect_to_h_q',
-    label: "Equation 5.166",
+    label: "\u2202M^{z,0c}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e,ii}^{z,0c} &= \sum_{\substack{jj=1\\ q=S(e,qq)}}^{n_v^e} Re\, w_{l(e,jj)} \Bigg\{ \frac{2\dt}{3} \sum_{kk=1}^{n_v^e} \left( u_{l(e,kk)} \partial_{h_{S(e,qq)}} a_{ii,kk,jj}^r(e) + w_{l(e,kk)} \partial_{h_{S(e,qq)}} a_{ii,kk,jj}^z(e) \right)
 &\quad - \sum_{kk=1}^{n_v^e} \left[ a_{ii,kk,jj}^r(e) \partial_{h_{S(e,qq)}} r_{l(e,kk)}^c + \partial_{h_{S(e,qq)}} a_{ii,kk,jj}^r(e) \left( r_{l(e,kk)}^c - \frac{4}{3} r_{l(e,kk)}^c(t_{n-1}) + \frac{1}{3} r_{l(e,kk)}^c(t_{n-2}) \right) \right]
@@ -5422,7 +5422,7 @@ export const equations = [
   {
     id: '5.167',
     section: 'derivatives_of_m_i_z_with_respect_to_h_q',
-    label: "Equation 5.167",
+    label: "\u2202M^{z,0d}/\u2202h",
     latex: String.raw`\partial_{h_q}\mathcal{M}_{e,ii}^{z,0d} = -\frac{2\dt}{3} \sum_{jj=1}^{n_p^e} p_{l^p(e,jj)} \partial_{h_q} b_{jj,ii}^z(e)`,
     description: "",
     references: ["5.93"],
@@ -5432,7 +5432,7 @@ export const equations = [
   {
     id: '5.168',
     section: 'derivatives_of_m_i_z_with_respect_to_h_q',
-    label: "Equation 5.168",
+    label: "\u2202M^{z,0d}/\u2202h",
     latex: String.raw`\partial_{h_q}\mathcal{M}_{e,ii}^{z,0d} = -\frac{2\dt}{3} \sum_{\substack{jj=1\\ q=S(e,qq)}}^{n_p^e} p_{l^p(e,jj)} \partial_{h_{S(e,qq)}} b_{jj,ii}^z(e)`,
     description: "Now, from equation (5.93), we have and passing to local spine numbers we have",
     references: ["5.93"],
@@ -5442,7 +5442,7 @@ export const equations = [
   {
     id: '5.169',
     section: 'derivatives_of_m_i_z_with_respect_to_h_q',
-    label: "Equation 5.169",
+    label: "\u2202M^{z,1}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_1,ii}^{z,1} &= \frac{2\dt}{3\ca} \sum_{jj=1}^{n_v^{1,e_1}} \sigma_{l_1(e_1,jj)}^1 \partial_{h_q} c_{jj,ii,t_z}(e_1)
 &\quad - \frac{2\dt}{3} \sum_{jj=1}^{n_v^{1,e_1}} p_{l_1(e_1,jj)}^g \partial_{h_q} c_{ii,jj,n_z}(e_1),
@@ -5455,7 +5455,7 @@ export const equations = [
   {
     id: '5.170',
     section: 'derivatives_of_m_i_z_with_respect_to_h_q',
-    label: "Equation 5.170",
+    label: "\u2202M^{z,1}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_1,ii}^{z,1} &= \sum_{jj=1}^{n_v^{1,e_1}} \frac{2\dt}{3} \left( \frac{1}{\ca} \sigma_{l_1(e_1,jj)}^1 \partial_{h_q} c_{jj,ii,t_z}(e_1) - p_{l_1(e_1,jj)}^g \partial_{h_q} c_{ii,jj,n_z}(e_1) \right),
 \end{aligned}`,
@@ -5467,7 +5467,7 @@ export const equations = [
   {
     id: '5.171',
     section: 'derivatives_of_m_i_z_with_respect_to_h_q',
-    label: "Equation 5.171",
+    label: "\u2202M^{z,1}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_1,ii}^{z,1} &= \sum_{\substack{jj=1\\ q=S_1(e_1,qq)}}^{n_v^{1,e_1}} \frac{2\dt}{3} \left( \frac{1}{\ca} \sigma_{l_1(e_1,jj)}^1 \partial_{h_{S_1(e_1,qq)}} c_{jj,ii,t_z}(e_1) - p_{l_1(e_1,jj)}^g \partial_{h_{S_1(e_1,qq)}} c_{ii,jj,n_z}(e_1) \right).
 \end{aligned}`,
@@ -5479,7 +5479,7 @@ export const equations = [
   {
     id: '5.172',
     section: 'derivatives_of_m_i_z_with_respect_to_h_q',
-    label: "Equation 5.172",
+    label: "\u2202M^{z,2}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_2,ii}^{z,2} &= \frac{2\dt \be}{3} \sum_{jj=1}^{n_v^{2,e_2}} u_{l_2(e_2,jj)} \partial_{h_q} d_{ii,jj,t_r,t_z}(e_2)
 &\quad + \frac{2\dt \be}{3} \sum_{jj=1}^{n_v^{2,e_2}} w_{l_2(e_2,jj)} \partial_{h_q} d_{ii,jj,t_z,t_z}(e_2)
@@ -5496,7 +5496,7 @@ export const equations = [
   {
     id: '5.173',
     section: 'derivatives_of_m_i_z_with_respect_to_h_q',
-    label: "Equation 5.173",
+    label: "\u2202M^{z,2}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_2,ii}^{z,2} &= \sum_{jj=1}^{n_v^{2,e_2}} \frac{2\dt}{3} \Bigg[ \be \left( \partial_{h_q} d_{ii,jj,t_r,t_z}(e_2) \{ u_{l_2(e_2,jj)} - u_{l_2^2(e_2,jj)}^s \} \right.
 &\quad \left. + \partial_{h_q} d_{ii,jj,t_z,t_z}(e_2) \{ w_{l_2(e_2,jj)} - w_{l_2^2(e_2,jj)}^s \} \right)
@@ -5510,7 +5510,7 @@ export const equations = [
   {
     id: '5.174',
     section: 'derivatives_of_m_i_z_with_respect_to_h_q',
-    label: "Equation 5.174",
+    label: "\u2202M^{z,2}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_2,ii}^{z,2} &= \sum_{\substack{jj=1\\ q=S_2(e_2,qq)}}^{n_v^{2,e_2}} \frac{2\dt}{3} \Bigg[ \be \left( \partial_{h_{S_2(e_2,qq)}} d_{ii,jj,t_r,t_z}(e_2) \{ u_{l_2(e_2,jj)} - u_{l_2^2(e_2,jj)}^s \} \right.
 &\quad \left. + \partial_{h_{S_2(e_2,qq)}} d_{ii,jj,t_z,t_z}(e_2) \{ w_{l_2(e_2,jj)} - w_{l_2^2(e_2,jj)}^s \} \right)
@@ -5525,7 +5525,7 @@ export const equations = [
   {
     id: '5.175',
     section: 'derivatives_of_m_i_z_with_respect_to_h_q',
-    label: "Equation 5.175",
+    label: "\u2202M^{z,3}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_3,ii}^{z,3} &= \frac{2\dt}{3} \sum_{jj=1}^{n_v^{3,e_3}} \lambda_{l_3(e_3,jj)}^3 \partial_{h_q} f_{ii,jj,n_z}(e_3)
 &\quad + \frac{2\dt}{3} \sum_{jj=1}^{n_v^{3,e_3}} \gamma_{l_3(e_3,jj)}^3 \partial_{h_q} f_{ii,jj,t_z}(e_3),
@@ -5538,7 +5538,7 @@ export const equations = [
   {
     id: '5.176',
     section: 'derivatives_of_m_i_z_with_respect_to_h_q',
-    label: "Equation 5.176",
+    label: "\u2202M^{z,3}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_3,ii}^{z,3} &= \sum_{jj=1}^{n_v^{3,e_3}} \frac{2\dt}{3} \left[ \lambda_{l_3(e_3,jj)}^3 \partial_{h_q} f_{ii,jj,n_z}(e_3) + \gamma_{l_3(e_3,jj)}^3 \partial_{h_q} f_{ii,jj,t_z}(e_3) \right],
 \end{aligned}`,
@@ -5550,7 +5550,7 @@ export const equations = [
   {
     id: '5.177',
     section: 'derivatives_of_m_i_z_with_respect_to_h_q',
-    label: "Equation 5.177",
+    label: "\u2202M^{z,3}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_3,ii}^{z,3} &= \sum_{\substack{jj=1\\ q=S_3(e_3,qq)}}^{n_v^{3,e_3}} \frac{2\dt}{3} \left[ \lambda_{l_3(e_3,jj)}^3 \partial_{h_{S_3(e_3,qq)}} f_{ii,jj,n_z}(e_3) + \gamma_{l_3(e_3,jj)}^3 \partial_{h_{S_3(e_3,qq)}} f_{ii,jj,t_z}(e_3) \right].
 \end{aligned}`,
@@ -5562,7 +5562,7 @@ export const equations = [
   {
     id: '5.178',
     section: 'derivatives_of_m_i_z_with_respect_to_h_q',
-    label: "Equation 5.178",
+    label: "\u2202M^{z,4}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_4,ii}^{z,4} &= \frac{2\dt}{3} \sum_{jj=1}^{n_v^{4,e_4}} \lambda_{l_4(e_4,jj)}^4 \partial_{h_q} e_{ii,jj,n_z}(e_4)
 &\quad + \frac{2\dt}{3} \sum_{jj=1}^{n_v^{4,e_4}} \gamma_{l_4(e_4,jj)}^4 \partial_{h_q} e_{ii,jj,t_z}(e_4),
@@ -5575,7 +5575,7 @@ export const equations = [
   {
     id: '5.179',
     section: 'derivatives_of_m_i_z_with_respect_to_h_q',
-    label: "Equation 5.179",
+    label: "\u2202M^{z,4}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_4,ii}^{z,4} &= \sum_{jj=1}^{n_v^{4,e_4}} \frac{2\dt}{3} \left[ \lambda_{l_4(e_4,jj)}^4 \partial_{h_q} e_{ii,jj,n_z}(e_4) + \gamma_{l_4(e_4,jj)}^4 \partial_{h_q} e_{ii,jj,t_z}(e_4) \right],
 \end{aligned}`,
@@ -5587,7 +5587,7 @@ export const equations = [
   {
     id: '5.180',
     section: 'derivatives_of_m_i_z_with_respect_to_h_q',
-    label: "Equation 5.180",
+    label: "\u2202M^{z,4}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q}\mathcal{M}_{e_4,ii}^{z,4} &= \sum_{\substack{jj=1\\ q=S_4(e_4,qq)}}^{n_v^{4,e_4}} \frac{2\dt}{3} \left[ \lambda_{l_4(e_4,jj)}^4 \partial_{h_{S_4(e_4,qq)}} e_{ii,jj,n_z}(e_4) + \gamma_{l_4(e_4,jj)}^4 \partial_{h_{S_4(e_4,qq)}} e_{ii,jj,t_z}(e_4) \right].
 \end{aligned}`,
@@ -5702,7 +5702,7 @@ export const equations = [
   {
     id: '6.11',
     section: 'derivatives_of_c_i_with_respect_to_u_q',
-    label: "Equation 6.11",
+    label: "\u2202C/\u2202u",
     latex: String.raw`\partial_{u_q} \mathcal{C}_i = \sum_{e=n_{el,s}}^{n_{el}} \partial_{u_q} \mathcal{C}_{e,ii}`,
     description: "Where % 6.1 We now consider the derivatives of with respect to , and",
     references: ["6.9"],
@@ -5712,7 +5712,7 @@ export const equations = [
   {
     id: '6.12',
     section: 'derivatives_of_c_i_with_respect_to_u_q',
-    label: "Equation 6.12",
+    label: "\u2202C/\u2202u",
     latex: String.raw`\begin{aligned}
 \partial_{u_q} \mathcal{C}_{e,ii} &= \sum_{jj=1}^{n_v^e} \left[ b_{ii,jj}^r(e) \partial_{u_q} u_{l(e,jj)} + b_{ii,jj}^z(e) \partial_{u_q} w_{l(e,jj)} \right],
 \end{aligned}`,
@@ -5724,7 +5724,7 @@ export const equations = [
   {
     id: '6.13',
     section: 'derivatives_of_c_i_with_respect_to_u_q',
-    label: "Equation 6.13",
+    label: "\u2202C/\u2202u",
     latex: String.raw`\partial_{u_q} \mathcal{C}_{e,ii} = b_{ii,jj}^r(e) \big|_{q=l(e,jj)}`,
     description: "SubsectionJacobian terms % 6.1 We now consider the derivatives of with respect to , and",
     references: ["6.10", "6.9"],
@@ -5734,7 +5734,7 @@ export const equations = [
   {
     id: '6.14',
     section: 'derivatives_of_c_i_with_respect_to_w_q',
-    label: "Equation 6.14",
+    label: "\u2202C/\u2202w",
     latex: String.raw`\partial_{w_q} \mathcal{C}_i = \sum_{e=n_{el,s}}^{n_{el}} \partial_{w_q} \mathcal{C}_{e,ii}`,
     description: "",
     references: ["6.10", "6.9"],
@@ -5744,7 +5744,7 @@ export const equations = [
   {
     id: '6.15',
     section: 'derivatives_of_c_i_with_respect_to_w_q',
-    label: "Equation 6.15",
+    label: "\u2202C/\u2202w",
     latex: String.raw`\begin{aligned}
 \partial_{w_q} \mathcal{C}_{e,ii} &= \sum_{jj=1}^{n_v^e} \left[ b_{ii,jj}^r(e) \partial_{w_q} u_{l(e,jj)} + b_{ii,jj}^z(e) \partial_{w_q} w_{l(e,jj)} \right],
 \end{aligned}`,
@@ -5756,7 +5756,7 @@ export const equations = [
   {
     id: '6.16',
     section: 'derivatives_of_c_i_with_respect_to_w_q',
-    label: "Equation 6.16",
+    label: "\u2202C/\u2202w",
     latex: String.raw`\partial_{w_q} \mathcal{C}_{e,ii} = b_{ii,jj}^z(e) \big|_{q=l(e,jj)}`,
     description: "",
     references: ["6.10", "6.9"],
@@ -5766,7 +5766,7 @@ export const equations = [
   {
     id: '6.17',
     section: 'derivatives_of_c_i_with_respect_to_h_q',
-    label: "Equation 6.17",
+    label: "\u2202C/\u2202h",
     latex: String.raw`\partial_{h_q} \mathcal{C}_i = \sum_{e=n_{el,s}}^{n_{el}} \partial_{h_q} \mathcal{C}_{e,ii}`,
     description: "",
     references: ["6.10", "6.9"],
@@ -5776,7 +5776,7 @@ export const equations = [
   {
     id: '6.18',
     section: 'derivatives_of_c_i_with_respect_to_h_q',
-    label: "Equation 6.18",
+    label: "\u2202C/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} \mathcal{C}_{e,ii} &= \sum_{jj=1}^{n_v^e} \left[ u_{l(e,jj)} \partial_{h_q} b_{ii,jj}^r(e) + w_{l(e,jj)} \partial_{h_q} b_{ii,jj}^z(e) \right],
 \end{aligned}`,
@@ -5788,7 +5788,7 @@ export const equations = [
   {
     id: '6.19',
     section: 'derivatives_of_c_i_with_respect_to_h_q',
-    label: "Equation 6.19",
+    label: "\u2202C/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} \mathcal{C}_{e,ii} &= \sum_{jj=1}^{n_v^e} \left[ u_{l(e,jj)} \partial_{h_{S(e,qq)}} b_{ii,jj}^r(e) + w_{l(e,jj)} \partial_{h_{S(e,qq)}} b_{ii,jj}^z(e) \right].
 \end{aligned}`,
@@ -6114,7 +6114,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '7.24',
     section: 'derivatives_of_s_i_2_with_respect_to_u_q',
-    label: "Equation 7.24",
+    label: "\u2202S^{2}/\u2202u",
     latex: String.raw`\begin{aligned}
 \partial_{u_q} \mathcal{S}_i^2 &= E_s \phi_i^2(r_c,z_c) \partial_{u_q} \varepsilon^2(r_c,z_c) - E_s \phi_i^2(r_o,z_o) \partial_{u_q} \varepsilon^2(r_o,z_o)
 &\quad + \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{n_{el}^2} \partial_{u_q} \mathcal{S}_{e_2,ii}^2,
@@ -6127,7 +6127,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '7.25',
     section: 'derivatives_of_s_i_2_with_respect_to_u_q',
-    label: "Equation 7.25",
+    label: "\u2202S^{2}/\u2202u",
     latex: String.raw`\begin{aligned}
 \partial_{u_q} \mathcal{S}_{e_2,ii}^2 &= \sum_{jj=1}^{n_v^{2,e_2}} \partial_{u_q} u_{l_2(e_2,jj)}^{s2} d_{ii,jj,t_r}(e_2) + \sum_{jj=1}^{n_v^{2,e_2}} \partial_{u_q} w_{l_2(e_2,jj)}^{s2} d_{ii,jj,t_z}(e_2)
 &\quad - \frac{1}{2} \sum_{jj=1}^{n_v^{2,e_2}} \partial_{u_q} u_{l_2(e_2,jj)} d_{ii,jj,t_r}(e_2) - \frac{1}{2} \sum_{jj=1}^{n_v^{2,e_2}} \partial_{u_q} w_{l_2(e_2,jj)} d_{ii,jj,t_z}(e_2)
@@ -6142,7 +6142,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '7.26',
     section: 'derivatives_of_s_i_2_with_respect_to_u_q',
-    label: "Equation 7.26",
+    label: "\u2202S^{2}/\u2202u",
     latex: String.raw`\partial_{u_q} \mathcal{S}_{e_2,ii}^2 = -\frac{1}{2} d_{ii,jj,t_r}(e_2) \big|_{q=l_2(e_2,jj)}`,
     description: "",
     references: [],
@@ -6152,7 +6152,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '7.27',
     section: 'derivatives_of_s_i_2_with_respect_to_w_q',
-    label: "Equation 7.27",
+    label: "\u2202S^{2}/\u2202w",
     latex: String.raw`\begin{aligned}
 \partial_{w_q} \mathcal{S}_i^2 &= E_s \phi_i^2(r_c,z_c) \partial_{w_q} \varepsilon^2(r_c,z_c) - E_s \phi_i^2(r_o,z_o) \partial_{w_q} \varepsilon^2(r_o,z_o)
 &\quad + \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{n_{el}^2} \partial_{w_q} \mathcal{S}_{e_2,ii}^2,
@@ -6165,7 +6165,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '7.28',
     section: 'derivatives_of_s_i_2_with_respect_to_w_q',
-    label: "Equation 7.28",
+    label: "\u2202S^{2}/\u2202w",
     latex: String.raw`\begin{aligned}
 \partial_{w_q} \mathcal{S}_{e_2,ii}^2 &= \sum_{jj=1}^{n_v^{2,e_2}} \partial_{w_q} u_{l_2(e_2,jj)}^{s2} d_{ii,jj,t_r}(e_2) + \sum_{jj=1}^{n_v^{2,e_2}} \partial_{w_q} w_{l_2(e_2,jj)}^{s2} d_{ii,jj,t_z}(e_2)
 &\quad - \frac{1}{2} \sum_{jj=1}^{n_v^{2,e_2}} \partial_{w_q} u_{l_2(e_2,jj)} d_{ii,jj,t_r}(e_2) - \frac{1}{2} \sum_{jj=1}^{n_v^{2,e_2}} \partial_{w_q} w_{l_2(e_2,jj)} d_{ii,jj,t_z}(e_2)
@@ -6180,7 +6180,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '7.29',
     section: 'derivatives_of_s_i_2_with_respect_to_w_q',
-    label: "Equation 7.29",
+    label: "\u2202S^{2}/\u2202w",
     latex: String.raw`\partial_{w_q} \mathcal{S}_{e_2,ii}^2 = -\frac{1}{2} d_{ii,jj,t_z}(e_2) \big|_{q=l_2(e_2,jj)}`,
     description: "",
     references: [],
@@ -6266,7 +6266,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '7.36',
     section: 'derivatives_of_s_i_2_with_respect_to_var',
-    label: "Equation 7.36",
+    label: "\u2202S^{2}/\u2202\u03b5^2",
     latex: String.raw`\begin{aligned}
 \partial_{\varepsilon_q^2} \mathcal{S}_i^2 &= E_s \phi_i^2(r_c,z_c) \partial_{\varepsilon_q^2} \varepsilon^2(r_c,z_c) - E_s \phi_i^2(r_o,z_o) \partial_{\varepsilon_q^2} \varepsilon^2(r_o,z_o)
 &\quad + \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{n_{el}^2} \partial_{\varepsilon_q^2} \mathcal{S}_{e_2,ii}^2,
@@ -6279,7 +6279,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '7.37',
     section: 'derivatives_of_s_i_2_with_respect_to_var',
-    label: "Equation 7.37",
+    label: "\u2202S^{2}/\u2202\u03b5^2",
     latex: String.raw`\begin{aligned}
 \partial_{\varepsilon_q^2} \mathcal{S}_{e_2,ii}^2 &= \sum_{jj=1}^{n_v^{2,e_2}} \partial_{\varepsilon_q^2} u_{l_2(e_2,jj)}^{s2} d_{ii,jj,t_r}(e_2) + \sum_{jj=1}^{n_v^{2,e_2}} \partial_{\varepsilon_q^2} w_{l_2(e_2,jj)}^{s2} d_{ii,jj,t_z}(e_2)
 &\quad - \frac{1}{2} \sum_{jj=1}^{n_v^{2,e_2}} \partial_{\varepsilon_q^2} u_{l_2(e_2,jj)} d_{ii,jj,t_r}(e_2) - \frac{1}{2} \sum_{jj=1}^{n_v^{2,e_2}} \partial_{\varepsilon_q^2} w_{l_2(e_2,jj)} d_{ii,jj,t_z}(e_2)
@@ -6294,7 +6294,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '7.38',
     section: 'derivatives_of_s_i_2_with_respect_to_var',
-    label: "Equation 7.38",
+    label: "\u2202S^{2}/\u2202\u03b5^2",
     latex: String.raw`\partial_{\varepsilon_q^2} \mathcal{S}_{e_2,ii}^2 = E_s d_{jj,ii}^s(e_2) \big|_{q=l_2^2(e_2,jj)}`,
     description: "",
     references: [],
@@ -6304,7 +6304,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '7.39',
     section: 'derivatives_of_s_i_2_with_respect_to_h_q',
-    label: "Equation 7.39",
+    label: "\u2202S^{2}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} \mathcal{S}_i^2 &= E_s \phi_i^2(r_c,z_c) \partial_{h_q} \varepsilon^2(r_c,z_c) - E_s \phi_i^2(r_o,z_o) \partial_{h_q} \varepsilon^2(r_o,z_o)
 &\quad + \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{n_{el}^2} \partial_{h_q} \mathcal{S}_{e_2,ii}^2,
@@ -6317,7 +6317,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '7.40',
     section: 'derivatives_of_s_i_2_with_respect_to_h_q',
-    label: "Equation 7.40",
+    label: "\u2202S^{2}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} \mathcal{S}_{e_2,ii}^2 &= \sum_{jj=1}^{n_v^{2,e_2}} u_{l_2(e_2,jj)}^{s2} \partial_{h_q} d_{ii,jj,t_r}(e_2) + \sum_{jj=1}^{n_v^{2,e_2}} w_{l_2(e_2,jj)}^{s2} \partial_{h_q} d_{ii,jj,t_z}(e_2)
 &\quad - \frac{1}{2} \sum_{jj=1}^{n_v^{2,e_2}} u_{l_2(e_2,jj)} \partial_{h_q} d_{ii,jj,t_r}(e_2) - \frac{1}{2} \sum_{jj=1}^{n_v^{2,e_2}} w_{l_2(e_2,jj)} \partial_{h_q} d_{ii,jj,t_z}(e_2)
@@ -6332,7 +6332,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '7.41',
     section: 'derivatives_of_s_i_2_with_respect_to_h_q',
-    label: "Equation 7.41",
+    label: "\u2202S^{2}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} \mathcal{S}_{e_2,ii}^2 &= \sum_{jj=1}^{n_v^{2,e_2}} \Bigg[ \partial_{h_q} d_{ii,jj,t_r}(e_2) \left( u_{l_2(e_2,jj)}^{s2} - \frac{1}{2} u_{l_2(e_2,jj)} - \frac{1}{2} u_{l_2^2(e_2,jj)}^s \right)
 &\quad + \partial_{h_q} d_{ii,jj,t_z}(e_2) \left( w_{l_2(e_2,jj)}^{s2} - \frac{1}{2} w_{l_2(e_2,jj)} - \frac{1}{2} w_{l_2^2(e_2,jj)}^s \right)
@@ -6346,7 +6346,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '7.41',
     section: 'derivatives_of_s_i_2_with_respect_to_h_q',
-    label: "Equation 7.41",
+    label: "\u2202S^{2}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} \mathcal{S}_{e_2,ii}^2 &= \sum_{\substack{jj=1\\ q=S_2(e_2,qq)}}^{n_v^{2,e_2}} \Bigg[ \partial_{h_{S_2(e_2,qq)}} d_{ii,jj,t_r}(e_2) \left( u_{l_2(e_2,jj)}^{s2} - \frac{1}{2} u_{l_2(e_2,jj)} - \frac{1}{2} u_{l_2^2(e_2,jj)}^s \right)
 &\quad + \partial_{h_{S_2(e_2,qq)}} d_{ii,jj,t_z}(e_2) \left( w_{l_2(e_2,jj)}^{s2} - \frac{1}{2} w_{l_2(e_2,jj)} - \frac{1}{2} w_{l_2^2(e_2,jj)}^s \right)
@@ -6622,7 +6622,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '8.23',
     section: 'derivatives_of_i_i_with_respect_to_h_q',
-    label: "Equation 8.23",
+    label: "\u2202I/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} \mathcal{I}_i &= \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{n_{el}^2} \sum_{jj=1}^{n_v^{2,e_2}} \partial_{h_q} \Bigg[ u_{l_2(e_2,jj)}^{s2} d_{ii,jj,n_r}(e_2) + w_{l_2(e_2,jj)}^{s2} d_{ii,jj,n_z}(e_2)
 &\quad - u_{l_2(e_2,jj)}^s d_{ii,jj,n_r}(e_2) - w_{l_2(e_2,jj)}^s d_{ii,jj,n_z}(e_2) \Bigg].
@@ -6635,7 +6635,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '8.24',
     section: 'derivatives_of_i_i_with_respect_to_h_q',
-    label: "Equation 8.24",
+    label: "\u2202I/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} \mathcal{I}_i &= \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)\\ q=S_2(e_2,qq)}}^{n_{el}^2} \sum_{jj=1}^{n_v^{2,e_2}} \Bigg[ u_{l_2(e_2,jj)}^{s2} \partial_{h_{S_2(e_2,qq)}} d_{ii,jj,n_r}(e_2)
 &\quad + w_{l_2(e_2,jj)}^{s2} \partial_{h_{S_2(e_2,qq)}} d_{ii,jj,n_z}(e_2)
@@ -6649,7 +6649,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '8.25',
     section: 'derivatives_of_i_i_with_respect_to_h_q',
-    label: "Equation 8.25",
+    label: "\u2202I/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} \mathcal{I}_i &= \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)\\ q=S_2(e_2,qq)}}^{n_{el}^2} \sum_{jj=1}^{n_v^{2,e_2}} \Bigg[ \partial_{h_{S_2(e_2,qq)}} d_{ii,jj,n_r}(e_2) \left( u_{l_2(e_2,jj)}^{s2} - u_{l_2(e_2,jj)}^s \right)
 &\quad + \partial_{h_{S_2(e_2,qq)}} d_{ii,jj,n_z}(e_2) \left( w_{l_2(e_2,jj)}^{s2} - w_{l_2(e_2,jj)}^s \right) \Bigg].
@@ -6893,7 +6893,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.19',
     section: 'derivatives_of_s_i_1_with_respect_to_u_q',
-    label: "Equation 12.19",
+    label: "\u2202S^{1}/\u2202u",
     latex: String.raw`\begin{aligned}
 \partial_{u_q} \mathcal{S}_i^1 &= \frac{1 + 4 E_g B_g}{4 B_g} \phi_i^1(r_c,z_c) \partial_{u_q} \sigma^1(r_c,z_c) - \frac{1 + 4 E_g B_g}{4 B_g} \phi_i^1(r_a,z_a) \partial_{u_q} \sigma^1(r_a,z_a)
 &\quad + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{n_{el}^1} \partial_{u_q} \mathcal{S}_{e_1,ii}^1.
@@ -6906,7 +6906,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.20',
     section: 'derivatives_of_s_i_1_with_respect_to_u_q',
-    label: "Equation 12.20",
+    label: "\u2202S^{1}/\u2202u",
     latex: String.raw`\begin{aligned}
 \partial_{u_q} \mathcal{S}_{e_1,ii}^1 &= \sum_{jj=1}^{n_v^{1,e_1}} \partial_{u_q} u_{l_1(e_1,jj)}^{s1} c_{ii,jj,t_r}(e_1) + \sum_{jj=1}^{n_v^{1,e_1}} \partial_{u_q} w_{l_1(e_1,jj)}^{s1} c_{ii,jj,t_z}(e_1)
 &\quad - \sum_{jj=1}^{n_v^{1,e_1}} c_{ii,jj,t_r}(e_1) \partial_{u_q} u_{l_1(e_1,jj)} - \sum_{jj=1}^{n_v^{1,e_1}} \partial_{u_q} w_{l_1(e_1,jj)} c_{ii,jj,t_z}(e_1)
@@ -6920,7 +6920,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.21',
     section: 'derivatives_of_s_i_1_with_respect_to_u_q',
-    label: "Equation 12.21",
+    label: "\u2202S^{1}/\u2202u",
     latex: String.raw`\partial_{u_q} \mathcal{S}_{e_1,ii}^1 = - c_{ii,jj,t_r}(e_1) \big|_{q=l_1(e_1,jj)}`,
     description: "",
     references: ["12.16"],
@@ -6930,7 +6930,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.22',
     section: 'derivatives_of_s_i_1_with_respect_to_w_q',
-    label: "Equation 12.22",
+    label: "\u2202S^{1}/\u2202w",
     latex: String.raw`\begin{aligned}
 \partial_{w_q} \mathcal{S}_i^1 &= \frac{1 + 4 E_g B_g}{4 B_g} \phi_i^1(r_c,z_c) \partial_{w_q} \sigma^1(r_c,z_c) - \frac{1 + 4 E_g B_g}{4 B_g} \phi_i^1(r_a,z_a) \partial_{w_q} \sigma^1(r_a,z_a)
 &\quad + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{n_{el}^1} \partial_{w_q} \mathcal{S}_{e_1,ii}^1.
@@ -6943,7 +6943,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.23',
     section: 'derivatives_of_s_i_1_with_respect_to_w_q',
-    label: "Equation 12.23",
+    label: "\u2202S^{1}/\u2202w",
     latex: String.raw`\begin{aligned}
 \partial_{w_q} \mathcal{S}_{e_1,ii}^1 &= \sum_{jj=1}^{n_v^{1,e_1}} \partial_{w_q} u_{l_1(e_1,jj)}^{s1} c_{ii,jj,t_r}(e_1) + \sum_{jj=1}^{n_v^{1,e_1}} \partial_{w_q} w_{l_1(e_1,jj)}^{s1} c_{ii,jj,t_z}(e_1)
 &\quad - \sum_{jj=1}^{n_v^{1,e_1}} c_{ii,jj,t_r}(e_1) \partial_{w_q} u_{l_1(e_1,jj)} - \sum_{jj=1}^{n_v^{1,e_1}} \partial_{w_q} w_{l_1(e_1,jj)} c_{ii,jj,t_z}(e_1)
@@ -6957,7 +6957,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.24',
     section: 'derivatives_of_s_i_1_with_respect_to_w_q',
-    label: "Equation 12.24",
+    label: "\u2202S^{1}/\u2202w",
     latex: String.raw`\partial_{w_q} \mathcal{S}_{e_1,ii}^1 = - c_{ii,jj,t_z}(e_1) \big|_{q=l_1(e_1,jj)}`,
     description: "",
     references: ["12.16"],
@@ -7041,7 +7041,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.31',
     section: 'derivatives_of_s_i_1_with_respect_to_sig',
-    label: "Equation 12.31",
+    label: "\u2202S^{1}/\u2202\u03c3^1",
     latex: String.raw`\begin{aligned}
 \partial_{\sigma_q^1} \mathcal{S}_i^1 &= \frac{1 + 4 E_g B_g}{4 B_g} \phi_i^1(r_c,z_c) \partial_{\sigma_q^1} \sigma^1(r_c,z_c) - \frac{1 + 4 E_g B_g}{4 B_g} \phi_i^1(r_a,z_a) \partial_{\sigma_q^1} \sigma^1(r_a,z_a)
 &\quad + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)\\ q=S_1(e_1,qq)}}^{n_{el}^1} \partial_{\sigma_q^1} \mathcal{S}_{e_1,ii}^1.
@@ -7054,7 +7054,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.32',
     section: 'derivatives_of_s_i_1_with_respect_to_sig',
-    label: "Equation 12.32",
+    label: "\u2202S^{1}/\u2202\u03c3^1",
     latex: String.raw`\begin{aligned}
 \partial_{\sigma_q^1} \mathcal{S}_{e_1,ii}^1 &= \sum_{jj=1}^{n_v^{1,e_1}} \partial_{\sigma_q^1} u_{l_1(e_1,jj)}^{s1} c_{ii,jj,t_r}(e_1) + \sum_{jj=1}^{n_v^{1,e_1}} \partial_{\sigma_q^1} w_{l_1(e_1,jj)}^{s1} c_{ii,jj,t_z}(e_1)
 &\quad - \sum_{jj=1}^{n_v^{1,e_1}} \partial_{\sigma_q^1} u_{l_1(e_1,jj)} c_{ii,jj,t_r}(e_1) - \sum_{jj=1}^{n_v^{1,e_1}} \partial_{\sigma_q^1} w_{l_1(e_1,jj)} c_{ii,jj,t_z}(e_1)
@@ -7068,7 +7068,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.33',
     section: 'derivatives_of_s_i_1_with_respect_to_sig',
-    label: "Equation 12.33",
+    label: "\u2202S^{1}/\u2202\u03c3^1",
     latex: String.raw`\partial_{\sigma_q^1} \mathcal{S}_{e_1,ii}^1 = \frac{1 + 4 E_g B_g}{4 B_g} c_{jj,ii}^s(e_1) \big|_{q=l_1(e_1,jj)}`,
     description: "",
     references: [],
@@ -7078,7 +7078,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.34',
     section: 'derivatives_of_s_i_1_with_respect_to_h_q',
-    label: "Equation 12.34",
+    label: "\u2202S^{1}/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} \mathcal{S}_i^1 &= \frac{1 + 4 E_g B_g}{4 B_g} \phi_i^1(r_c,z_c) \partial_{h_q} \sigma^1(r_c,z_c) - \frac{1 + 4 E_g B_g}{4 B_g} \phi_i^1(r_a,z_a) \partial_{h_q} \sigma^1(r_a,z_a)
 &\quad + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)\\ q=S_1(e_1,qq)}}^{n_{el}^1} \partial_{h_{S_1(e_1,qq)}} \mathcal{S}_{e_1,ii}^1.
@@ -7338,7 +7338,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '13.20',
     section: 'derivatives_of_k_i_with_respect_to_h_q',
-    label: "Equation 13.20",
+    label: "\u2202K/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} \mathcal{K}_i &= \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{n_{el}^1} \sum_{jj=1}^{n_v^{1,e_1}} \partial_{h_q} \Bigg[ \frac{2\dt}{3} \left( u_{l_1(e_1,jj)}^{s1} c_{ii,jj,n_r}(e_1) + w_{l_1(e_1,jj)}^{s1} c_{ii,jj,n_z}(e_1) \right)
 &\quad - \left( r_{l_1(e_1,jj)}^c c_{ii,jj,n_r}(e_1) + z_{l_1(e_1,jj)}^c c_{ii,jj,n_z}(e_1) \right)
@@ -7353,7 +7353,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '13.21',
     section: 'derivatives_of_k_i_with_respect_to_h_q',
-    label: "Equation 13.21",
+    label: "\u2202K/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} \mathcal{K}_i &= \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{n_{el}^1} \sum_{jj=1}^{n_v^{1,e_1}} \Bigg[ \frac{2\dt}{3} \left( u_{l_1(e_1,jj)}^{s1} \partial_{h_q} c_{ii,jj,n_r}(e_1) + w_{l_1(e_1,jj)}^{s1} \partial_{h_q} c_{ii,jj,n_z}(e_1) \right)
 &\quad - \left( r_{l_1(e_1,jj)}^c \partial_{h_q} c_{ii,jj,n_r}(e_1) + z_{l_1(e_1,jj)}^c \partial_{h_q} c_{ii,jj,n_z}(e_1) \right)
@@ -7369,7 +7369,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '13.22',
     section: 'derivatives_of_k_i_with_respect_to_h_q',
-    label: "Equation 13.22",
+    label: "\u2202K/\u2202h",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} \mathcal{K}_i &= \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)\\ q=S_1(e_1,qq)}}^{n_{el}^1} \sum_{jj=1}^{n_v^{1,e_1}} \Bigg[ \frac{2\dt}{3} \left( u_{l_1(e_1,jj)}^{s1} \partial_{h_{S_1(e_1,qq)}} c_{ii,jj,n_r}(e_1) + w_{l_1(e_1,jj)}^{s1} \partial_{h_{S_1(e_1,qq)}} c_{ii,jj,n_z}(e_1) \right)
 &\quad - \left( r_{l_1(e_1,jj)}^c \partial_{h_{S_1(e_1,qq)}} c_{ii,jj,n_r}(e_1) + z_{l_1(e_1,jj)}^c \partial_{h_{S_1(e_1,qq)}} c_{ii,jj,n_z}(e_1) \right)
@@ -7385,7 +7385,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '13.23',
     section: 'derivatives_of_k_i_with_respect_to_h_q',
-    label: "Equation 13.23",
+    label: "\u2202K/\u2202h",
     latex: String.raw`\partial_{h_q} \mathcal{K}_i = \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)\\ q=S_1(e_1,qq)}}^{n_{el}^1} \partial_{h_{S_1(e_1,qq)}} \mathcal{K}_{e_1,ii}`,
     description: "",
     references: [],
@@ -7476,7 +7476,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     id: '17.6',
     section: 'z_momentum_residuals',
     label: "Equation 17.6",
-    latex: String.raw`\hat{M}_i^z = \sum_{e = 1}^{n_{cl}}\hat{M}_{e,ii}^z +\sum_{e = 1}^{n_{cl}^1}\hat{M}_{e,ii}^z +\sum_{e = 1}^{n_{cl}^{2}}\hat{M}_{e,ii}^{z,2}`,
+    latex: String.raw`\hat{M}_i^z = \sum_{e = 1}^{n_{el}}\hat{M}_{e,ii}^z +\sum_{e = 1}^{n_{el}^1}\hat{M}_{e,ii}^z +\sum_{e = 1}^{n_{el}^{2}}\hat{M}_{e,ii}^{z,2}`,
     description: "",
     references: [],
     transform: null,
@@ -7977,7 +7977,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.38',
     section: 'jacobian_with_explicit_zero_blocks',
-    label: "Equation 18.38",
+    label: "\u2202M^{r}/\u2202\u03c9^2",
     latex: String.raw`\partial_{\omega^2} \hat{M}^r = 0`,
     description: "We highlight that when boundary 2 is a straight line parallel to the axis, we also have",
     references: [],
@@ -7987,7 +7987,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.39-40',
     section: 'jacobian_with_explicit_zero_blocks',
-    label: "Equation 18.39-40",
+    label: "\u2202M^{r}/\u2202\u03b5^3",
     latex: String.raw`\partial_{\epsilon^3} \hat{M}^r = 0, \qquad \partial_{\omega^3} \hat{M}^z = 0`,
     description: "We highlight that when boundary 2 is a straight line parallel to the axis, we also have and when boundary 3 is a straight line parallel to the axis, we also have",
     references: [],
