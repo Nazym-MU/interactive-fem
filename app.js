@@ -7,6 +7,13 @@ import { equations as allEquations, sections } from './equations.js';
 // Filter out equations that shouldn't appear in the main flow (like jacobian entries)
 const equations = allEquations.filter(e => !e.hidden);
 
+// ---- Performance: Lazy rendering constants ----
+const WINDOW_SIZE = 20;        // render current ± this many
+const cardCache = new Map();   // idx -> fully rendered HTMLElement
+const allCards = [];           // placeholder/rendered card refs (indexed by equation idx)
+const allDividers = [];        // section divider elements (sparse, indexed by eq idx)
+const allTransforms = [];      // transform annotation elements (sparse, indexed by eq idx)
+
 // ---- State ----
 const state = {
   currentIdx: -1,          // index in the equations array
@@ -36,6 +43,15 @@ const compareTop     = document.getElementById('compare-top');
 const compareBottom  = document.getElementById('compare-bottom');
 const btnCompareClose = document.getElementById('btn-compare-close');
 const btnCompareGoto  = document.getElementById('btn-compare-goto');
+
+// Chapter comparison panel
+const chapterComparePanel   = document.getElementById('chapter-compare-panel');
+const chapterCompareOverlay = document.getElementById('chapter-compare-overlay');
+const chapterCompareLeft    = document.getElementById('chapter-compare-left');
+const chapterCompareRight   = document.getElementById('chapter-compare-right');
+const chapterCompareLeftTitle  = document.getElementById('chapter-compare-left-title');
+const chapterCompareRightTitle = document.getElementById('chapter-compare-right-title');
+const btnChapterCompareClose   = document.getElementById('btn-chapter-compare-close');
 
 // ---- Wait for KaTeX to load ----
 function waitForKatex() {
@@ -82,7 +98,7 @@ const latexMacros = {
   "\\del": "\\partial"
 };
 
-// ---- Render a single equation card ----
+// ---- Render a single equation card (full, with KaTeX) ----
 function renderEquation(eq, idx) {
   const card = document.createElement('div');
   card.className = 'eq-card';
@@ -107,7 +123,7 @@ function renderEquation(eq, idx) {
   // Math
   const mathDiv = document.createElement('div');
   mathDiv.className = 'eq-math';
-  
+
   let renderLatex = eq.latex;
   if (eq.id === '18.1' || eq.id === '18.37') {
     const jacobianMap = {
@@ -146,7 +162,6 @@ function renderEquation(eq, idx) {
           link.title = `View equation ${targetId}`;
           link.addEventListener('click', (e) => {
             e.stopPropagation();
-            // Show the matrix in Current, and the block in Derives From
             openComparison(eq, targetId);
           });
         }
@@ -191,13 +206,46 @@ function renderEquation(eq, idx) {
   card.style.cursor = 'pointer';
   card.title = 'Click to focus this equation';
   card.addEventListener('click', (e) => {
-    // Only go to if they didn't click on a ref link or jacobian link
     if (!e.target.closest('.eq-ref-link') && !e.target.closest('.jacob-link-item')) {
       goTo(idx);
     }
   });
 
   return card;
+}
+
+// ---- Create lightweight placeholder ----
+function createPlaceholder(eq, idx) {
+  const ph = document.createElement('div');
+  ph.className = 'eq-card eq-placeholder';
+  ph.id = `eq-${eq.id}`;
+  ph.dataset.idx = idx;
+  ph.dataset.eqId = eq.id;
+  ph.style.display = 'none';
+  return ph;
+}
+
+// ---- Ensure a card at idx is fully rendered (lazy KaTeX) ----
+function ensureRendered(idx) {
+  if (cardCache.has(idx)) return;
+  const eq = equations[idx];
+  const rendered = renderEquation(eq, idx);
+  // Replace placeholder in DOM
+  const placeholder = allCards[idx];
+  placeholder.replaceWith(rendered);
+  allCards[idx] = rendered;
+  cardCache.set(idx, rendered);
+}
+
+// ---- Render equations within window around centerIdx ----
+function renderWindow(centerIdx) {
+  const start = Math.max(0, centerIdx - WINDOW_SIZE);
+  const end = Math.min(equations.length - 1, centerIdx + WINDOW_SIZE);
+  for (let i = start; i <= end; i++) {
+    if (i <= state.revealedUpTo) {
+      ensureRendered(i);
+    }
+  }
 }
 
 // ---- Insert transform annotation between cards ----
@@ -219,16 +267,39 @@ function renderSectionDivider(section) {
   const div = document.createElement('div');
   div.className = 'section-divider';
   div.id = `section-${section.id}`;
+
+  // Check if this section has a parallel chapter
+  const pair = parallelChapters.find(p => p.left === section.id || p.right === section.id);
+  const compareBtn = pair ? `<button class="section-compare-btn" data-left="${pair.left}" data-right="${pair.right}" title="Compare with parallel chapter">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="18" rx="1"/><rect x="14" y="3" width="7" height="18" rx="1"/></svg>
+    Compare
+  </button>` : '';
+
   div.innerHTML = `
     <span class="section-title">
       ${section.title}
       ${section.subtitle ? `<span class="section-subtitle">${section.subtitle}</span>` : ''}
     </span>
+    ${compareBtn}
   `;
+
+  // Attach event listener for compare button
+  if (pair) {
+    setTimeout(() => {
+      const btn = div.querySelector('.section-compare-btn');
+      if (btn) {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          openChapterComparison(btn.dataset.left, btn.dataset.right);
+        });
+      }
+    }, 0);
+  }
+
   return div;
 }
 
-// ---- Build all cards (hidden initially) ----
+// ---- Build all cards as placeholders (fast, no KaTeX) ----
 async function buildFlow() {
   await waitForKatex();
 
@@ -243,6 +314,7 @@ async function buildFlow() {
         const divider = renderSectionDivider(sec);
         divider.style.display = 'none';
         flow.appendChild(divider);
+        allDividers[idx] = divider;
       }
     }
 
@@ -252,11 +324,13 @@ async function buildFlow() {
       transform.style.display = 'none';
       transform.dataset.forIdx = idx;
       flow.appendChild(transform);
+      allTransforms[idx] = transform;
     }
 
-    // Equation card
-    const card = renderEquation(eq, idx);
-    flow.appendChild(card);
+    // Lightweight placeholder (no KaTeX rendering)
+    const placeholder = createPlaceholder(eq, idx);
+    flow.appendChild(placeholder);
+    allCards[idx] = placeholder;
   });
 
   // Build timeline dots
@@ -275,31 +349,46 @@ function goTo(idx) {
   state.currentIdx = idx;
   if (idx > state.revealedUpTo) state.revealedUpTo = idx;
 
-  // Update all cards
-  const cards = flow.querySelectorAll('.eq-card');
-  cards.forEach((card, i) => {
+  // Lazy-render equations in the visible window
+  renderWindow(idx);
+
+  // Only update cards in the visible window + a small buffer
+  const updateStart = Math.max(0, idx - WINDOW_SIZE - 5);
+  const updateEnd = Math.min(equations.length - 1, idx + WINDOW_SIZE + 5);
+
+  for (let i = updateStart; i <= updateEnd; i++) {
+    const card = allCards[i];
     card.classList.remove('current', 'faded', 'entering');
 
     if (i <= state.revealedUpTo) {
       // Show section dividers and transforms
-      showElementsBefore(card);
+      showElementsBefore(i);
       card.style.display = '';
 
       if (i === idx) {
         card.classList.add('visible', 'current');
         if (i > prevIdx) card.classList.add('entering');
-      } else if (i < idx) {
-        card.classList.add('visible', 'faded');
       } else {
         card.classList.add('visible', 'faded');
       }
     } else {
       card.style.display = 'none';
     }
-  });
+  }
+
+  // Hide cards far outside the window that were previously visible
+  // (for performance: collapse them so browser doesn't layout them)
+  for (let i = 0; i < updateStart; i++) {
+    const card = allCards[i];
+    if (i <= state.revealedUpTo && card.style.display !== 'none') {
+      // Keep them in DOM but collapsed for scroll position
+      card.classList.remove('current', 'entering');
+      card.classList.add('visible', 'faded');
+    }
+  }
 
   // Scroll to current
-  const currentCard = document.getElementById(`eq-${equations[idx].id}`);
+  const currentCard = allCards[idx];
   if (currentCard) {
     setTimeout(() => {
       currentCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -310,20 +399,18 @@ function goTo(idx) {
   clearReferenceHighlight();
 }
 
-function showElementsBefore(card) {
+function showElementsBefore(idx) {
   // Show preceding section-divider and transform annotation
-  let prev = card.previousElementSibling;
-  while (prev && !prev.classList.contains('eq-card')) {
-    prev.style.display = '';
-    if (prev.classList.contains('section-divider')) {
-      prev.style.opacity = '1';
-    }
-    prev = prev.previousElementSibling;
-  }
+  if (allDividers[idx]) allDividers[idx].style.display = '';
+  if (allTransforms[idx]) allTransforms[idx].style.display = '';
 }
 
 function next() { goTo(state.currentIdx + 1); }
 function prev() { goTo(state.currentIdx - 1); }
+
+// ---- Cached timeline/TOC arrays for fast access ----
+let timelineDotArray = [];
+let tocItemArray = [];
 
 // ---- Update UI state ----
 function updateUI() {
@@ -343,25 +430,27 @@ function updateUI() {
   btnPrev.disabled = idx === 0;
   btnNext.disabled = idx === total - 1;
 
-  // Timeline dots
-  timelineDots.querySelectorAll('.timeline-dot').forEach((dot, i) => {
-    dot.classList.remove('active', 'visited');
-    if (i === idx) dot.classList.add('active');
-    else if (i <= state.revealedUpTo) dot.classList.add('visited');
-  });
+  // Timeline dots - use cached array
+  if (timelineDotArray.length > 0) {
+    // Only update previously active, current, and nearby dots
+    timelineDotArray.forEach((dot, i) => {
+      dot.classList.remove('active');
+      if (i === idx) dot.classList.add('active');
+      else if (i <= state.revealedUpTo) dot.classList.add('visited');
+    });
+  }
 
-  // TOC
-  tocList.querySelectorAll('.toc-item').forEach(item => {
-    item.classList.remove('active');
-    if (item.dataset.idx === String(idx)) item.classList.add('active');
+  // TOC - use cached array, update only active
+  tocItemArray.forEach(item => {
+    item.classList.toggle('active', item.dataset.idx === String(idx));
   });
 }
 
 // ---- Timeline ----
 function buildTimeline() {
   timelineDots.innerHTML = '';
-  // For 200+ equations, show section markers + nearby dots
   const showAll = equations.length <= 40;
+  timelineDotArray = [];
 
   equations.forEach((eq, idx) => {
     const dot = document.createElement('div');
@@ -370,17 +459,16 @@ function buildTimeline() {
     dot.title = `(${eq.id}) ${eq.label}`;
     dot.addEventListener('click', () => goTo(idx));
 
-    // Mark section starts
     if (idx === 0 || eq.section !== equations[idx - 1].section) {
       dot.classList.add('section-start');
     }
 
-    // Hide dots if too many (show only section starts)
     if (!showAll && idx > 0 && eq.section === equations[idx - 1]?.section) {
       dot.style.display = 'none';
     }
 
     timelineDots.appendChild(dot);
+    timelineDotArray[idx] = dot;
   });
 }
 
@@ -388,6 +476,7 @@ function buildTimeline() {
 function buildTOC() {
   tocList.innerHTML = '';
   let currentSection = null;
+  tocItemArray = [];
 
   equations.forEach((eq, idx) => {
     if (eq.section !== currentSection) {
@@ -397,7 +486,6 @@ function buildTOC() {
         const secLabel = document.createElement('div');
         secLabel.className = 'toc-section-label';
         secLabel.textContent = sec.title;
-        // Make section label clickable to jump to first eq in section
         secLabel.style.cursor = 'pointer';
         secLabel.addEventListener('click', () => {
           goTo(idx);
@@ -416,6 +504,7 @@ function buildTOC() {
       closeTOC();
     });
     tocList.appendChild(item);
+    tocItemArray[idx] = item;
   });
 }
 
@@ -440,16 +529,12 @@ function openComparison(currentEq, refId) {
   if (!refEq) return;
   compareTargetId = refId;
 
-  // Fill top side (referenced equation, older)
   fillCompareCard(compareTop, refEq, 'Derives from');
-  // Fill bottom side (current equation, newer)
   fillCompareCard(compareBottom, currentEq, 'Current');
 
-  // Arrow label
   const arrowLabel = comparePanel.querySelector('.compare-arrow-label');
   arrowLabel.textContent = 'builds to';
 
-  // Show panel
   comparePanel.classList.remove('hidden');
   compareOverlay.classList.remove('hidden');
   requestAnimationFrame(() => {
@@ -537,25 +622,157 @@ function showRefLine(fromId, toId) {
   line.classList.add('ref-line');
   refLinesSvg.appendChild(line);
 
-  // Animate in
   requestAnimationFrame(() => line.classList.add('visible'));
 
-  // Also softly highlight the target
   toCard.classList.add('referenced');
   toCard.classList.remove('faded');
 }
 
 function hideRefLines() {
   refLinesSvg.innerHTML = '';
-  // Remove referenced class from non-active refs
-  flow.querySelectorAll('.eq-card.referenced').forEach(card => {
+  // Only clear the specific referenced card tracked in state
+  if (state.activeRef) return; // Don't clear if we have an active ref
+  document.querySelectorAll('.eq-card.referenced').forEach(card => {
+    card.classList.remove('referenced');
     const eqId = card.dataset.eqId;
-    if (eqId !== state.activeRef) {
-      card.classList.remove('referenced');
-      const idx = equations.findIndex(e => e.id === eqId);
-      if (idx < state.currentIdx) card.classList.add('faded');
-    }
+    const idx = equations.findIndex(e => e.id === eqId);
+    if (idx >= 0 && idx < state.currentIdx) card.classList.add('faded');
   });
+}
+
+// ---- Parallel chapters for side-by-side comparison ----
+const parallelChapters = [
+  { left: 'the_r_momentum_residuals', right: 'the_z_momentum_equation', label: 'r-momentum vs z-momentum' },
+  { left: 'derivatives_of_m_i_r_with_respect_to_u_q', right: 'derivatives_of_m_i_z_with_respect_to_u_q', label: 'dM^r/du vs dM^z/du' },
+  { left: 'derivatives_of_m_i_r_with_respect_to_w_q', right: 'derivatives_of_m_i_z_with_respect_to_w_q', label: 'dM^r/dw vs dM^z/dw' },
+  { left: 'derivatives_of_m_i_r_with_respect_to_p_q', right: 'derivatives_of_m_i_z_with_respect_to_p_q', label: 'dM^r/dp vs dM^z/dp' },
+  { left: 'derivatives_of_m_i_r_with_respect_to_sig', right: 'derivatives_of_m_i_z_with_respect_to_sig', label: 'dM^r/dσ vs dM^z/dσ' },
+  { left: 'derivatives_of_m_i_r_with_respect_to_var', right: 'derivatives_of_m_i_z_with_respect_to_var', label: 'dM^r/dε vs dM^z/dε' },
+  { left: 'derivatives_of_m_i_r_with_respect_to_lam', right: 'derivatives_of_m_i_z_with_respect_to_lam', label: 'dM^r/dλ vs dM^z/dλ' },
+  { left: 'derivatives_of_m_i_r_with_respect_to_gam', right: 'derivatives_of_m_i_z_with_respect_to_gam', label: 'dM^r/dγ vs dM^z/dγ' },
+  { left: 'derivatives_of_m_i_r_with_respect_to_h_q', right: 'derivatives_of_m_i_z_with_respect_to_h_q', label: 'dM^r/dh vs dM^z/dh' },
+  { left: 'r_momentum_residuals', right: 'z_momentum_residuals', label: 'r-momentum summary vs z-momentum summary' },
+];
+
+// ---- Chapter comparison ----
+let chapterSyncingScroll = false;
+
+function getEquationsInSection(sectionId) {
+  return equations.filter(eq => eq.section === sectionId);
+}
+
+function openChapterComparison(leftSectionId, rightSectionId) {
+  const leftEqs = getEquationsInSection(leftSectionId);
+  const rightEqs = getEquationsInSection(rightSectionId);
+  if (leftEqs.length === 0 && rightEqs.length === 0) return;
+
+  const leftSec = sections.find(s => s.id === leftSectionId);
+  const rightSec = sections.find(s => s.id === rightSectionId);
+
+  chapterCompareLeftTitle.textContent = leftSec ? leftSec.title : leftSectionId;
+  chapterCompareRightTitle.textContent = rightSec ? rightSec.title : rightSectionId;
+
+  // Clear previous content
+  const leftBody = chapterCompareLeft.querySelector('.chapter-compare-eqs');
+  const rightBody = chapterCompareRight.querySelector('.chapter-compare-eqs');
+  leftBody.innerHTML = '';
+  rightBody.innerHTML = '';
+
+  // Render equations side by side
+  const maxLen = Math.max(leftEqs.length, rightEqs.length);
+  for (let i = 0; i < maxLen; i++) {
+    if (i < leftEqs.length) {
+      leftBody.appendChild(renderCompareChapterCard(leftEqs[i]));
+    } else {
+      leftBody.appendChild(createEmptySlot());
+    }
+    if (i < rightEqs.length) {
+      rightBody.appendChild(renderCompareChapterCard(rightEqs[i]));
+    } else {
+      rightBody.appendChild(createEmptySlot());
+    }
+  }
+
+  // Show panel
+  chapterComparePanel.classList.remove('hidden');
+  chapterCompareOverlay.classList.remove('hidden');
+  requestAnimationFrame(() => {
+    chapterComparePanel.classList.add('visible');
+    chapterCompareOverlay.classList.add('visible');
+  });
+
+  // Synchronized scrolling
+  const leftCol = chapterCompareLeft;
+  const rightCol = chapterCompareRight;
+  leftCol.onscroll = () => {
+    if (chapterSyncingScroll) return;
+    chapterSyncingScroll = true;
+    rightCol.scrollTop = leftCol.scrollTop;
+    chapterSyncingScroll = false;
+  };
+  rightCol.onscroll = () => {
+    if (chapterSyncingScroll) return;
+    chapterSyncingScroll = true;
+    leftCol.scrollTop = rightCol.scrollTop;
+    chapterSyncingScroll = false;
+  };
+}
+
+function renderCompareChapterCard(eq) {
+  const card = document.createElement('div');
+  card.className = 'chapter-eq-card';
+
+  const numBadge = document.createElement('div');
+  numBadge.className = 'chapter-eq-number';
+  numBadge.textContent = `(${eq.id})`;
+  card.appendChild(numBadge);
+
+  if (eq.label) {
+    const label = document.createElement('div');
+    label.className = 'chapter-eq-label';
+    label.textContent = eq.label;
+    card.appendChild(label);
+  }
+
+  const mathDiv = document.createElement('div');
+  mathDiv.className = 'chapter-eq-math';
+  try {
+    katex.render(eq.latex, mathDiv, {
+      displayMode: true,
+      throwOnError: false,
+      trust: true,
+      strict: false,
+      macros: latexMacros
+    });
+  } catch (e) {
+    mathDiv.textContent = eq.latex;
+  }
+  card.appendChild(mathDiv);
+
+  if (eq.description) {
+    const desc = document.createElement('div');
+    desc.className = 'chapter-eq-desc';
+    desc.textContent = eq.description;
+    card.appendChild(desc);
+  }
+
+  return card;
+}
+
+function createEmptySlot() {
+  const slot = document.createElement('div');
+  slot.className = 'chapter-eq-card chapter-eq-empty';
+  slot.innerHTML = '<span style="color:var(--fg-faint);font-size:0.8rem;">—</span>';
+  return slot;
+}
+
+function closeChapterComparison() {
+  chapterComparePanel.classList.remove('visible');
+  chapterCompareOverlay.classList.remove('visible');
+  setTimeout(() => {
+    chapterComparePanel.classList.add('hidden');
+    chapterCompareOverlay.classList.add('hidden');
+  }, 400);
 }
 
 // ---- Keyboard navigation ----
@@ -568,6 +785,7 @@ document.addEventListener('keydown', (e) => {
     prev();
   } else if (e.key === 'Escape') {
     closeComparison();
+    closeChapterComparison();
     closeTOC();
     clearReferenceHighlight();
   }
@@ -589,7 +807,6 @@ btnCompareGoto.addEventListener('click', () => {
     if (idx >= 0) {
       goTo(idx);
     } else {
-      // If hidden jacobian entry, jump to the matrix
       const matrixIdx = equations.findIndex(e => e.id === '18.37' || e.id === '18.1');
       if (matrixIdx >= 0) goTo(matrixIdx);
     }
@@ -597,10 +814,17 @@ btnCompareGoto.addEventListener('click', () => {
   closeComparison();
 });
 
+// Chapter comparison panel
+if (btnChapterCompareClose) {
+  btnChapterCompareClose.addEventListener('click', closeChapterComparison);
+}
+if (chapterCompareOverlay) {
+  chapterCompareOverlay.addEventListener('click', closeChapterComparison);
+}
+
 // ---- Scroll wheel navigation (optional) ----
 let scrollTimeout = null;
 document.addEventListener('wheel', (e) => {
-  // Debounce to prevent too-fast scrolling
   if (scrollTimeout) return;
   scrollTimeout = setTimeout(() => { scrollTimeout = null; }, 400);
 

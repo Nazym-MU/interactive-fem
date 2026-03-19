@@ -3320,7 +3320,7 @@ export const equations = [
   {
     id: '5.1',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.1",
+    label: "z-Momentum Residual",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^z &= Re \int_{\Omega^f} \phi_i \partial_t w + Re \int_{\Omega^f} \phi_i u \partial_r w + Re \int_{\Omega^f} \phi_i w \partial_z w - Re \int_{\Omega^f} \phi_i u^c \partial_r w
 &\quad - Re \int_{\Omega^f} \phi_i w^c \partial_z w - St \int_{\Omega^f} \phi_i \hat{g}_z - \int_{\Omega^f} \phi_i e_z \cdot \nabla \cdot \mathbf{P},
@@ -3333,7 +3333,7 @@ export const equations = [
   {
     id: '5.2',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.2",
+    label: "Tensor Divergence Identity (z)",
     latex: String.raw`\nabla \cdot (\mathbf{x} \cdot \mathbf{A}) = \mathbf{x} \cdot \nabla \cdot \mathbf{A} + \nabla \mathbf{x} : \mathbf{A}`,
     description: "Once again, we recall the tensor identity",
     references: ["3.2"],
@@ -3343,7 +3343,7 @@ export const equations = [
   {
     id: '5.3',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.3",
+    label: "Applied to Stress (z)",
     latex: String.raw`-\phi_i \mathbf{e}_z \cdot \nabla \cdot \mathbf{P} = -\nabla \cdot (\phi_i \mathbf{e}_z \cdot \mathbf{P}) + \nabla (\phi_i \mathbf{e}_z) : \mathbf{P}`,
     description: "Once again, we recall the tensor identity taking and , we have",
     references: [],
@@ -3353,7 +3353,7 @@ export const equations = [
   {
     id: '5.4',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.4",
+    label: "Residual with IBP (z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^z &= Re \int_{\Omega^f} \phi_i \partial_t w + Re \int_{\Omega^f} \phi_i u \partial_r w + Re \int_{\Omega^f} \phi_i w \partial_z w - Re \int_{\Omega^f} \phi_i u^c \partial_r w
 &\quad - Re \int_{\Omega^f} \phi_i w^c \partial_z w - St \int_{\Omega^f} \phi_i \hat{g}_z + \int_{\Omega^f} \nabla (\phi_i \mathbf{e}_z) : \mathbf{P} - \int_{\Omega^f} \nabla \cdot (\phi_i \mathbf{e}_z \cdot \mathbf{P}),
@@ -3366,7 +3366,7 @@ export const equations = [
   {
     id: '5.5',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.5",
+    label: "After Divergence Theorem (z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^z &= Re \int_{\Omega^f} \phi_i \partial_t w + Re \int_{\Omega^f} \phi_i u \partial_r w + Re \int_{\Omega^f} \phi_i w \partial_z w - Re \int_{\Omega^f} \phi_i u^c \partial_r w
 &\quad - Re \int_{\Omega^f} \phi_i w^c \partial_z w - St \int_{\Omega^f} \phi_i \hat{g}_z + \int_{\Omega^f} \nabla (\phi_i \mathbf{e}_z) : \mathbf{P} + \int_{\partial \Omega^f} \phi_i \mathbf{e}_z \cdot \mathbf{P} \cdot \mathbf{n},
@@ -3379,7 +3379,7 @@ export const equations = [
   {
     id: '5.6',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.6",
+    label: "Grad-Stress (Matrix, z)",
     latex: String.raw`\nabla (\phi_i \mathbf{e}_z) : \mathbf{P} = \begin{bmatrix} 0 & 0 \\ \partial_r \phi_i & \partial_z \phi_i \end{bmatrix} : \begin{bmatrix} \mathbf{P}_{rr} & \mathbf{P}_{rz} \\ \mathbf{P}_{zr} & \mathbf{P}_{zz} \end{bmatrix}`,
     description: "Where is the boundary of and is the normal to , that points into",
     references: [],
@@ -3389,7 +3389,7 @@ export const equations = [
   {
     id: '5.7',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.7",
+    label: "Grad-Stress (Components, z)",
     latex: String.raw`\nabla (\phi_i \mathbf{e}_z) : \mathbf{P} = \begin{bmatrix} 0 & 0 \\ \partial_r \phi_i & \partial_z \phi_i \end{bmatrix} : \begin{bmatrix} -p + 2\partial_r u & \partial_z u + \partial_r w \\ \partial_r w + \partial_z u & -p + 2\partial_z w \end{bmatrix}`,
     description: "Where is the boundary of and is the normal to , that points into",
     references: [],
@@ -3399,7 +3399,7 @@ export const equations = [
   {
     id: '5.8',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.8",
+    label: "Grad-Stress Simplified (z)",
     latex: String.raw`\nabla (\phi_i \mathbf{e}_z) : \mathbf{P} = \partial_r \phi_i \mathbf{P}_{zr} + \partial_z \phi_i \mathbf{P}_{zz} = \partial_r w \partial_r \phi_i + \partial_z u \partial_r \phi_i - p \partial_z \phi_i + 2 \partial_z w \partial_z \phi_i`,
     description: "",
     references: [],
@@ -3409,7 +3409,7 @@ export const equations = [
   {
     id: '5.9',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.9",
+    label: "Full Residual M_i^z",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^z &= Re \int_{\Omega^f} \phi_i \partial_t w + Re \int_{\Omega^f} \phi_i u \partial_r w + Re \int_{\Omega^f} \phi_i w \partial_z w - Re \int_{\Omega^f} \phi_i u^c \partial_r w
 &\quad - Re \int_{\Omega^f} \phi_i w^c \partial_z w - St \int_{\Omega^f} \phi_i \hat{g}_z + \int_{\Omega^f} \partial_r w \partial_r \phi_i + \int_{\Omega^f} \partial_z u \partial_r \phi_i
@@ -3423,7 +3423,7 @@ export const equations = [
   {
     id: '5.10',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.10",
+    label: "Boundary Decomposition (z)",
     latex: String.raw`\begin{aligned}
 \int_{\partial \Omega} \phi_i \mathbf{e}_z \cdot \mathbf{P} \cdot \mathbf{n} &= \int_{\partial \Omega^{1,1}} \phi_i \mathbf{e}_z \cdot \mathbf{P} \cdot \mathbf{n}^1 + \int_{\partial \Omega^{2,1}} \phi_i \mathbf{e}_z \cdot \mathbf{P} \cdot \mathbf{n}^2
 &\quad + \int_{\partial \Omega^{3}} \phi_i \mathbf{e}_z \cdot \mathbf{P} \cdot \mathbf{n}^3 + \int_{\partial \Omega^{4}} \phi_i \mathbf{e}_z \cdot \mathbf{P} \cdot \mathbf{n}^4,
@@ -3436,7 +3436,7 @@ export const equations = [
   {
     id: '5.11',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.11",
+    label: "DBC1 Restatement (z)",
     latex: String.raw`\mathbf{P} \cdot \mathbf{n}^1 = -p^g \mathbf{n}^1 - \frac{\nabla^s \cdot [\sigma^1 (\mathbf{I} - \mathbf{n}^1 \mathbf{n}^1)]}{\ca}`,
     description: "For the free surface we have equation (2.10), which states",
     references: ["2.10"],
@@ -3446,7 +3446,7 @@ export const equations = [
   {
     id: '5.12',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.12",
+    label: "phi_i e_z dot P dot n^1",
     latex: String.raw`\phi_i \mathbf{e}_z \cdot \mathbf{P} \cdot \mathbf{n}^1 = -\phi_i p^g \mathbf{e}_z \cdot \mathbf{n}^1 - \frac{1}{\ca} \phi_i \mathbf{e}_z \cdot \nabla^s \cdot [\sigma^1 (\mathbf{I} - \mathbf{n}^1 \mathbf{n}^1)]`,
     description: "For the free surface we have equation (2.10), which states and therefore",
     references: ["2.10"],
@@ -3456,7 +3456,7 @@ export const equations = [
   {
     id: '5.13',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.13",
+    label: "Surface Div Identity (z)",
     latex: String.raw`\nabla^s \cdot (\mathbf{x} \cdot \mathbf{A}) = \mathbf{A} : \nabla^s \mathbf{x} + \mathbf{x} \cdot \nabla^s \cdot \mathbf{A}`,
     description: "For the free surface we have equation (2.10), which states and therefore Now, we have the following surface vector calculus identity",
     references: ["2.10"],
@@ -3466,7 +3466,7 @@ export const equations = [
   {
     id: '5.14',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.14",
+    label: "Identity Applied (z)",
     latex: String.raw`\nabla^s \cdot (\phi_i \mathbf{e}_z \cdot \sigma^1 (\mathbf{I} - \mathbf{n}^1 \mathbf{n}^1)) = \sigma^1 (\mathbf{I} - \mathbf{n}^1 \mathbf{n}^1) : \nabla^s (\phi_i \mathbf{e}_z) + \phi_i \mathbf{e}_z \cdot \nabla^s \cdot \sigma^1 (\mathbf{I} - \mathbf{n}^1 \mathbf{n}^1)`,
     description: "Now, we have the following surface vector calculus identity taking and , we have",
     references: [],
@@ -3476,7 +3476,7 @@ export const equations = [
   {
     id: '5.15',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.15",
+    label: "Rearranged (z)",
     latex: String.raw`-\phi_i \mathbf{e}_z \cdot \nabla^s \cdot \sigma^1 (\mathbf{I} - \mathbf{n}^1 \mathbf{n}^1) = -\nabla^s \cdot (\phi_i \mathbf{e}_z \cdot \sigma^1 (\mathbf{I} - \mathbf{n}^1 \mathbf{n}^1)) + \sigma^1 (\mathbf{I} - \mathbf{n}^1 \mathbf{n}^1) : \nabla^s (\phi_i \mathbf{e}_z)`,
     description: "Taking and , we have which yields",
     references: [],
@@ -3486,7 +3486,7 @@ export const equations = [
   {
     id: '5.16',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.16",
+    label: "Surface Gradient 1D (z)",
     latex: String.raw`\nabla^s (\phi_i \mathbf{e}_z) = \begin{bmatrix} 0 & \partial_s \phi_i t_z^1 \\ 0 & \partial_s \phi_i t_z^1 \end{bmatrix}`,
     description: "Which yields In this 1D surface case, we have",
     references: [],
@@ -3496,7 +3496,7 @@ export const equations = [
   {
     id: '5.17',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.17",
+    label: "Projection Computation (z)",
     latex: String.raw`(\mathbf{I} - \mathbf{n}^1 \mathbf{n}^1) : \nabla^s (\phi_i \mathbf{e}_z) = \begin{bmatrix} 1 - n_z^1 n_z^1 & -n_z^1 n_z^1 \\ -n_z^1 n_z^1 & 1 - n_z^1 n_z^1 \end{bmatrix} : \begin{bmatrix} 0 & \partial_s \phi_i t_z^1 \\ 0 & \partial_s \phi_i t_z^1 \end{bmatrix} = \partial_s \phi_i t_z^1`,
     description: "Which yields In this 1D surface case, we have , and therefore",
     references: [],
@@ -3506,7 +3506,7 @@ export const equations = [
   {
     id: '5.18',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.18",
+    label: "Simplified Projection (z)",
     latex: String.raw`(\mathbf{I} - \mathbf{n}^1 \mathbf{n}^1) : \nabla^s (\phi_i \mathbf{e}_z) = \partial_s \phi_i t_z^1 - \partial_s \phi_i n_z^1 (t^1 \cdot \mathbf{n}^1) = \partial_s \phi_i t_z^1`,
     description: "In this 1D surface case, we have , and therefore",
     references: [],
@@ -3516,7 +3516,7 @@ export const equations = [
   {
     id: '5.19',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.19",
+    label: "Surface Div Result (z)",
     latex: String.raw`-\phi_i \mathbf{e}_z \cdot \nabla^s \cdot \sigma^1 (\mathbf{I} - \mathbf{n}^1 \mathbf{n}^1) = -\nabla^s \cdot (\phi_i \mathbf{e}_z \cdot \sigma^1 (\mathbf{I} - \mathbf{n}^1 \mathbf{n}^1)) + \sigma^1 \partial_s \phi_i t_z^1`,
     description: "",
     references: ["5.15"],
@@ -3526,7 +3526,7 @@ export const equations = [
   {
     id: '5.20',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.20",
+    label: "Stress dot n^1 Final (z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^z &= Re \int_{\Omega^f} \phi_i \partial_t w + Re \int_{\Omega^f} \phi_i u \partial_r w + Re \int_{\Omega^f} \phi_i w \partial_z w - Re \int_{\Omega^f} \phi_i u^c \partial_r w
 &\quad - Re \int_{\Omega^f} \phi_i w^c \partial_z w - St \int_{\Omega^f} \phi_i \hat{g}_z + \int_{\Omega^f} \partial_r w \partial_r \phi_i + \int_{\Omega^f} \partial_z w \partial_r \phi_i + 2 \int_{\Omega^f} \partial_z w \partial_z \phi_i
@@ -3541,7 +3541,7 @@ export const equations = [
   {
     id: '5.21',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.21",
+    label: "M^{z,1} Div Theorem",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^z &= Re \int_{\Omega^f} \phi_i \partial_t w + Re \int_{\Omega^f} \phi_i u \partial_r w + Re \int_{\Omega^f} \phi_i w \partial_z w - Re \int_{\Omega^f} \phi_i u^c \partial_r w
 &\quad - Re \int_{\Omega^f} \phi_i w^c \partial_z w - St \int_{\Omega^f} \phi_i \hat{g}_z + \int_{\Omega^f} \partial_r w \partial_r \phi_i + \int_{\Omega^f} \partial_z w \partial_r \phi_i + 2 \int_{\Omega^f} \partial_z w \partial_z \phi_i
@@ -3556,7 +3556,7 @@ export const equations = [
   {
     id: '5.22',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.22",
+    label: "M^{z,1} with Endpoints",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^z &= Re \int_{\Omega^f} \phi_i \partial_t w + Re \int_{\Omega^f} \phi_i u \partial_r w + Re \int_{\Omega^f} \phi_i w \partial_z w - Re \int_{\Omega^f} \phi_i u^c \partial_r w - Re \int_{\Omega^f} \phi_i w^c \partial_z w
 &\quad - St \int_{\Omega^f} \phi_i \hat{g}_z + \int_{\Omega^f} \partial_r w \partial_r \phi_i + \int_{\Omega^f} \partial_z u \partial_r \phi_i + 2 \int_{\Omega^f} \partial_z w \partial_z \phi_i - \int_{\Omega^f} p \partial_z \phi_i - \int_{\partial \Omega^1} p^g \phi_i n_z^1
@@ -3571,7 +3571,7 @@ export const equations = [
   {
     id: '5.23',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.23",
+    label: "Apex Normal Vector (z)",
     latex: String.raw`\int_{\partial \Omega^{2,1}} \phi_i \mathbf{e}_z \cdot \mathbf{P} \cdot \mathbf{n}^2`,
     description: "We consider now the term",
     references: [],
@@ -3581,7 +3581,7 @@ export const equations = [
   {
     id: '5.24',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.24",
+    label: "Bdry 2 Stress Integral (z)",
     latex: String.raw`\begin{aligned}
 \phi_i \mathbf{e}_z \cdot \mathbf{P} \cdot \mathbf{n}^2 &= \phi_i \mathbf{e}_z \cdot \underbrace{(\mathbf{I} - \mathbf{n}^2 \mathbf{n}^2) \cdot \mathbf{P} \cdot \mathbf{n}^2}_{\be (\mathbf{u} - \mathbf{u}^s) \cdot (\mathbf{I} - \mathbf{n}^2 \mathbf{n}^2) - \frac{1}{2\ca} \nabla^2 \sigma^2} + \phi_i \mathbf{e}_z \cdot \underbrace{(\mathbf{n}^2 \cdot \mathbf{P} \cdot \mathbf{n}^2)}_{\lambda^2} \mathbf{n}^2,
 \end{aligned}`,
@@ -3593,7 +3593,7 @@ export const equations = [
   {
     id: '5.25',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.25",
+    label: "GNSC Substitution (z)",
     latex: String.raw`\begin{aligned}
 \phi_i \mathbf{e}_z \cdot \mathbf{P} \cdot \mathbf{n}^2 &= \be \phi_i \mathbf{e}_z \cdot (\mathbf{u} \cdot \mathbf{t}^2) \mathbf{t}^2 - \be \phi_i \mathbf{e}_z \cdot (\mathbf{u}^s \cdot \mathbf{t}^2) \mathbf{t}^2 - \frac{1}{2\ca} \phi_i \mathbf{e}_z \cdot \nabla^2 \sigma^2 + \lambda^2 \phi_i \mathbf{e}_z \cdot \mathbf{n}^2,
 \end{aligned}`,
@@ -3605,7 +3605,7 @@ export const equations = [
   {
     id: '5.26',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.26",
+    label: "Stress dot n^2 Expanded (z)",
     latex: String.raw`\begin{aligned}
 \phi_i \mathbf{e}_z \cdot \mathbf{P} \cdot \mathbf{n}^2 &= \be \phi_i \mathbf{e}_z \cdot (u t_r^2 + w t_z^2) \mathbf{t}^2 - \be \phi_i \mathbf{e}_z \cdot (u^s t_r^2 + w^s t_z^2) \mathbf{t}^2
 &\quad - \frac{1}{2\ca} \phi_i (\partial_s \sigma^2) \mathbf{e}_z \cdot \mathbf{t}^2 + \lambda^2 \phi_i n_z^2,
@@ -3618,7 +3618,7 @@ export const equations = [
   {
     id: '5.27',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.27",
+    label: "Stress dot n^2 Components (z)",
     latex: String.raw`\begin{aligned}
 \phi_i \mathbf{e}_z \cdot \mathbf{P} \cdot \mathbf{n}^2 &= \be \phi_i u t_r^2 t_z^2 + \be \phi_i w t_z^2 t_z^2 - \be \phi_i u^s t_r^2 t_z^2 - \be \phi_i w^s t_z^2 t_z^2
 &\quad - \frac{1}{2\ca} \phi_i t_z^2 \partial_s \sigma^2 + \lambda^2 \phi_i n_z^2.
@@ -3631,7 +3631,7 @@ export const equations = [
   {
     id: '5.28',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.28",
+    label: "Stress dot n^2 Regrouped (z)",
     latex: String.raw`\begin{aligned}
 \int_{\partial \Omega^{2,1}} \phi_i \mathbf{e}_z \cdot \mathbf{P} \cdot \mathbf{n}^2 &= \be \int_{\partial \Omega^{2,1}} \phi_i u t_r^2 t_z^2 + \be \int_{\partial \Omega^{2,1}} \phi_i w t_z^2 t_z^2 - \be \int_{\partial \Omega^{2,1}} \phi_i u^s t_r^2 t_z^2
 &\quad - \be \int_{\partial \Omega^{2,1}} \phi_i w^s t_z^2 t_z^2 - \frac{1}{2\ca} \int_{\partial \Omega^{2,1}} \phi_i t_z^2 \partial_s \sigma^2 + \int_{\partial \Omega^{2,1}} \lambda^2 \phi_i n_z^2.
@@ -3644,7 +3644,7 @@ export const equations = [
   {
     id: '5.30',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.30",
+    label: "M^{z,2} Expression",
     latex: String.raw`\begin{aligned}
 \int_{\partial \Omega^{3}} \phi_i \mathbf{e}_z \cdot \mathbf{P} \cdot \mathbf{n}^3, \quad
 \mathbf{P} \cdot \mathbf{n}^3 = \mathbf{n}^3 \underbrace{\mathbf{n}^3 \cdot \mathbf{P} \cdot \mathbf{n}^3}_{\lambda^3} + \underbrace{(\mathbf{I} - \mathbf{n}^3 \mathbf{n}^3) \cdot \mathbf{P} \cdot \mathbf{n}^3}_{\gamma^3 \mathbf{t}^3},
@@ -3657,7 +3657,7 @@ export const equations = [
   {
     id: '5.31',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.31",
+    label: "Bdry 3 Stress Integral (z)",
     latex: String.raw`\mathbf{P} \cdot \mathbf{n}^3 = \lambda^3 \mathbf{n}^3 + \gamma^3 \mathbf{t}^3`,
     description: "Similarly, we have for the term where is the normal stress on surface 3 and is the tangential stress on surface 3",
     references: [],
@@ -3667,7 +3667,7 @@ export const equations = [
   {
     id: '5.32',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.32",
+    label: "Stress dot n^3 Decomposed (z)",
     latex: String.raw`\int_{\partial \Omega^{3}} \phi_i \mathbf{e}_z \cdot \mathbf{P} \cdot \mathbf{n}^3 = \int_{\partial \Omega^{3}} \phi_i \lambda^3 \mathbf{e}_z \cdot \mathbf{n}^3 + \int_{\partial \Omega^{3}} \phi_i \gamma^3 \mathbf{e}_z \cdot \mathbf{t}^3`,
     description: "We therefore have Consequently we have",
     references: [],
@@ -3677,7 +3677,7 @@ export const equations = [
   {
     id: '5.33',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.33",
+    label: "M^{z,3} Expression",
     latex: String.raw`\int_{\partial \Omega^{3}} \phi_i \mathbf{e}_z \cdot \mathbf{P} \cdot \mathbf{n}^3 = \int_{\partial \Omega^{3}} \lambda^3 n_z^3 \phi_i + \int_{\partial \Omega^{3}} \gamma^3 t_z^3 \phi_i`,
     description: "We therefore have Consequently we have i.e",
     references: [],
@@ -3687,7 +3687,7 @@ export const equations = [
   {
     id: '5.35',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.35",
+    label: "Stress dot n^4 Decomposed (z)",
     latex: String.raw`\int_{\partial \Omega^{4}} \phi_i \mathbf{e}_z \cdot \mathbf{P} \cdot \mathbf{n}^4, \quad
 \mathbf{P} \cdot \mathbf{n}^4 = \mathbf{n}^4 \underbrace{\mathbf{n}^4 \cdot \mathbf{P} \cdot \mathbf{n}^4}_{\lambda^4} + \underbrace{(\mathbf{I} - \mathbf{n}^4 \mathbf{n}^4) \cdot \mathbf{P} \cdot \mathbf{n}^4}_{\gamma^4 \mathbf{t}^4}`,
     description: "Finally, for the term",
@@ -3698,7 +3698,7 @@ export const equations = [
   {
     id: '5.36',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.36",
+    label: "Stress dot n^4 Simplified (z)",
     latex: String.raw`\mathbf{P} \cdot \mathbf{n}^4 = \lambda^4 \mathbf{n}^4 + \gamma^4 \mathbf{t}^4`,
     description: "Finally, for the term where is the normal stress on surface 4 and is the tangential stress on surface 4",
     references: [],
@@ -3708,7 +3708,7 @@ export const equations = [
   {
     id: '5.37',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.37",
+    label: "M^{z,4} Expression",
     latex: String.raw`\int_{\partial \Omega^{4}} \phi_i \mathbf{e}_z \cdot \mathbf{P} \cdot \mathbf{n}^4 = \int_{\partial \Omega^{4}} \phi_i \lambda^4 \mathbf{e}_z \cdot \mathbf{n}^4 + \int_{\partial \Omega^{4}} \phi_i \gamma^4 \mathbf{e}_z \cdot \mathbf{t}^4`,
     description: "We therefore have Consequently we have",
     references: [],
@@ -3718,7 +3718,7 @@ export const equations = [
   {
     id: '5.38',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.38",
+    label: "M^{z,0} with BDF2",
     latex: String.raw`\int_{\partial \Omega^{4}} \phi_i \mathbf{e}_z \cdot \mathbf{P} \cdot \mathbf{n}^4 = \int_{\partial \Omega^{4}} \lambda^4 n_z^4 \phi_i + \int_{\partial \Omega^{4}} \gamma^4 t_z^4 \phi_i`,
     description: "We therefore have Consequently we have i.e",
     references: [],
@@ -3728,7 +3728,7 @@ export const equations = [
   {
     id: '5.39',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.39",
+    label: "M^{z,1} with BDF2",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^z &= Re \int_{\Omega^f} \phi_i \partial_t w + Re \int_{\Omega^f} \phi_i u \partial_r w + Re \int_{\Omega^f} \phi_i w \partial_z w - Re \int_{\Omega^f} \phi_i u^c \partial_r w
 &\quad - Re \int_{\Omega^f} \phi_i w^c \partial_z w - St \int_{\Omega^f} \phi_i \hat{g}_z + \int_{\Omega^f} \partial_r w \partial_r \phi_i + \int_{\Omega^f} \partial_z u \partial_r \phi_i + 2 \int_{\Omega^f} \partial_z w \partial_z \phi_i
@@ -3746,7 +3746,7 @@ export const equations = [
   {
     id: '5.40',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.40",
+    label: "M^{z,2} with BDF2",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^z &= Re \int_{\Omega^f} \phi_i \frac{3w(t_n) - 4w(t_{n-1}) + w(t_{n-2})}{2\dt} + Re \int_{\Omega^f} \phi_i u \partial_r w
 &\quad + Re \int_{\Omega^f} \phi_i w \partial_z w - Re \int_{\Omega^f} \phi_i \frac{3r^c(t_n) - 4r^c(t_{n-1}) + r^c(t_{n-2})}{2\dt} \partial_r w
@@ -3766,7 +3766,7 @@ export const equations = [
   {
     id: '5.41',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.41",
+    label: "M^{z,3} with BDF2",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^z &= Re \int_{\Omega^f} \phi_i w - \frac{4Re}{3} \int_{\Omega^f} \phi_i w(t_{n-1}) + \frac{Re}{3} \int_{\Omega^f} \phi_i w(t_{n-2})
 &\quad + \frac{2\dt Re}{3} \int_{\Omega^f} \phi_i u \partial_r w + \frac{2\dt Re}{3} \int_{\Omega^f} \phi_i w \partial_z w
@@ -3789,7 +3789,7 @@ export const equations = [
   {
     id: '5.42',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.42",
+    label: "M^{z,4} with BDF2",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^z &= Re \int_{\Omega^f} \phi_i \sum_{j=1}^{n_v} w_j \phi_j - \frac{4Re}{3} \int_{\Omega^f} \phi_i \sum_{j=1}^{n_v} w_j(t_{n-1}) \phi_j + \frac{Re}{3} \int_{\Omega^f} \phi_i \sum_{j=1}^{n_v} w_j(t_{n-2}) \phi_j
 &\quad + \frac{2\dt Re}{3} \int_{\Omega^f} \phi_i \left( \sum_{k=1}^{n_v} u_k \phi_k \right) \partial_r \left( \sum_{j=1}^{n_v} w_j \phi_j \right) + \frac{2\dt Re}{3} \int_{\Omega^f} \phi_i \left( \sum_{k=1}^{n_v} w_k \phi_k \right) \partial_z \left( \sum_{j=1}^{n_v} w_j \phi_j \right)
@@ -3815,7 +3815,7 @@ export const equations = [
   {
     id: '5.45',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.45",
+    label: "M^{z,0} Rescaled",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,0} &= Re \sum_{j=1}^{n_v} w_j \int_{\Omega^f} \phi_i \phi_j - \frac{4Re}{3} \sum_{j=1}^{n_v} w_j(t_{n-1}) \int_{\Omega^f} \phi_i \phi_j + \frac{Re}{3} \sum_{j=1}^{n_v} w_j(t_{n-2}) \int_{\Omega^f} \phi_i \phi_j
 &\quad + \frac{2\dt Re}{3} \sum_{j=1}^{n_v} w_j \sum_{k=1}^{n_v} u_k \int_{\Omega^f} \phi_i \phi_k \partial_r \phi_j + \frac{2\dt Re}{3} \sum_{j=1}^{n_v} w_j \sum_{k=1}^{n_v} w_k \int_{\Omega^f} \phi_i \phi_k \partial_z \phi_j
@@ -3833,7 +3833,7 @@ export const equations = [
   {
     id: '5.46',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.46",
+    label: "M^{z,1} Rescaled",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,1} &= -\frac{2\dt}{3} \sum_{j=1}^{n_v} \tilde{p}_j^g \int_{\partial \Omega^{1,f}} \phi_i \phi_j^1 n_z^1 + \frac{2\dt}{3\ca} \sigma^1(r_{J1},z_{J1}) \phi_i(r_{J1},z_{J1}) m_z^{1}(r_{J1},z_{J1})
 &\quad + \frac{2\dt}{3\ca} \sigma^1(r_a,z_a) \phi_i(r_a,z_a) m_z^{1}(r_a,z_a) + \frac{2\dt}{3\ca} \sum_{j=1}^{n_v} \tilde{\sigma}_j^1 \int_{\partial \Omega^{1,f}} \phi_j^1 t_z^1 \partial_s \phi_i,
@@ -3846,7 +3846,7 @@ export const equations = [
   {
     id: '5.47',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.47",
+    label: "M^{z,2} Rescaled",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,2} &= \frac{2\dt \be}{3} \sum_{j=1}^{n_v} u_j \int_{\partial \Omega^{2,f}} \phi_i t_r^2 t_z^2 \phi_j + \frac{2\dt \be}{3} \sum_{j=1}^{n_v} w_j \int_{\partial \Omega^{2,f}} \phi_i t_z^2 t_z^2 \phi_j
 &\quad - \frac{2\dt \be}{3} \sum_{j=1}^{n_v} \tilde{u}_j^s \int_{\partial \Omega^{2,f}} \phi_i \phi_j t_r^2 t_z^2 - \frac{2\dt \be}{3} \sum_{j=1}^{n_v} \tilde{w}_j^s \int_{\partial \Omega^{2,f}} \phi_i \phi_j t_z^2 t_z^2
@@ -3860,7 +3860,7 @@ export const equations = [
   {
     id: '5.48',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.48",
+    label: "M^{z,3} Rescaled",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,3} &= \frac{2\dt}{3} \sum_{j=1}^{n_v} \tilde{\lambda}_j^3 \int_{\partial \Omega^{3}} \phi_j n_z^3 \phi_i + \frac{2\dt}{3} \sum_{j=1}^{n_v} \tilde{\gamma}_j^3 \int_{\partial \Omega^{3}} t_z^3 \phi_j \phi_i,
 \end{aligned}`,
@@ -3872,7 +3872,7 @@ export const equations = [
   {
     id: '5.49',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.49",
+    label: "M^{z,4} Rescaled",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,4} &= \frac{2\dt}{3} \sum_{j=1}^{n_v} \tilde{\lambda}_j^4 \int_{\partial \Omega^{4}} \phi_j n_z^4 \phi_i + \frac{2\dt}{3} \sum_{j=1}^{n_v} \tilde{\gamma}_j^4 \int_{\partial \Omega^{4}} t_z^4 \phi_j \phi_i.
 \end{aligned}`,
@@ -3884,7 +3884,7 @@ export const equations = [
   {
     id: '5.50',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.50",
+    label: "M^{z} Residual Decomposition",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,0} &= -\frac{2\dt St}{3} \int_{\Omega^f} \phi_i \hat{g}_z + Re \sum_{j=1}^{n_v} w_j \int_{\Omega^f} \phi_i \phi_j - \frac{4Re}{3} \sum_{j=1}^{n_v} w_j(t_{n-1}) \int_{\Omega^f} \phi_i \phi_j
 &\quad + \frac{Re}{3} \sum_{j=1}^{n_v} w_j(t_{n-2}) \int_{\Omega^f} \phi_i \phi_j + \sum_{j=1}^{n_v} w_j \frac{2\dt}{3} \int_{\Omega^f} \partial_r \phi_j \partial_r \phi_i + \frac{2\dt}{3} \sum_{j=1}^{n_v} u_j \int_{\Omega^f} \partial_z \phi_j \partial_r \phi_i
@@ -3902,7 +3902,7 @@ export const equations = [
   {
     id: '5.51',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.51",
+    label: "M^{z,0} Global Sums",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,1} &= \frac{2\dt}{3\ca} \sigma^1(r_{J1},z_{J1}) \phi_i(r_{J1},z_{J1}) m_z^{1}(r_{J1},z_{J1})
 &\quad + \frac{2\dt}{3\ca} \sigma^1(r_a,z_a) \phi_i(r_a,z_a) m_z^{1}(r_a,z_a)
@@ -3916,7 +3916,7 @@ export const equations = [
   {
     id: '5.52',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.52",
+    label: "M^{z,1} Global Sums",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,2} &= \frac{2\dt \be}{3} \sum_{j=1}^{n_v} u_j \int_{\partial \Omega^{2,f}} \phi_i t_r^2 t_z^2 \phi_j + \frac{2\dt \be}{3} \sum_{j=1}^{n_v} w_j \int_{\partial \Omega^{2,f}} \phi_i t_z^2 t_z^2 \phi_j
 &\quad - \frac{2\dt \be}{3} \sum_{j=1}^{n_v} \tilde{u}_j^s \int_{\partial \Omega^{2,f}} \phi_i \phi_j t_r^2 t_z^2 - \frac{2\dt \be}{3} \sum_{j=1}^{n_v} \tilde{w}_j^s \int_{\partial \Omega^{2,f}} \phi_i \phi_j t_z^2 t_z^2
@@ -3930,7 +3930,7 @@ export const equations = [
   {
     id: '5.53',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.53",
+    label: "M^{z,2} Global Sums",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,3} &= \frac{2\dt}{3} \sum_{j=1}^{n_v} \tilde{\lambda}_j^3 \int_{\partial \Omega^{3}} \phi_j n_z^3 \phi_i + \frac{2\dt}{3} \sum_{j=1}^{n_v} \tilde{\gamma}_j^3 \int_{\partial \Omega^{3}} t_z^3 \phi_j \phi_i,
 \end{aligned}`,
@@ -3942,7 +3942,7 @@ export const equations = [
   {
     id: '5.54',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.54",
+    label: "M^{z,3} Global Sums",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,4} &= \frac{2\dt}{3} \sum_{j=1}^{n_v} \tilde{\lambda}_j^4 \int_{\partial \Omega^{4}} \phi_j n_z^4 \phi_i + \frac{2\dt}{3} \sum_{j=1}^{n_v} \tilde{\gamma}_j^4 \int_{\partial \Omega^{4}} t_z^4 \phi_j \phi_i.
 \end{aligned}`,
@@ -3954,7 +3954,7 @@ export const equations = [
   {
     id: '5.55',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.55",
+    label: "M^{z,4} Global Sums",
     latex: String.raw`\mathcal{M}_i^z = \underbrace{\mathcal{M}_i^{z,0a} + \mathcal{M}_i^{z,0b} + \mathcal{M}_i^{z,0c} + \mathcal{M}_i^{z,0d} + \mathcal{M}_i^{z,1} + \mathcal{M}_i^{z,2} + \mathcal{M}_i^{z,3} + \mathcal{M}_i^{z,4}}_{\mathcal{M}_i^{z,0}}`,
     description: "Those portions of the boundary of the triangular elements that lie on the domain boundary",
     references: [],
@@ -3964,7 +3964,7 @@ export const equations = [
   {
     id: '5.56',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.56",
+    label: "M^{z,0} Rearranged",
     latex: String.raw`\mathcal{M}_i^{z,0a} = \sum_{e=1}^{n_{el}} \left[ -\frac{2\dt St}{3} \int_{\Omega_e} \phi_i \hat{g}_z \right]`,
     description: "Those portions of the boundary of the triangular elements that lie on the domain boundary",
     references: [],
@@ -3974,7 +3974,7 @@ export const equations = [
   {
     id: '5.57',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.57",
+    label: "M^{z,1} Rearranged",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,0b} &= \sum_{e=1}^{n_{el}} \Bigg[ Re \sum_{j=1}^{n_v} w_j \int_{\Omega_e} \phi_i \phi_j - \frac{4Re}{3} \sum_{j=1}^{n_v} w_j(t_{n-1}) \int_{\Omega_e} \phi_i \phi_j + \frac{Re}{3} \sum_{j=1}^{n_v} w_j(t_{n-2}) \int_{\Omega_e} \phi_i \phi_j
 &\quad + \sum_{j=1}^{n_v} w_j \frac{2\dt}{3} \int_{\Omega_e} \partial_r \phi_j \partial_r \phi_i + \frac{2\dt}{3} \sum_{j=1}^{n_v} u_j \int_{\Omega_e} \partial_z \phi_j \partial_r \phi_i + \frac{4\dt}{3} \sum_{j=1}^{n_v} w_j \int_{\Omega_e} \partial_z \phi_j \partial_z \phi_i \Bigg],
@@ -3987,7 +3987,7 @@ export const equations = [
   {
     id: '5.58',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.58",
+    label: "M^{z,2} Rearranged",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,0c} &= \sum_{e=1}^{n_{el}} \Bigg[ \frac{2\dt Re}{3} \sum_{j=1}^{n_v} \sum_{k=1}^{n_v} u_k \int_{\Omega_e} \phi_i \phi_k \partial_r \phi_j + \frac{2\dt Re}{3} \sum_{j=1}^{n_v} w_j \sum_{k=1}^{n_v} w_k \int_{\Omega_e} \phi_i \phi_k \partial_z \phi_j
 &\quad - Re \sum_{j=1}^{n_v} w_j \sum_{k=1}^{n_v} r_k^c \int_{\Omega_e} \phi_i \phi_k \partial_r \phi_j + \frac{4Re}{3} \sum_{j=1}^{n_v} w_j \sum_{k=1}^{n_v} r_k^c(t_{n-1}) \int_{\Omega_e} \phi_i \phi_k \partial_r \phi_j
@@ -4002,7 +4002,7 @@ export const equations = [
   {
     id: '5.59',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.59",
+    label: "M^{z,3} Rearranged",
     latex: String.raw`\mathcal{M}_i^{z,0d} = \sum_{e=1}^{n_{el}} \left[ -\frac{2\dt}{3} \sum_{j=1}^{n_p} p_j \int_{\Omega_e} \psi_j \partial_z \phi_i \right]`,
     description: "",
     references: [],
@@ -4012,7 +4012,7 @@ export const equations = [
   {
     id: '5.60',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.60",
+    label: "M^{z,4} Rearranged",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,1} &= \frac{2\dt}{3\ca} \sigma^1(r_{j1},z_{j1}) \phi_i(r_{j1},z_{j1}) m_z^{1}(r_{j1},z_{j1})
 &\quad + \frac{2\dt}{3\ca} \sigma^1(r_a,z_a) \phi_i(r_a,z_a) m_z^{1}(r_a,z_a)
@@ -4026,7 +4026,7 @@ export const equations = [
   {
     id: '5.61',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.61",
+    label: "M^{z,0} Reordered",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,2} &= \sum_{e_2=1}^{n_{el}^2} \Bigg[ \frac{2\dt \be}{3} \sum_{j=1}^{n_v} u_j \int_{\partial \Omega_{e_2}^2} \phi_i t_r^2 t_z^2 \phi_j + \frac{2\dt \be}{3} \sum_{j=1}^{n_v} w_j \int_{\partial \Omega_{e_2}^2} \phi_i t_z^2 t_z^2 \phi_j
 &\quad - \frac{2\dt \be}{3} \sum_{j=1}^{n_v} \tilde{u}_j^s \int_{\partial \Omega_{e_2}^2} \phi_i t_r^2 t_z^2 - \frac{2\dt \be}{3} \sum_{j=1}^{n_v} \tilde{w}_j^s \int_{\partial \Omega_{e_2}^2} \phi_i \phi_j t_z^2 t_z^2
@@ -4040,7 +4040,7 @@ export const equations = [
   {
     id: '5.62',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.62",
+    label: "M^{z,1} Reordered",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,3} = \sum_{e_3=1}^{n_{el}^3} \left[ \frac{2\dt}{3} \sum_{j=1}^{n_v} \tilde{\lambda}_j^3 \int_{\partial \Omega_{e_3}^3} \phi_j n_z^3 \phi_i + \frac{2\dt}{3} \sum_{j=1}^{n_v} \tilde{\gamma}_j^3 \int_{\partial \Omega_{e_3}^3} t_z^3 \phi_j \phi_i \right],
 \end{aligned}`,
@@ -4052,7 +4052,7 @@ export const equations = [
   {
     id: '5.63',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.63",
+    label: "M^{z,2} Reordered",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,4} = \sum_{e_4=1}^{n_{el}^4} \left[ \frac{2\dt}{3} \sum_{j=1}^{n_v} \tilde{\lambda}_j^4 \int_{\partial \Omega_{e_4}^4} \phi_j n_z^4 \phi_i + \frac{2\dt}{3} \sum_{j=1}^{n_v} \tilde{\gamma}_j^4 \int_{\partial \Omega_{e_4}^4} t_z^4 \phi_j \phi_i \right];
 \end{aligned}`,
@@ -4064,7 +4064,7 @@ export const equations = [
   {
     id: '5.64',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.64",
+    label: "M^{z,3} Reordered",
     latex: String.raw`\mathcal{M}_i^{z,0a} = \sum_{\substack{e=1\\ i=l(e,ii)}}^{n_{el}} \left[ -\frac{2\dt St}{3} \int_{\Omega_e} \phi_{l(e,ii)} \hat{g}_z \right]`,
     description: "Hence, it is better to re-write the sum above as",
     references: [],
@@ -4074,7 +4074,7 @@ export const equations = [
   {
     id: '5.65',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.65",
+    label: "M^{z,4} Reordered",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,0b} &= \sum_{\substack{e=1\\ i=l(e,ii)}}^{n_{el}} \Bigg[ Re \sum_{jj=1}^{n_v^e} w_{l(e,jj)} \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,jj)}
 &\quad - \frac{4Re}{3} \sum_{jj=1}^{n_v^e} w_{l(e,jj)}(t_{n-1}) \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,jj)}
@@ -4091,7 +4091,7 @@ export const equations = [
   {
     id: '5.66',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.66",
+    label: "Element-wise Decomposition (z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,0c} &= \sum_{\substack{e=1\\ i=l(e,ii)}}^{n_{el}} \Bigg[ \frac{2\dt Re}{3} \sum_{jj=1}^{n_v^e} w_{l(e,jj)} \sum_{kk=1}^{n_v^e} u_{l(e,kk)} \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_r \phi_{l(e,jj)}
 &\quad + \frac{2\dt Re}{3} \sum_{jj=1}^{n_v^e} w_{l(e,jj)} \sum_{kk=1}^{n_v^e} w_{l(e,kk)} \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_z \phi_{l(e,jj)}
@@ -4110,7 +4110,7 @@ export const equations = [
   {
     id: '5.67',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.67",
+    label: "Gravity Term (z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,0d} &= \sum_{\substack{e=1\\ i=l(e,ii)}}^{n_{el}} \left[ -\frac{2\dt}{3} \sum_{jj=1}^{n_p^e} p_{l^p(e,jj)} \int_{\Omega_e} \psi_{l^p(e,jj)} \partial_z \phi_{l(e,ii)} \right],
 \end{aligned}`,
@@ -4122,7 +4122,7 @@ export const equations = [
   {
     id: '5.68',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.68",
+    label: "Viscous + Mass Term (z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,1} &= \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{n_{el}^1} \Bigg[ \frac{2\dt}{3\ca} \sum_{jj=1}^{n_v^{1,e_1}} \sigma_{l_1(e_1,jj)}^1 \int_{\partial \Omega_{e_1}^1} \phi_{l_1(e_1,jj)}^1 t_z^1 \partial_s \phi_{l_1(e_1,ii)}^1
 &\quad - \frac{2\dt}{3} \sum_{jj=1}^{n_v^{1,e_1}} p_{l_1(e_1,jj)}^g \int_{\partial \Omega_{e_1}^1} \phi_{l_1(e_1,ii)}^1 \phi_{l_1(e_1,jj)}^1 n_z^1 \Bigg],
@@ -4135,7 +4135,7 @@ export const equations = [
   {
     id: '5.69',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.69",
+    label: "Convection + ALE Term (z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,2} &= \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{n_{el}^2} \Bigg[ \frac{2\dt \be}{3} \sum_{jj=1}^{n_v^{2,e_2}} u_{l_2(e_2,jj)} \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)} t_r^2 t_z^2 \phi_{l_2(e_2,jj)}
 &\quad + \frac{2\dt \be}{3} \sum_{jj=1}^{n_v^{2,e_2}} w_{l_2(e_2,jj)} \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)} t_z^2 t_z^2 \phi_{l_2(e_2,jj)}
@@ -4152,7 +4152,7 @@ export const equations = [
   {
     id: '5.70',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.70",
+    label: "Pressure Term (z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,3} &= \sum_{\substack{e_3=1\\ i=l_3(e_3,ii)}}^{n_{el}^3} \Bigg[ \frac{2\dt}{3} \sum_{jj=1}^{n_v^{3,e_3}} \lambda_{l_3(e_3,jj)}^3 \int_{\partial \Omega_{e_3}^3} \phi_{l_3(e_3,jj)} n_z^3 \phi_{l_3(e_3,ii)}
 &\quad + \frac{2\dt}{3} \sum_{jj=1}^{n_v^{3,e_3}} \gamma_{l_3(e_3,jj)}^3 \int_{\partial \Omega_{e_3}^3} t_z^3 \phi_{l_3(e_3,jj)} \phi_{l_3(e_3,ii)} \Bigg],
@@ -4165,7 +4165,7 @@ export const equations = [
   {
     id: '5.71',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.71",
+    label: "Bdry 1 (Elements, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,4} &= \sum_{\substack{e_4=1\\ i=l_4(e_4,ii)}}^{n_{el}^4} \Bigg[ \frac{2\dt}{3} \sum_{jj=1}^{n_v^{4,e_4}} \lambda_{l_4(e_4,jj)}^4 \int_{\partial \Omega_{e_4}^4} \phi_{l_4(e_4,jj)} n_z^4 \phi_{l_4(e_4,ii)}
 &\quad + \frac{2\dt}{3} \sum_{jj=1}^{n_v^{4,e_4}} \gamma_{l_4(e_4,jj)}^4 \int_{\partial \Omega_{e_4}^4} t_z^4 \phi_{l_4(e_4,jj)} \phi_{l_4(e_4,ii)} \Bigg];
@@ -4178,7 +4178,7 @@ export const equations = [
   {
     id: '5.72',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.72",
+    label: "Bdry 2 (Elements, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,0a} &= \sum_{\substack{e=1\\ i=l(e,ii)}}^{n_{el}} \left[ -\frac{2\dt St}{3} \int_{\Omega_e} \phi_{l(e,ii)} \hat{g}_z \right],
 \end{aligned}`,
@@ -4190,7 +4190,7 @@ export const equations = [
   {
     id: '5.73',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.73",
+    label: "Bdry 3 (Elements, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,0b} &= \sum_{\substack{e=1\\ i=l(e,ii)}}^{n_{el}} \Bigg[ Re \sum_{jj=1}^{n_v^e} w_{l(e,jj)} \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,jj)}
 &\quad - \frac{4Re}{3} \sum_{jj=1}^{n_v^e} w_{l(e,jj)}(t_{n-1}) \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,jj)}
@@ -4207,7 +4207,7 @@ export const equations = [
   {
     id: '5.74',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.74",
+    label: "Bdry 4 (Elements, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,0c} &= \sum_{\substack{e=1\\ i=l(e,ii)}}^{n_{el}} \Bigg[ \frac{2\dt Re}{3} \sum_{jj=1}^{n_v^e} w_{l(e,jj)} \sum_{kk=1}^{n_v^e} u_{l(e,kk)} \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_r \phi_{l(e,jj)}
 &\quad + \frac{2\dt Re}{3} \sum_{jj=1}^{n_v^e} w_{l(e,jj)} \sum_{kk=1}^{n_v^e} w_{l(e,kk)} \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_z \phi_{l(e,jj)}
@@ -4226,7 +4226,7 @@ export const equations = [
   {
     id: '5.75',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.75",
+    label: "Gravity (Local, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,0d} &= \sum_{\substack{e=1\\ i=l(e,ii)}}^{n_{el}} \left[ -\frac{2\dt}{3} \sum_{jj=1}^{n_p^e} p_{l^p(e,jj)} \int_{\Omega_e} \psi_{l^p(e,jj)} \partial_z \phi_{l(e,ii)} \right],
 \end{aligned}`,
@@ -4238,7 +4238,7 @@ export const equations = [
   {
     id: '5.76',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.76",
+    label: "Viscous+Mass (Local, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,1} &= \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{n_{el}^1} \Bigg[ \frac{2\dt}{3\ca} \sum_{jj=1}^{n_v^{1,e_1}} \sigma_{l_1(e_1,jj)}^1 \int_{\partial \Omega_{e_1}^1} \phi_{l_1(e_1,jj)}^1 t_z^1 \partial_s \phi_{l_1(e_1,ii)}^1
 &\quad - \frac{2\dt}{3} \sum_{jj=1}^{n_v^{1,e_1}} p_{l_1(e_1,jj)}^g \int_{\partial \Omega_{e_1}^1} \phi_{l_1(e_1,ii)}^1 \phi_{l_1(e_1,jj)}^1 n_z^1 \Bigg],
@@ -4251,7 +4251,7 @@ export const equations = [
   {
     id: '5.77',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.77",
+    label: "Convection (Local, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,2} &= \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{n_{el}^2} \Bigg[ \frac{2\dt \be}{3} \sum_{jj=1}^{n_v^{2,e_2}} u_{l_2(e_2,jj)} \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)} t_r^2 t_z^2 \phi_{l_2(e_2,jj)}
 &\quad + \frac{2\dt \be}{3} \sum_{jj=1}^{n_v^{2,e_2}} w_{l_2(e_2,jj)} \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)} t_z^2 t_z^2 \phi_{l_2(e_2,jj)}
@@ -4268,7 +4268,7 @@ export const equations = [
   {
     id: '5.78',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.78",
+    label: "Pressure (Local, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,3} &= \sum_{\substack{e_3=1\\ i=l_3(e_3,ii)}}^{n_{el}^3} \Bigg[ \frac{2\dt}{3} \sum_{jj=1}^{n_v^{3,e_3}} \lambda_{l_3(e_3,jj)}^3 \int_{\partial \Omega_{e_3}^3} \phi_{l_3(e_3,jj)} n_z^3 \phi_{l_3(e_3,ii)}
 &\quad + \frac{2\dt}{3} \sum_{jj=1}^{n_v^{3,e_3}} \gamma_{l_3(e_3,jj)}^3 \int_{\partial \Omega_{e_3}^3} t_z^3 \phi_{l_3(e_3,jj)} \phi_{l_3(e_3,ii)} \Bigg],
@@ -4281,7 +4281,7 @@ export const equations = [
   {
     id: '5.79',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.79",
+    label: "Bdry 1 (Local, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,4} &= \sum_{\substack{e_4=1\\ i=l_4(e_4,ii)}}^{n_{el}^4} \Bigg[ \frac{2\dt}{3} \sum_{jj=1}^{n_v^{4,e_4}} \lambda_{l_4(e_4,jj)}^4 \int_{\partial \Omega_{e_4}^4} \phi_{l_4(e_4,jj)} n_z^4 \phi_{l_4(e_4,ii)}
 &\quad + \frac{2\dt}{3} \sum_{jj=1}^{n_v^{4,e_4}} \gamma_{l_4(e_4,jj)}^4 \int_{\partial \Omega_{e_4}^4} t_z^4 \phi_{l_4(e_4,jj)} \phi_{l_4(e_4,ii)} \Bigg].
@@ -4294,7 +4294,7 @@ export const equations = [
   {
     id: '5.80',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.80",
+    label: "Bdry 2 (Local, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^z &= \sum_{\substack{e=1\\ i=l(e,ii)}}^{\bar{n}_{el}} \mathcal{M}_{e,ii}^{z,0} + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{\bar{n}_{el}^1} \mathcal{M}_{e_1,ii}^{z,1} + \frac{2\dt}{3} \frac{\sigma^1(r_{J1},z_{J1}) \phi_i(r_{J1},z_{J1}) m_z^{1,n}(r_{J1},z_{J1})}{\ca}
 &\quad + \frac{2\dt}{3} \frac{\sigma^1(r_a,z_a) \phi_i(r_a,z_a) m_z^{1}(r_a,z_a)}{\ca} + \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{\bar{n}_{el}^2} \mathcal{M}_{e_2,ii}^{z,2}
@@ -4308,7 +4308,7 @@ export const equations = [
   {
     id: '5.81',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.81",
+    label: "Bdry 3 (Local, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^{z,1} &= \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{\bar{n}_{el}^1} \mathcal{M}_{e_1,ii}^{z,1} + \frac{2\dt}{3} \frac{\sigma^1(r_{J1},z_{J1}) \phi_i(r_{J1},z_{J1}) m_z^{1,n}(r_{J1},z_{J1})}{\ca}
 &\quad + \frac{2\dt}{3} \frac{\sigma^1(r_a,z_a) \phi_i(r_a,z_a) m_z^{1}(r_a,z_a)}{\ca},
@@ -4321,7 +4321,7 @@ export const equations = [
   {
     id: '5.82',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.82",
+    label: "Bdry 4 (Local, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_{e,ii}^{z,0a} &= -\frac{2\dt St}{3} \int_{\Omega_e} \phi_{l(e,ii)} \hat{g}_z \equiv a_{ii,g_z}(e),
 \end{aligned}`,
@@ -4333,7 +4333,7 @@ export const equations = [
   {
     id: '5.83',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.83",
+    label: "Gravity (Bdry Numbering, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_{e,ii}^{z,0b} &= Re \sum_{jj=1}^{n_v^e} w_{l(e,jj)} \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,jj)} \equiv a_{ii,jj}(e)
 &\quad - \frac{4Re}{3} \sum_{jj=1}^{n_v^e} w_{l(e,jj)}(t_{n-1}) \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,jj)} \equiv a_{ii,jj}(e)
@@ -4350,7 +4350,7 @@ export const equations = [
   {
     id: '5.84',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.84",
+    label: "Visc+Mass (Bdry Num, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_{e,ii}^{z,0c} &= \frac{2\dt Re}{3} \sum_{jj=1}^{n_v^e} w_{l(e,jj)} \sum_{kk=1}^{n_v^e} u_{l(e,kk)} \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_r \phi_{l(e,jj)} \equiv a_{ii,kk,jj}^r(e)
 &\quad + \frac{2\dt Re}{3} \sum_{jj=1}^{n_v^e} w_{l(e,jj)} \sum_{kk=1}^{n_v^e} w_{l(e,kk)} \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_z \phi_{l(e,jj)} \equiv a_{ii,kk,jj}^z(e)
@@ -4369,7 +4369,7 @@ export const equations = [
   {
     id: '5.85',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.85",
+    label: "Convection (Bdry Num, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_{e,ii}^{z,0d} &= -\frac{2\dt}{3} \sum_{jj=1}^{n_p^e} p_{l^p(e,jj)} \int_{\Omega_e} \psi_{l^p(e,jj)} \partial_z \phi_{l(e,ii)} \equiv b_{jj,ii}^z(e),
 \end{aligned}`,
@@ -4381,7 +4381,7 @@ export const equations = [
   {
     id: '5.86',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.86",
+    label: "Pressure (Bdry Num, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_{e_1,ii}^{z,1} &= \frac{2\dt}{3\ca} \sum_{jj=1}^{n_v^{1,e_1}} \sigma_{l_1(e_1,jj)}^1 \int_{\partial \Omega_{e_1}^1} \phi_{l_1(e_1,jj)}^1 t_z^1 \partial_s \phi_{l_1(e_1,ii)}^1
 &\quad - \frac{2\dt}{3} \sum_{jj=1}^{n_v^{1,e_1}} p_{l_1(e_1,jj)}^g \int_{\partial \Omega_{e_1}^1} \phi_{l_1(e_1,ii)}^1 \phi_{l_1(e_1,jj)}^1 n_z^1,
@@ -4394,7 +4394,7 @@ export const equations = [
   {
     id: '5.87',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.87",
+    label: "Bdry 1 (Bdry Num, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_{e_2,ii}^{z,2} &= \frac{2\dt \be}{3} \sum_{jj=1}^{n_v^{2,e_2}} u_{l_2(e_2,jj)} \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)} t_r^2 t_z^2 \phi_{l_2(e_2,jj)}
 &\quad + \frac{2\dt \be}{3} \sum_{jj=1}^{n_v^{2,e_2}} w_{l_2(e_2,jj)} \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)} t_z^2 t_z^2 \phi_{l_2(e_2,jj)}
@@ -4411,7 +4411,7 @@ export const equations = [
   {
     id: '5.88',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.88",
+    label: "Bdry 2 (Bdry Num, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_{e_3,ii}^{z,3} &= \frac{2\dt}{3} \sum_{jj=1}^{n_v^{3,e_3}} \lambda_{l_3(e_3,jj)}^3 \int_{\partial \Omega_{e_3}^3} \phi_{l_3(e_3,jj)} n_z^3 \phi_{l_3(e_3,ii)} \equiv f_{ii,jj,n_z}(e_3)
 &\quad + \frac{2\dt}{3} \sum_{jj=1}^{n_v^{3,e_3}} \gamma_{l_3(e_3,jj)}^3 \int_{\partial \Omega_{e_3}^3} t_z^3 \phi_{l_3(e_3,jj)} \phi_{l_3(e_3,ii)} \equiv f_{ii,jj,t_z}(e_3),
@@ -4424,7 +4424,7 @@ export const equations = [
   {
     id: '5.89',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.89",
+    label: "Bdry 3 (Bdry Num, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_{e_4,ii}^{z,4} &= \frac{2\dt}{3} \sum_{jj=1}^{n_v^{4,e_4}} \lambda_{l_4(e_4,jj)}^4 \int_{\partial \Omega_{e_4}^4} \phi_{l_4(e_4,jj)} n_z^4 \phi_{l_4(e_4,ii)} \equiv e_{ii,jj,n_z}(e_4)
 &\quad + \frac{2\dt}{3} \sum_{jj=1}^{n_v^{4,e_4}} \gamma_{l_4(e_4,jj)}^4 \int_{\partial \Omega_{e_4}^4} t_z^4 \phi_{l_4(e_4,jj)} \phi_{l_4(e_4,ii)} \equiv e_{ii,jj,t_z}(e_4).
@@ -4437,7 +4437,7 @@ export const equations = [
   {
     id: '5.90',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.90",
+    label: "Bdry 4 (Bdry Num, z)",
     latex: String.raw`\mathcal{M}_{e,ii}^{z,0a} = -\frac{2\dt St}{3} a_{ii,g_z}(e)`,
     description: "Using the notation introduced above and re-arranging terms we have",
     references: [],
@@ -4447,7 +4447,7 @@ export const equations = [
   {
     id: '5.91',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.91",
+    label: "Gravity (ii Index, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_{e,ii}^{z,0b} &= \frac{2\dt}{3} \sum_{jj=1}^{n_v^e} u_{l(e,jj)} a_{ii,jj}^{r,z}(e) + \sum_{jj=1}^{n_v^e} w_{l(e,jj)} \frac{2\dt}{3} a_{ii,jj}^{r,r}(e)
 &\quad + \frac{4\dt}{3} \sum_{jj=1}^{n_v^e} w_{l(e,jj)} a_{ii,jj}^{z,z}(e) + Re \sum_{jj=1}^{n_v^e} w_{l(e,jj)} a_{ii,jj}(e)
@@ -4461,7 +4461,7 @@ export const equations = [
   {
     id: '5.92',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.92",
+    label: "Visc+Mass (ii Index, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_{e,ii}^{z,0c} &= \sum_{jj=1}^{n_v^e} Re\, w_{l(e,jj)} \Bigg[ \frac{2\dt}{3} \sum_{kk=1}^{n_v^e} \left( u_{l(e,kk)} a_{ii,kk,jj}^r(e) + w_{l(e,kk)} a_{ii,kk,jj}^z(e) \right)
 &\quad - \sum_{kk=1}^{n_v^e} a_{ii,kk,jj}^r(e) \left( r_{l(e,kk)}^c - \frac{4}{3} r_{l(e,kk)}^c(t_{n-1}) + \frac{1}{3} r_{l(e,kk)}^c(t_{n-2}) \right)
@@ -4475,7 +4475,7 @@ export const equations = [
   {
     id: '5.93',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.93",
+    label: "Convection (ii Index, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_{e,ii}^{z,0d} &= -\frac{2\dt}{3} \sum_{jj=1}^{n_p^e} p_{l^p(e,jj)} b_{jj,ii}^z(e),
 \end{aligned}`,
@@ -4487,7 +4487,7 @@ export const equations = [
   {
     id: '5.94',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.94",
+    label: "Pressure (ii Index, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_{e_1,ii}^{z,1} &= \sum_{jj=1}^{n_v^{1,e_1}} \frac{2\dt}{3} \left( \frac{1}{\ca} \sigma_{l_1(e_1,jj)}^1 c_{jj,ii,t_z}(e_1) - p_{l_1(e_1,jj)}^g c_{ii,jj,n_z}(e_1) \right),
 \end{aligned}`,
@@ -4499,7 +4499,7 @@ export const equations = [
   {
     id: '5.95',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.95",
+    label: "Bdry 1 (ii Index, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_{e_2,ii}^{z,2} &= \sum_{jj=1}^{n_v^{2,e_2}} \frac{2\dt}{3} \Bigg[ \be \left( d_{ii,jj,t_r,t_r}(e_2) \{ u_{l_2(e_2,jj)} - u_{l_2^2(e_2,jj)}^s \} \right.
 &\quad \left. + d_{ii,jj,t_r,t_z}(e_2) \{ w_{l_2(e_2,jj)} - w_{l_2^2(e_2,jj)}^s \} \right)
@@ -4513,7 +4513,7 @@ export const equations = [
   {
     id: '5.96',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.96",
+    label: "Bdry 2 (ii Index, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_{e_3,ii}^{z,3} &= \sum_{jj=1}^{n_v^{3,e_3}} \frac{2\dt}{3} \left( \lambda_{l_3(e_3,jj)}^3 f_{ii,jj,n_z}(e_3) + \gamma_{l_3(e_3,jj)}^3 f_{ii,jj,t_z}(e_3) \right),
 \end{aligned}`,
@@ -4525,7 +4525,7 @@ export const equations = [
   {
     id: '5.97',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.97",
+    label: "Bdry 3 (ii Index, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_{e_4,ii}^{z,4} &= \sum_{jj=1}^{n_v^{4,e_4}} \frac{2\dt}{3} \left( \lambda_{l_4(e_4,jj)}^4 e_{ii,jj,n_z}(e_4) + \gamma_{l_4(e_4,jj)}^4 e_{ii,jj,t_z}(e_4) \right).
 \end{aligned}`,
@@ -4537,7 +4537,7 @@ export const equations = [
   {
     id: '5.98',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.98",
+    label: "Bdry 4 (ii Index, z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_i^z &= \sum_{e=1}^{n_{el}} \mathcal{M}_{e,ii}^{z,0a} + \sum_{e=1}^{n_{el}} \mathcal{M}_{e,ii}^{z,0b} + \sum_{e=1}^{n_{el}} \mathcal{M}_{e,ii}^{z,0c} + \sum_{e=1}^{n_{el}} \mathcal{M}_{e,ii}^{z,0d} + \sum_{e_1=1}^{n_{el}^1} \mathcal{M}_{e_1,ii}^{z,1}
 &\quad + \frac{2\dt}{3} \frac{\sigma^1(r_{j1},z_{j1}) \phi_i(r_{j1},z_{j1}) m_z^{1,n}(r_{j1},z_{j1})}{\ca}
@@ -4552,7 +4552,7 @@ export const equations = [
   {
     id: '5.99',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.99",
+    label: "Full Decomposition (z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_{e,ii}^{z,0a} &= -\frac{2\dt St}{3} a_{ii,g_z}(e),
 \end{aligned}`,
@@ -4564,7 +4564,7 @@ export const equations = [
   {
     id: '5.100',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.100",
+    label: "M^{z,1} Boundary",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_{e,ii}^{z,0b} &= \sum_{jj=1}^{n_v^e} \frac{2\dt}{3} \left[ u_{l(e,jj)} a_{ii,jj}^{r,z}(e) + w_{l(e,jj)} \left( a_{ii,jj}^{r,r}(e) + 2 a_{ii,jj}^{z,z}(e) \right) \right]
 &\quad + \sum_{jj=1}^{n_v^e} Re\, a_{ii,jj}(e) \left[ w_{l(e,jj)} - \frac{4}{3} w_{l(e,jj)}(t_{n-1}) + \frac{1}{3} w_{l(e,jj)}(t_{n-2}) \right],
@@ -4577,7 +4577,7 @@ export const equations = [
   {
     id: '5.101',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.101",
+    label: "Gravity Integral (z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_{e,ii}^{z,0c} &= \sum_{jj=1}^{n_v^e} Re\, w_{l(e,jj)} \Bigg[ \frac{2\dt}{3} \sum_{kk=1}^{n_v^e} \left( u_{l(e,kk)} a_{ii,kk,jj}^r(e) + w_{l(e,kk)} a_{ii,kk,jj}^z(e) \right)
 &\quad - \sum_{kk=1}^{n_v^e} a_{ii,kk,jj}^r(e) \left( r_{l(e,kk)}^c - \frac{4}{3} r_{l(e,kk)}^c(t_{n-1}) + \frac{1}{3} r_{l(e,kk)}^c(t_{n-2}) \right)
@@ -4591,7 +4591,7 @@ export const equations = [
   {
     id: '5.102',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.102",
+    label: "Viscous+Mass Integrals (z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_{e,ii}^{z,0d} &= \sum_{jj=1}^{n_p^e} \frac{2\dt}{3} p_{l^p(e,jj)} b_{jj,ii}^z(e),
 \end{aligned}`,
@@ -4603,7 +4603,7 @@ export const equations = [
   {
     id: '5.103',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.103",
+    label: "Convection Integrals (z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_{e_1,ii}^{z,1} &= \sum_{jj=1}^{n_v^{1,e_1}} \frac{2\dt}{3} \left( \frac{1}{\ca} \sigma_{l_1(e_1,jj)}^1 c_{jj,ii,t_z}(e_1) - p_{l_1(e_1,jj)}^g c_{ii,jj,n_z}(e_1) \right),
 \end{aligned}`,
@@ -4615,7 +4615,7 @@ export const equations = [
   {
     id: '5.104',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.104",
+    label: "Pressure Integral (z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_{e_2,ii}^{z,2} &= \sum_{jj=1}^{n_v^{2,e_2}} \frac{2\dt}{3} \Bigg[ \be \left( d_{ii,jj,t_r,t_r}(e_2) \{ u_{l_2(e_2,jj)} - u_{l_2^2(e_2,jj)}^s \} \right.
 &\quad \left. + d_{ii,jj,t_r,t_z}(e_2) \{ w_{l_2(e_2,jj)} - w_{l_2^2(e_2,jj)}^s \} \right)
@@ -4629,7 +4629,7 @@ export const equations = [
   {
     id: '5.105',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.105",
+    label: "Bdry 1 Integrals (z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_{e_3,ii}^{z,3} &= \sum_{jj=1}^{n_v^{3,e_3}} \frac{2\dt}{3} \left( \lambda_{l_3(e_3,jj)}^3 f_{ii,jj,n_z}(e_3) + \gamma_{l_3(e_3,jj)}^3 f_{ii,jj,t_z}(e_3) \right),
 \end{aligned}`,
@@ -4641,7 +4641,7 @@ export const equations = [
   {
     id: '5.106',
     section: 'the_z_momentum_equation',
-    label: "Equation 5.106",
+    label: "Bdry 2 Integrals (z)",
     latex: String.raw`\begin{aligned}
 \mathcal{M}_{e_4,ii}^{z,4} &= \sum_{jj=1}^{n_v^{4,e_4}} \frac{2\dt}{3} \left( \lambda_{l_4(e_4,jj)}^4 e_{ii,jj,n_z}(e_4) + \gamma_{l_4(e_4,jj)}^4 e_{ii,jj,t_z}(e_4) \right).
 \end{aligned}`,
@@ -5599,7 +5599,7 @@ export const equations = [
   {
     id: '6.1',
     section: 'the_continuity_equation',
-    label: "Equation 6.1",
+    label: "Continuity Equation",
     latex: String.raw`\partial_r u + \partial_z w = 0`,
     description: "And passing to local spine numbers % 6 We consider",
     references: [],
@@ -5609,7 +5609,7 @@ export const equations = [
   {
     id: '6.2',
     section: 'the_continuity_equation',
-    label: "Equation 6.2",
+    label: "Continuity Residual C_i",
     latex: String.raw`\mathcal{C}_i = \int_{\Omega^f} \psi_i \partial_r u + \int_{\Omega^f} \psi_i \partial_z w`,
     description: "And passing to local spine numbers % 6 We consider and we define",
     references: [],
@@ -5619,7 +5619,7 @@ export const equations = [
   {
     id: '6.3',
     section: 'the_continuity_equation',
-    label: "Equation 6.3",
+    label: "C_i with FE Approximation",
     latex: String.raw`\mathcal{C}_i = \int_{\Omega^f} \psi_i \partial_r \left( \sum_{j=1}^{n_v} u_j \phi_j \right) + \int_{\Omega^f} \psi_i \partial_z \left( \sum_{j=1}^{n_v} w_j \phi_j \right)`,
     description: "We consider and we define where is an index that runs through the pressure node numbering",
     references: ["4.66", "4.67"],
@@ -5629,7 +5629,7 @@ export const equations = [
   {
     id: '6.4',
     section: 'the_continuity_equation',
-    label: "Equation 6.4",
+    label: "C_i Rearranged",
     latex: String.raw`\mathcal{C}_i = \sum_{j=1}^{n_v} u_j \int_{\Omega^f} \psi_i \partial_r \phi_j + \sum_{j=1}^{n_v} w_j \int_{\Omega^f} \psi_i \partial_z \phi_j`,
     description: "We can re-write this as",
     references: ["4.66", "4.67"],
@@ -5639,7 +5639,7 @@ export const equations = [
   {
     id: '6.5',
     section: 'the_continuity_equation',
-    label: "Equation 6.5",
+    label: "C_i Gathered Sums",
     latex: String.raw`\mathcal{C}_i = \sum_{j=1}^{n_v} \left[ u_j \int_{\Omega^f} \psi_i \partial_r \phi_j + w_j \int_{\Omega^f} \psi_i \partial_z \phi_j \right]`,
     description: "We can re-write this as gathering the sums we have",
     references: ["4.66", "4.67"],
@@ -5649,7 +5649,7 @@ export const equations = [
   {
     id: '6.6',
     section: 'the_continuity_equation',
-    label: "Equation 6.6",
+    label: "C_i Element-wise",
     latex: String.raw`\mathcal{C}_i = \sum_{e=n_{el,s}}^{n_{el}} \sum_{j=1}^{n_v} \left[ u_j \int_{\Omega_e} \psi_i \partial_r \phi_j + w_j \int_{\Omega_e} \psi_i \partial_z \phi_j \right]`,
     description: "We can re-write this as gathering the sums we have We now express the integrals as a sum over the integrals on each element",
     references: [],
@@ -5659,7 +5659,7 @@ export const equations = [
   {
     id: '6.7',
     section: 'the_continuity_equation',
-    label: "Equation 6.7",
+    label: "C_i Local Numbering (j)",
     latex: String.raw`\mathcal{C}_i = \sum_{e=n_{el,s}}^{n_{el}} \sum_{jj=1}^{n_v^e} \left[ u_{l(e,jj)} \int_{\Omega_e} \psi_i \partial_r \phi_{l(e,jj)} + w_{l(e,jj)} \int_{\Omega_e} \psi_i \partial_z \phi_{l(e,jj)} \right]`,
     description: "Moving to local numbering in variable we have",
     references: [],
@@ -5669,7 +5669,7 @@ export const equations = [
   {
     id: '6.8',
     section: 'the_continuity_equation',
-    label: "Equation 6.8",
+    label: "C_i Local Numbering (i,j)",
     latex: String.raw`\begin{aligned}
 \mathcal{C}_i &= \sum_{e=n_{el,s}}^{n_{el}} \sum_{jj=1}^{n_v^e} \left[ u_{l(e,jj)} \int_{\Omega_e} \psi_{l^p(e,ii)} \partial_r \phi_{l(e,jj)} \right.
 &\quad \left. + w_{l(e,jj)} \int_{\Omega_e} \psi_{l^p(e,ii)} \partial_z \phi_{l(e,jj)} \right],
@@ -5682,7 +5682,7 @@ export const equations = [
   {
     id: '6.9',
     section: 'the_continuity_equation',
-    label: "Equation 6.9",
+    label: "C_i = Sum of C_{e,ii}",
     latex: String.raw`\mathcal{C}_i = \sum_{e=n_{el,s}}^{n_{el}} \mathcal{C}_{e,ii}`,
     description: "Moving to local node numbers for index variable we have i.e",
     references: [],
@@ -5692,7 +5692,7 @@ export const equations = [
   {
     id: '6.10',
     section: 'the_continuity_equation',
-    label: "Equation 6.10",
+    label: "C_{e,ii} Definition",
     latex: String.raw`\mathcal{C}_{e,ii} = \sum_{jj=1}^{n_v^e} \left[ u_{l(e,jj)} b_{ii,jj}^r(e) + w_{l(e,jj)} b_{ii,jj}^z(e) \right]`,
     description: "Moving to local node numbers for index variable we have i.e",
     references: [],
@@ -5702,7 +5702,7 @@ export const equations = [
   {
     id: '6.11',
     section: 'derivatives_of_c_i_with_respect_to_u_q',
-    label: "\u2202C/\u2202u",
+    label: "dC_i/du Global",
     latex: String.raw`\partial_{u_q} \mathcal{C}_i = \sum_{e=n_{el,s}}^{n_{el}} \partial_{u_q} \mathcal{C}_{e,ii}`,
     description: "Where % 6.1 We now consider the derivatives of with respect to , and",
     references: ["6.9"],
@@ -5712,7 +5712,7 @@ export const equations = [
   {
     id: '6.12',
     section: 'derivatives_of_c_i_with_respect_to_u_q',
-    label: "\u2202C/\u2202u",
+    label: "dC_{e,ii}/du Expanded",
     latex: String.raw`\begin{aligned}
 \partial_{u_q} \mathcal{C}_{e,ii} &= \sum_{jj=1}^{n_v^e} \left[ b_{ii,jj}^r(e) \partial_{u_q} u_{l(e,jj)} + b_{ii,jj}^z(e) \partial_{u_q} w_{l(e,jj)} \right],
 \end{aligned}`,
@@ -5724,7 +5724,7 @@ export const equations = [
   {
     id: '6.13',
     section: 'derivatives_of_c_i_with_respect_to_u_q',
-    label: "\u2202C/\u2202u",
+    label: "dC_{e,ii}/du Compact",
     latex: String.raw`\partial_{u_q} \mathcal{C}_{e,ii} = b_{ii,jj}^r(e) \big|_{q=l(e,jj)}`,
     description: "SubsectionJacobian terms % 6.1 We now consider the derivatives of with respect to , and",
     references: ["6.10", "6.9"],
@@ -5734,7 +5734,7 @@ export const equations = [
   {
     id: '6.14',
     section: 'derivatives_of_c_i_with_respect_to_w_q',
-    label: "\u2202C/\u2202w",
+    label: "dC_i/dw Global",
     latex: String.raw`\partial_{w_q} \mathcal{C}_i = \sum_{e=n_{el,s}}^{n_{el}} \partial_{w_q} \mathcal{C}_{e,ii}`,
     description: "",
     references: ["6.10", "6.9"],
@@ -5744,7 +5744,7 @@ export const equations = [
   {
     id: '6.15',
     section: 'derivatives_of_c_i_with_respect_to_w_q',
-    label: "\u2202C/\u2202w",
+    label: "dC_{e,ii}/dw Expanded",
     latex: String.raw`\begin{aligned}
 \partial_{w_q} \mathcal{C}_{e,ii} &= \sum_{jj=1}^{n_v^e} \left[ b_{ii,jj}^r(e) \partial_{w_q} u_{l(e,jj)} + b_{ii,jj}^z(e) \partial_{w_q} w_{l(e,jj)} \right],
 \end{aligned}`,
@@ -5756,7 +5756,7 @@ export const equations = [
   {
     id: '6.16',
     section: 'derivatives_of_c_i_with_respect_to_w_q',
-    label: "\u2202C/\u2202w",
+    label: "dC_{e,ii}/dw Compact",
     latex: String.raw`\partial_{w_q} \mathcal{C}_{e,ii} = b_{ii,jj}^z(e) \big|_{q=l(e,jj)}`,
     description: "",
     references: ["6.10", "6.9"],
@@ -5766,7 +5766,7 @@ export const equations = [
   {
     id: '6.17',
     section: 'derivatives_of_c_i_with_respect_to_h_q',
-    label: "\u2202C/\u2202h",
+    label: "dC_i/dh Global",
     latex: String.raw`\partial_{h_q} \mathcal{C}_i = \sum_{e=n_{el,s}}^{n_{el}} \partial_{h_q} \mathcal{C}_{e,ii}`,
     description: "",
     references: ["6.10", "6.9"],
@@ -5776,7 +5776,7 @@ export const equations = [
   {
     id: '6.18',
     section: 'derivatives_of_c_i_with_respect_to_h_q',
-    label: "\u2202C/\u2202h",
+    label: "dC_{e,ii}/dh Expanded",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} \mathcal{C}_{e,ii} &= \sum_{jj=1}^{n_v^e} \left[ u_{l(e,jj)} \partial_{h_q} b_{ii,jj}^r(e) + w_{l(e,jj)} \partial_{h_q} b_{ii,jj}^z(e) \right],
 \end{aligned}`,
@@ -5788,7 +5788,7 @@ export const equations = [
   {
     id: '6.19',
     section: 'derivatives_of_c_i_with_respect_to_h_q',
-    label: "\u2202C/\u2202h",
+    label: "dC_{e,ii}/dh Local Spines",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} \mathcal{C}_{e,ii} &= \sum_{jj=1}^{n_v^e} \left[ u_{l(e,jj)} \partial_{h_{S(e,qq)}} b_{ii,jj}^r(e) + w_{l(e,jj)} \partial_{h_{S(e,qq)}} b_{ii,jj}^z(e) \right].
 \end{aligned}`,
@@ -5800,7 +5800,7 @@ export const equations = [
   {
     id: '7.1',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.1",
+    label: "SC2 Equation Recalled",
     latex: String.raw`\left( \mathbf{v}^{s2} - \frac{1}{2} (\mathbf{u} + \mathbf{u}^s) \right) \cdot (\mathbf{I} - \mathbf{n}^2 \mathbf{n}^2) = E_s \nabla^s \varepsilon^2`,
     description: "",
     references: ["2.52", "6.10"],
@@ -5810,7 +5810,7 @@ export const equations = [
   {
     id: '7.2',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.2",
+    label: "SC2 Residual S_i^2",
     latex: String.raw`\mathcal{S}_i^2 = \int_{\partial \Omega^{2,n}} \phi_i^2 \left( \mathbf{v}^{s2} - \frac{1}{2} (\mathbf{u} + \mathbf{u}^s) \right) \cdot \mathbf{t}^2 - E_s \int_{\partial \Omega^{2,n}} \phi_i^2 \mathbf{t}^2 \cdot \nabla^s \varepsilon^2`,
     description: "And passing to local spine numbers we have % 7 We recall equation (2.52) and we define the -th SC2 residual as",
     references: ["2.52"],
@@ -5820,7 +5820,7 @@ export const equations = [
   {
     id: '7.3',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.3",
+    label: "S_i^2 with FE Approximation",
     latex: String.raw`\begin{aligned}
 \mathcal{S}_i^2 &= \int_{\partial \Omega^{2,n}} \phi_i^2 \left( \mathbf{v}^{s2} \cdot \mathbf{t}^2 - \frac{1}{2} \mathbf{u} \cdot \mathbf{t}^2 - \frac{1}{2} \mathbf{u}^s \cdot \mathbf{t}^2 \right) - E_s \int_{\partial \Omega^{2,n}} \phi_i^2 (\partial_s \varepsilon^2) (\mathbf{t}^2 \cdot \mathbf{t}^2),
 \end{aligned}`,
@@ -5832,7 +5832,7 @@ export const equations = [
   {
     id: '7.4',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.4",
+    label: "S_i^2 Rearranged",
     latex: String.raw`\begin{aligned}
 \mathcal{S}_i^2 &= \int_{\partial \Omega^{2,n}} \phi_i^2 \left( u^{s2} t_r^2 + w^{s2} t_z^2 - \frac{1}{2} u t_r^2 - \frac{1}{2} w t_z^2 - \frac{1}{2} u^s t_r^2 - \frac{1}{2} w^s t_z^2 \right) - E_s \int_{\partial \Omega^{2,n}} \phi_i^2 \partial_s \varepsilon^2,
 \end{aligned}`,
@@ -5844,7 +5844,7 @@ export const equations = [
   {
     id: '7.5',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.5",
+    label: "S_i^2 Gathered Sums",
     latex: String.raw`\begin{aligned}
 \mathcal{S}_i^2 &= \int_{\partial \Omega^{2,n}} \phi_i^2 u^{s2} t_r^2 + \int_{\partial \Omega^{2,n}} \phi_i^2 w^{s2} t_z^2 - \frac{1}{2} \int_{\partial \Omega^{2,n}} \phi_i^2 u t_r^2 - \frac{1}{2} \int_{\partial \Omega^{2,n}} \phi_i^2 w t_z^2
 &\quad - \frac{1}{2} \int_{\partial \Omega^{2,n}} \phi_i^2 u^s t_r^2 - \frac{1}{2} \int_{\partial \Omega^{2,n}} \phi_i^2 w^s t_z^2 - E_s \int_{\partial \Omega^{2,n}} \phi_i^2 \partial_s \varepsilon^2,
@@ -5857,7 +5857,7 @@ export const equations = [
   {
     id: '7.6',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.6",
+    label: "S_i^2 Element-wise",
     latex: String.raw`\begin{aligned}
 \mathcal{S}_i^2 &= \int_{\partial \Omega^{2,n}} \phi_i^2 u^{s2} t_r^2 + \int_{\partial \Omega^{2,n}} \phi_i^2 w^{s2} t_z^2 - \frac{1}{2} \int_{\partial \Omega^{2,n}} \phi_i^2 u t_r^2 - \frac{1}{2} \int_{\partial \Omega^{2,n}} \phi_i^2 w t_z^2
 &\quad - \frac{1}{2} \int_{\partial \Omega^{2,n}} \phi_i^2 u^s t_r^2 - \frac{1}{2} \int_{\partial \Omega^{2,n}} \phi_i^2 w^s t_z^2 - E_s \int_{\partial \Omega^{2,n}} \phi_i^2 \partial_s \varepsilon^2.
@@ -5870,7 +5870,7 @@ export const equations = [
   {
     id: '7.7',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.7",
+    label: "S_i^2 = Sum of S_{e,ii}^2",
     latex: String.raw`- \int_{\partial \Omega^{2}} \phi_i^2 \partial_s \varepsilon^2 = - \phi_i^2 \varepsilon^2 \Big|_{(r_c,z_c)}^{(r_o,z_o)} + \int_{\partial \Omega^{2}} \varepsilon^2 \partial_s \phi_i^2`,
     description: "We consider the last integral on the right hand side above and we integrate by parts to obtain",
     references: [],
@@ -5880,7 +5880,7 @@ export const equations = [
   {
     id: '7.8',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.8",
+    label: "S_{e,ii}^2 Definition",
     latex: String.raw`\begin{aligned}
 \mathcal{S}_i^2 &= E_s \phi_i^2(r_c,z_c) \varepsilon^2(r_c,z_c) - E_s \phi_i^2(r_o,z_o) \varepsilon^2(r_o,z_o)
 &\quad + \int_{\partial \Omega^{2,n}} \phi_i^2 u^{s2} t_r^2 + \int_{\partial \Omega^{2,n}} \phi_i^2 w^{s2} t_z^2
@@ -5896,7 +5896,7 @@ export const equations = [
   {
     id: '7.9',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.9",
+    label: "dS_i^2/du Global",
     latex: String.raw`\begin{aligned}
 u &\approx \sum_{j=1}^{n_v} u_j \phi_j,
 \end{aligned}`,
@@ -5908,7 +5908,7 @@ u &\approx \sum_{j=1}^{n_v} u_j \phi_j,
   {
     id: '7.10',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.10",
+    label: "dS_{e,ii}^2/du Expanded",
     latex: String.raw`\begin{aligned}
 w &\approx \sum_{j=1}^{n_v} w_j \phi_j,
 \end{aligned}`,
@@ -5920,7 +5920,7 @@ w &\approx \sum_{j=1}^{n_v} w_j \phi_j,
   {
     id: '7.11',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.11",
+    label: "dS_{e,ii}^2/du Compact",
     latex: String.raw`\begin{aligned}
 \varepsilon^2 &\approx \sum_{j=1}^{n_v} \varepsilon_j^2 \phi_j^2,
 \end{aligned}`,
@@ -5932,7 +5932,7 @@ w &\approx \sum_{j=1}^{n_v} w_j \phi_j,
   {
     id: '7.12',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.12",
+    label: "dS_i^2/dw Global",
     latex: String.raw`\begin{aligned}
 u^s &\approx \sum_{j=1}^{n_v} u_j^s \phi_j^2,
 \end{aligned}`,
@@ -5944,7 +5944,7 @@ u^s &\approx \sum_{j=1}^{n_v} u_j^s \phi_j^2,
   {
     id: '7.13',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.13",
+    label: "dS_{e,ii}^2/dw Expanded",
     latex: String.raw`\begin{aligned}
 w^s &\approx \sum_{j=1}^{n_v} w_j^s \phi_j^2,
 \end{aligned}`,
@@ -5956,7 +5956,7 @@ w^s &\approx \sum_{j=1}^{n_v} w_j^s \phi_j^2,
   {
     id: '7.14',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.14",
+    label: "dS_{e,ii}^2/dw Compact",
     latex: String.raw`\begin{aligned}
 u^{s2} &\approx \sum_{j=1}^{n_v} u_j^{s2} \phi_j^2,
 \end{aligned}`,
@@ -5968,7 +5968,7 @@ u^{s2} &\approx \sum_{j=1}^{n_v} u_j^{s2} \phi_j^2,
   {
     id: '7.15',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.15",
+    label: "dS_i^2/d\u03b5 Global",
     latex: String.raw`\begin{aligned}
 w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
 \end{aligned}`,
@@ -5980,7 +5980,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '7.16',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.16",
+    label: "dS_{e,ii}^2/d\u03b5 Expanded",
     latex: String.raw`\begin{aligned}
 \mathcal{S}_i^2 &= E_s \phi_i^2(r_c,z_c) \varepsilon^2(r_c,z_c) - E_s \phi_i^2(r_o,z_o) \varepsilon^2(r_o,z_o)
 &\quad + \int_{\partial \Omega^{2,n}} \phi_i^2 \left( \sum_{j=1}^{n_v} u_j^{s2} \phi_j^2 \right) t_r^2 + \int_{\partial \Omega^{2,n}} \phi_i^2 \left( \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2 \right) t_z^2
@@ -5996,7 +5996,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '7.17',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.17",
+    label: "dS_{e,ii}^2/d\u03b5 Compact",
     latex: String.raw`\begin{aligned}
 \mathcal{S}_i^2 &= E_s \phi_i^2(r_c,z_c) \varepsilon^2(r_c,z_c) - E_s \phi_i^2(r_o,z_o) \varepsilon^2(r_o,z_o)
 &\quad + \sum_{j=1}^{n_v} u_j^{s2} \int_{\partial \Omega^{2,n}} \phi_i^2 \phi_j^2 t_r^2 + \sum_{j=1}^{n_v} w_j^{s2} \int_{\partial \Omega^{2,n}} \phi_i^2 \phi_j^2 t_z^2
@@ -6012,7 +6012,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '7.18',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.18",
+    label: "dS_i^2/dh Global",
     latex: String.raw`\mathcal{S}_i^2 = E_s \phi_i^2(r_c,z_c) \varepsilon^2(r_c,z_c) - E_s \phi_i^2(r_o,z_o) \varepsilon^2(r_o,z_o) + \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{n_{el}^2} \mathcal{S}_{e_2,ii}^2`,
     description: "Decomposing the integrals into sums over line elements and using local node numbers we have",
     references: [],
@@ -6022,7 +6022,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '7.19',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.19",
+    label: "dS_{e,ii}^2/dh Step 1",
     latex: String.raw`\begin{aligned}
 \mathcal{S}_{e_2,ii}^2 &= \sum_{jj=1}^{n_v^{2,e_2}} u_{l_2(e_2,jj)}^{s2} \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \phi_{l_2(e_2,jj)}^2 t_r^2 + \sum_{jj=1}^{n_v^{2,e_2}} w_{l_2(e_2,jj)}^{s2} \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \phi_{l_2(e_2,jj)}^2 t_z^2
 &\quad - \frac{1}{2} \sum_{jj=1}^{n_v^{2,e_2}} u_{l_2(e_2,jj)} \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \phi_{l_2(e_2,jj)}^2 t_r^2
@@ -6039,7 +6039,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '7.20',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.20",
+    label: "dS_{e,ii}^2/dh Step 2",
     latex: String.raw`\begin{aligned}
 d_{ii,jj,t_r}(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \phi_{l_2(e_2,jj)}^2 t_r^2,
 \end{aligned}`,
@@ -6051,7 +6051,7 @@ d_{ii,jj,t_r}(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \phi_{
   {
     id: '7.21',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.21",
+    label: "dS_{e,ii}^2/dh Step 3",
     latex: String.raw`\begin{aligned}
 d_{ii,jj,t_z}(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \phi_{l_2(e_2,jj)}^2 t_z^2,
 \end{aligned}`,
@@ -6063,7 +6063,7 @@ d_{ii,jj,t_z}(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \phi_{
   {
     id: '7.22',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.22",
+    label: "dS_{e,ii}^2/dh Compact",
     latex: String.raw`\begin{aligned}
 d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial_s \phi_{l_2(e_2,jj)}^2.
 \end{aligned}`,
@@ -6075,7 +6075,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '7.21',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.21",
+    label: "dS_{e,ii}^2/dh Step 3",
     latex: String.raw`\begin{aligned}
 \mathcal{S}_{e_2,ii}^2 &= \sum_{jj=1}^{n_v^{2,e_2}} u_{l_2(e_2,jj)}^{s2} d_{ii,jj,t_r}(e_2) + \sum_{jj=1}^{n_v^{2,e_2}} w_{l_2(e_2,jj)}^{s2} d_{ii,jj,t_z}(e_2)
 &\quad - \frac{1}{2} \sum_{jj=1}^{n_v^{2,e_2}} u_{l_2(e_2,jj)} d_{ii,jj,t_r}(e_2) - \frac{1}{2} \sum_{jj=1}^{n_v^{2,e_2}} w_{l_2(e_2,jj)} d_{ii,jj,t_z}(e_2)
@@ -6090,7 +6090,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '7.22',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.22",
+    label: "dS_{e,ii}^2/dh Compact",
     latex: String.raw`\mathcal{S}_i^2 = E_s \phi_i^2(r_c,z_c) \varepsilon^2(r_c,z_c) - E_s \phi_i^2(r_o,z_o) \varepsilon^2(r_o,z_o) + \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{n_{el}^2} \mathcal{S}_{e_2,ii}^2`,
     description: "Summarising and re-arranging terms we have",
     references: [],
@@ -6100,7 +6100,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '7.23',
     section: 'the_slip_condition_on_the_liquid_solid_i',
-    label: "Equation 7.23",
+    label: "dS_{e,ii}^2/dh Final",
     latex: String.raw`\begin{aligned}
 \mathcal{S}_{e_2,ii}^2 &= \sum_{jj=1}^{n_v^{2,e_2}} \Bigg[ d_{ii,jj,t_r}(e_2) \left( u_{l_2(e_2,jj)}^{s2} - \frac{1}{2} u_{l_2(e_2,jj)} - \frac{1}{2} u_{l_2^2(e_2,jj)}^s \right)
 &\quad + d_{ii,jj,t_z}(e_2) \left( w_{l_2(e_2,jj)}^{s2} - \frac{1}{2} w_{l_2(e_2,jj)} - \frac{1}{2} w_{l_2^2(e_2,jj)}^s \right)
@@ -6190,7 +6190,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '7.30',
     section: 'derivatives_of_s_i_2_with_respect_to_u_q',
-    label: "Equation 7.30",
+    label: "S_{e,ii}^2 Reordered",
     latex: String.raw`\begin{aligned}
 \partial_{u_q^{s2}} \mathcal{S}_i^2 &= E_s \phi_i^2(r_c,z_c) \partial_{u_q^{s2}} \varepsilon^2(r_c,z_c) - E_s \phi_i^2(r_o,z_o) \partial_{u_q^{s2}} \varepsilon^2(r_o,z_o)
 &\quad + \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{n_{el}^2} \partial_{u_q^{s2}} \mathcal{S}_{e_2,ii}^2,
@@ -6203,7 +6203,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '7.31',
     section: 'derivatives_of_s_i_2_with_respect_to_u_q',
-    label: "Equation 7.31",
+    label: "S_{e,ii}^2 Compact Form",
     latex: String.raw`\begin{aligned}
 \partial_{u_q^{s2}} \mathcal{S}_{e_2,ii}^2 &= \sum_{jj=1}^{n_v^{2,e_2}} \partial_{u_q^{s2}} u_{l_2(e_2,jj)}^{s2} d_{ii,jj,t_r}(e_2) + \sum_{jj=1}^{n_v^{2,e_2}} \partial_{u_q^{s2}} w_{l_2(e_2,jj)}^{s2} d_{ii,jj,t_z}(e_2)
 &\quad - \frac{1}{2} \sum_{jj=1}^{n_v^{2,e_2}} \partial_{u_q^{s2}} u_{l_2(e_2,jj)} d_{ii,jj,t_r}(e_2) - \frac{1}{2} \sum_{jj=1}^{n_v^{2,e_2}} \partial_{u_q^{s2}} w_{l_2(e_2,jj)} d_{ii,jj,t_z}(e_2)
@@ -6218,7 +6218,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '7.32',
     section: 'derivatives_of_s_i_2_with_respect_to_u_q',
-    label: "Equation 7.32",
+    label: "dS^2/du Compact",
     latex: String.raw`\partial_{u_q^{s2}} \mathcal{S}_{e_2,ii}^2 = d_{ii,jj,t_r}(e_2) \big|_{q=l_2^2(e_2,jj)}`,
     description: "",
     references: [],
@@ -6228,7 +6228,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '7.33',
     section: 'derivatives_of_s_i_2_with_respect_to_w_q',
-    label: "Equation 7.33",
+    label: "dS^2/dw Compact",
     latex: String.raw`\begin{aligned}
 \partial_{w_q^{s2}} \mathcal{S}_i^2 &= E_s \phi_i^2(r_c,z_c) \partial_{w_q^{s2}} \varepsilon^2(r_c,z_c) - E_s \phi_i^2(r_o,z_o) \partial_{w_q^{s2}} \varepsilon^2(r_o,z_o)
 &\quad + \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{n_{el}^2} \partial_{w_q^{s2}} \mathcal{S}_{e_2,ii}^2,
@@ -6241,7 +6241,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '7.34',
     section: 'derivatives_of_s_i_2_with_respect_to_w_q',
-    label: "Equation 7.34",
+    label: "dS^2/d\u03b5 Compact",
     latex: String.raw`\begin{aligned}
 \partial_{w_q^{s2}} \mathcal{S}_{e_2,ii}^2 &= \sum_{jj=1}^{n_v^{2,e_2}} \partial_{w_q^{s2}} u_{l_2(e_2,jj)}^{s2} d_{ii,jj,t_r}(e_2) + \sum_{jj=1}^{n_v^{2,e_2}} \partial_{w_q^{s2}} w_{l_2(e_2,jj)}^{s2} d_{ii,jj,t_z}(e_2)
 &\quad - \frac{1}{2} \sum_{jj=1}^{n_v^{2,e_2}} \partial_{w_q^{s2}} u_{l_2(e_2,jj)} d_{ii,jj,t_r}(e_2) - \frac{1}{2} \sum_{jj=1}^{n_v^{2,e_2}} \partial_{w_q^{s2}} w_{l_2(e_2,jj)} d_{ii,jj,t_z}(e_2)
@@ -6256,7 +6256,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '7.35',
     section: 'derivatives_of_s_i_2_with_respect_to_w_q',
-    label: "Equation 7.35",
+    label: "dS^2/dh Compact",
     latex: String.raw`\partial_{w_q^{s2}} \mathcal{S}_{e_2,ii}^2 = d_{ii,jj,t_z}(e_2) \big|_{q=l_2^2(e_2,jj)}`,
     description: "",
     references: [],
@@ -6360,7 +6360,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '8.1',
     section: 'impermeability_condition_i2',
-    label: "Equation 8.1",
+    label: "I2 Equation Recalled",
     latex: String.raw`\left( \mathbf{v}^{s2} - \mathbf{u}^s \right) \cdot \mathbf{n}^2 = 0`,
     description: "",
     references: ["2.51"],
@@ -6370,7 +6370,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '8.2',
     section: 'impermeability_condition_i2',
-    label: "Equation 8.2",
+    label: "I2 Residual I_i",
     latex: String.raw`(u^{s2} - u^s) n_r^2 + (w^{s2} - w^s) n_z^2 = 0`,
     description: "",
     references: ["2.51"],
@@ -6380,7 +6380,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '8.3',
     section: 'impermeability_condition_i2',
-    label: "Equation 8.3",
+    label: "I_i with FE Approximation",
     latex: String.raw`\begin{aligned}
 \mathcal{I}_i &= \int_{\partial \Omega^{2,f}} \phi_i^2 u^{s2} n_r^2 + \int_{\partial \Omega^{2,f}} \phi_i^2 w^{s2} n_z^2
 &\quad - \int_{\partial \Omega^{2,f}} \phi_i^2 u^s n_r^2 - \int_{\partial \Omega^{2,f}} \phi_i^2 w^s n_z^2,
@@ -6393,7 +6393,7 @@ d_{ii,jj}^s(e_2) &= \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \partial
   {
     id: '8.4',
     section: 'impermeability_condition_i2',
-    label: "Equation 8.4",
+    label: "I_i Rearranged",
     latex: String.raw`\begin{aligned}
 u^s &\approx \sum_{j=1}^{n_v} u_j^s \phi_j^2,
 \end{aligned}`,
@@ -6405,7 +6405,7 @@ u^s &\approx \sum_{j=1}^{n_v} u_j^s \phi_j^2,
   {
     id: '8.5',
     section: 'impermeability_condition_i2',
-    label: "Equation 8.5",
+    label: "I_i Gathered Sums",
     latex: String.raw`\begin{aligned}
 w^s &\approx \sum_{j=1}^{n_v} w_j^s \phi_j^2,
 \end{aligned}`,
@@ -6417,7 +6417,7 @@ w^s &\approx \sum_{j=1}^{n_v} w_j^s \phi_j^2,
   {
     id: '8.6',
     section: 'impermeability_condition_i2',
-    label: "Equation 8.6",
+    label: "I_i Element-wise",
     latex: String.raw`\begin{aligned}
 u^{s2} &\approx \sum_{j=1}^{n_v} u_j^{s2} \phi_j^2,
 \end{aligned}`,
@@ -6429,7 +6429,7 @@ u^{s2} &\approx \sum_{j=1}^{n_v} u_j^{s2} \phi_j^2,
   {
     id: '8.7',
     section: 'impermeability_condition_i2',
-    label: "Equation 8.7",
+    label: "I_i = Sum of I_{e,ii}",
     latex: String.raw`\begin{aligned}
 w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
 \end{aligned}`,
@@ -6441,7 +6441,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '8.8',
     section: 'impermeability_condition_i2',
-    label: "Equation 8.8",
+    label: "I_{e,ii} Definition",
     latex: String.raw`\begin{aligned}
 \mathcal{I}_i &= \int_{\partial \Omega^{2,f}} \phi_i^2 \left( \sum_{j=1}^{n_v} u_j^{s2} \phi_j^2 \right) n_r^2 + \int_{\partial \Omega^{2,f}} \phi_i^2 \left( \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2 \right) n_z^2
 &\quad - \int_{\partial \Omega^{2,f}} \phi_i^2 \left( \sum_{j=1}^{n_v} u_j^s \phi_j^2 \right) n_r^2 - \int_{\partial \Omega^{2,f}} \phi_i^2 \left( \sum_{j=1}^{n_v} w_j^s \phi_j^2 \right) n_z^2,
@@ -6454,7 +6454,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '8.9',
     section: 'impermeability_condition_i2',
-    label: "Equation 8.9",
+    label: "dI_i/du Global",
     latex: String.raw`\begin{aligned}
 \mathcal{I}_i &= \sum_{j=1}^{n_v} u_j^{s2} \int_{\partial \Omega^{2,f}} \phi_i^2 \phi_j^2 n_r^2 + \sum_{j=1}^{n_v} w_j^{s2} \int_{\partial \Omega^{2,f}} \phi_i^2 \phi_j^2 n_z^2
 &\quad - \sum_{j=1}^{n_v} u_j^s \int_{\partial \Omega^{2,f}} \phi_i^2 \phi_j^2 n_r^2 - \sum_{j=1}^{n_v} w_j^s \int_{\partial \Omega^{2,f}} \phi_i^2 \phi_j^2 n_z^2,
@@ -6467,7 +6467,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '8.10',
     section: 'impermeability_condition_i2',
-    label: "Equation 8.10",
+    label: "dI_{e,ii}/du Expanded",
     latex: String.raw`\begin{aligned}
 \mathcal{I}_i &= \sum_{j=1}^{n_v} \Bigg[ u_j^{s2} \int_{\partial \Omega^{2,f}} \phi_i^2 \phi_j^2 n_r^2 + w_j^{s2} \int_{\partial \Omega^{2,f}} \phi_i^2 \phi_j^2 n_z^2
 &\quad - u_j^s \int_{\partial \Omega^{2,f}} \phi_i^2 \phi_j^2 n_r^2 - w_j^s \int_{\partial \Omega^{2,f}} \phi_i^2 \phi_j^2 n_z^2 \Bigg].
@@ -6480,7 +6480,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '8.11',
     section: 'impermeability_condition_i2',
-    label: "Equation 8.11",
+    label: "dI_{e,ii}/du Compact",
     latex: String.raw`\mathcal{I}_i = \sum_{e_2=1}^{n_{el}^2} \mathcal{I}_{e_2,ii}`,
     description: "Gathering the sums we obtain Now, we decompose the integrals into the sum of the integrals over each line-element on boundary 2",
     references: [],
@@ -6490,7 +6490,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '8.12',
     section: 'impermeability_condition_i2',
-    label: "Equation 8.12",
+    label: "dI_i/dw Global",
     latex: String.raw`\begin{aligned}
 \mathcal{I}_{e_2,ii} &= \sum_{jj=1}^{n_v^{2,e_2}} \Bigg[ u_{l_2(e_2,jj)}^{s2} \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \phi_{l_2(e_2,jj)}^2 n_r^2
 &\quad + w_{l_2(e_2,jj)}^{s2} \int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \phi_{l_2(e_2,jj)}^2 n_z^2
@@ -6505,7 +6505,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '8.13',
     section: 'impermeability_condition_i2',
-    label: "Equation 8.13",
+    label: "dI_{e,ii}/dw Expanded",
     latex: String.raw`\begin{aligned}
 \mathcal{I}_{e_2,ii} &= \sum_{jj=1}^{n_v^{2,e_2}} \Bigg( u_{l_2(e_2,jj)}^{s2} \underbrace{\int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \phi_{l_2(e_2,jj)}^2 n_r^2}_{d_{ii,jj,n_r}(e_2)}
 &\quad + w_{l_2(e_2,jj)}^{s2} \underbrace{\int_{\partial \Omega_{e_2}^2} \phi_{l_2(e_2,ii)}^2 \phi_{l_2(e_2,jj)}^2 n_z^2}_{d_{ii,jj,n_z}(e_2)}
@@ -6520,7 +6520,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '8.14',
     section: 'impermeability_condition_i2',
-    label: "Equation 8.14",
+    label: "dI_{e,ii}/dw Compact",
     latex: String.raw`\begin{aligned}
 \mathcal{I}_{e_2,ii} &= \sum_{jj=1}^{n_v^{2,e_2}} \Bigg( u_{l_2(e_2,jj)}^{s2} d_{ii,jj,n_r}(e_2) + w_{l_2(e_2,jj)}^{s2} d_{ii,jj,n_z}(e_2)
 &\quad - u_{l_2(e_2,jj)}^s d_{ii,jj,n_r}(e_2) - w_{l_2(e_2,jj)}^s d_{ii,jj,n_z}(e_2) \Bigg).
@@ -6533,7 +6533,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '8.15',
     section: 'impermeability_condition_i2',
-    label: "Equation 8.15",
+    label: "dI_i/dh Global",
     latex: String.raw`\mathcal{I}_i = \sum_{e_2=1}^{n_{el}^2} \mathcal{I}_{e_2,ii}`,
     description: "Summarising and re-arranging we have",
     references: [],
@@ -6543,7 +6543,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '8.16',
     section: 'impermeability_condition_i2',
-    label: "Equation 8.16",
+    label: "dI_{e,ii}/dh Step 1",
     latex: String.raw`\begin{aligned}
 \mathcal{I}_{e_2,ii} &= \sum_{jj=1}^{n_v^{2,e_2}} \Bigg( d_{ii,jj,n_r}(e_2) \left[ u_{l_2(e_2,jj)}^{s2} - u_{l_2(e_2,jj)}^s \right]
 &\quad + d_{ii,jj,n_z}(e_2) \left[ w_{l_2(e_2,jj)}^{s2} - w_{l_2(e_2,jj)}^s \right] \Bigg).
@@ -6556,7 +6556,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '8.17',
     section: 'derivatives_of_i_i_with_respect_to_u_q_s',
-    label: "Equation 8.17",
+    label: "dI_{e,ii}/dh Expanded",
     latex: String.raw`\begin{aligned}
 \partial_{u_q^{s2}} \mathcal{I}_i &= \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{n_{el}^2} \partial_{u_q^{s2}} \sum_{jj=1}^{n_v^{2,e_2}} \Bigg[ u_{l_2(e_2,jj)}^{s2} d_{ii,jj,n_r}(e_2) + w_{l_2(e_2,jj)}^{s2} d_{ii,jj,n_z}(e_2)
 &\quad - u_{l_2(e_2,jj)}^s d_{ii,jj,n_r}(e_2) - w_{l_2(e_2,jj)}^s d_{ii,jj,n_z}(e_2) \Bigg],
@@ -6569,7 +6569,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '8.18',
     section: 'derivatives_of_i_i_with_respect_to_u_q_s',
-    label: "Equation 8.18",
+    label: "dI_{e,ii}/dh Compact",
     latex: String.raw`\partial_{u_q^{s2}} \mathcal{I}_i = \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{n_{el}^2} \sum_{jj=1}^{n_v^{2,e_2}} \partial_{u_q^{s2}} u_{l_2(e_2,jj)}^{s2} d_{ii,jj,n_r}(e_2) = \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{n_{el}^2} d_{ii,jj,n_r}(e_2) \Big|_{q=l_2(e_2,jj)}`,
     description: "We consider passing the derivative into the sum we have",
     references: [],
@@ -6579,7 +6579,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '8.19',
     section: 'derivatives_of_i_i_with_respect_to_u_q_s',
-    label: "Equation 8.19",
+    label: "I_{e,ii} Reordered",
     latex: String.raw`\partial_{u_q^{s2}} \mathcal{I}_i = \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{n_{el}^2} d_{ii,jj,n_r}(e_2)`,
     description: "Passing the derivative into the sum we have i.e",
     references: [],
@@ -6589,7 +6589,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '8.20',
     section: 'derivatives_of_i_i_with_respect_to_w_q_s',
-    label: "Equation 8.20",
+    label: "I_{e,ii} Compact Form",
     latex: String.raw`\begin{aligned}
 \partial_{w_q^{s2}} \mathcal{I}_i &= \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{n_{el}^2} \partial_{w_q^{s2}} \sum_{jj=1}^{n_v^{2,e_2}} \Bigg[ u_{l_2(e_2,jj)}^{s2} d_{ii,jj,n_r}(e_2) + w_{l_2(e_2,jj)}^{s2} d_{ii,jj,n_z}(e_2)
 &\quad - u_{l_2(e_2,jj)}^s d_{ii,jj,n_r}(e_2) - w_{l_2(e_2,jj)}^s d_{ii,jj,n_z}(e_2) \Bigg],
@@ -6602,7 +6602,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '8.21',
     section: 'derivatives_of_i_i_with_respect_to_w_q_s',
-    label: "Equation 8.21",
+    label: "dI/du Compact",
     latex: String.raw`\partial_{w_q^{s2}} \mathcal{I}_i = \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{n_{el}^2} \sum_{jj=1}^{n_v^{2,e_2}} \partial_{w_q^{s2}} w_{l_2(e_2,jj)}^{s2} d_{ii,jj,n_z}(e_2) = \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{n_{el}^2} d_{ii,jj,n_z}(e_2) \Big|_{q=l_2(e_2,jj)}`,
     description: "We consider passing the derivative into the sum we have",
     references: [],
@@ -6612,7 +6612,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '8.22',
     section: 'derivatives_of_i_i_with_respect_to_w_q_s',
-    label: "Equation 8.22",
+    label: "dI/dw Compact",
     latex: String.raw`\partial_{w_q^{s2}} \mathcal{I}_i = \sum_{\substack{e_2=1\\ i=l_2(e_2,ii)}}^{n_{el}^2} d_{ii,jj,n_z}(e_2)`,
     description: "Passing the derivative into the sum we have i.e",
     references: [],
@@ -6662,7 +6662,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '12.1',
     section: 'the_slip_condition_equation_on_boundary_',
-    label: "Equation 12.1",
+    label: "SC1 Equation Recalled",
     latex: String.raw`\left( \mathbf{v}^{s1} - \mathbf{u} \right) \cdot \left( \mathbf{I} - \mathbf{n}^1 \mathbf{n}^1 \right) = \frac{1 + 4 E_g B_g}{4 B_g} \nabla^s \sigma^1`,
     description: "",
     references: ["2.47"],
@@ -6672,7 +6672,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '12.2',
     section: 'the_slip_condition_equation_on_boundary_',
-    label: "Equation 12.2",
+    label: "SC1 Residual S_i^1",
     latex: String.raw`\begin{aligned}
 \mathcal{S}_i^1 &= \int_{\partial \Omega^{1,\ell}} \phi_i^1 (\mathbf{v}^{s1} - \mathbf{u}) \cdot \mathbf{t}^1 - \frac{1 + 4 E_g B_g}{4 B_g} \int_{\partial \Omega^{1,\ell}} \phi_i^1 \mathbf{t}^1 \cdot \nabla^s \sigma^1,
 \end{aligned}`,
@@ -6684,7 +6684,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '12.3',
     section: 'the_slip_condition_equation_on_boundary_',
-    label: "Equation 12.3",
+    label: "S_i^1 with FE Approximation",
     latex: String.raw`\begin{aligned}
 \mathcal{S}_i^1 &= \int_{\partial \Omega^{1,\ell}} \phi_i^1 \mathbf{v}^{s1} \cdot \mathbf{t}^1 - \int_{\partial \Omega^{1,\ell}} \phi_i^1 \mathbf{u} \cdot \mathbf{t}^1
 &\quad - \frac{1 + 4 E_g B_g}{4 B_g} \int_{\partial \Omega^{1,\ell}} \phi_i^1 (\partial_s \sigma^1) \mathbf{t}^1 \cdot \mathbf{t}^1,
@@ -6697,7 +6697,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '12.4',
     section: 'the_slip_condition_equation_on_boundary_',
-    label: "Equation 12.4",
+    label: "S_i^1 Rearranged",
     latex: String.raw`\begin{aligned}
 \mathcal{S}_i^1 &= \int_{\partial \Omega^{1,\ell}} \phi_i^1 u^{s1} t_r^1 + \int_{\partial \Omega^{1,\ell}} \phi_i^1 w^{s1} t_z^1 - \int_{\partial \Omega^{1,\ell}} \phi_i^1 u t_r^1 - \int_{\partial \Omega^{1,\ell}} \phi_i^1 w t_z^1
 &\quad - \frac{1 + 4 E_g B_g}{4 B_g} \int_{\partial \Omega^{1,\ell}} \phi_i^1 \partial_s \sigma^1.
@@ -6710,7 +6710,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '12.5',
     section: 'the_slip_condition_equation_on_boundary_',
-    label: "Equation 12.5",
+    label: "S_i^1 Gathered Sums",
     latex: String.raw`- \int_{\partial \Omega^{1,\ell}} \phi_i^1 \partial_s \sigma^1 = - \phi_i^1 \sigma^1 \Big|_{(r_j,z_j)}^{(r_a,z_a)} + \int_{\partial \Omega^{1}} \sigma^1 \partial_s \phi_i^1`,
     description: "Equivalently We consider the last integral on the right hand side above and we integrate by parts to obtain",
     references: [],
@@ -6720,7 +6720,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '12.6',
     section: 'the_slip_condition_equation_on_boundary_',
-    label: "Equation 12.6",
+    label: "S_i^1 Element-wise",
     latex: String.raw`\begin{aligned}
 \mathcal{S}_i^1 &= \int_{\partial \Omega^{1}} \phi_i^1 u^{s1} t_r^1 + \int_{\partial \Omega^{1}} \phi_i^1 w^{s1} t_z^1 - \int_{\partial \Omega^{1}} \phi_i^1 u t_r^1 - \int_{\partial \Omega^{1}} \phi_i^1 w t_z^1
 &\quad + \frac{1 + 4 E_g B_g}{4 B_g} \int_{\partial \Omega^{1}} \sigma^1 \partial_s \phi_i^1 + \frac{1 + 4 E_g B_g}{4 B_g} \phi_i^1(r_j,z_j) \sigma^1(r_j,z_j)
@@ -6734,7 +6734,7 @@ w^{s2} &\approx \sum_{j=1}^{n_v} w_j^{s2} \phi_j^2.
   {
     id: '12.7',
     section: 'the_slip_condition_equation_on_boundary_',
-    label: "Equation 12.7",
+    label: "S_i^1 = Sum of S_{e,ii}^1",
     latex: String.raw`\begin{aligned}
 u &\approx \sum_{j=1}^{n_v} u_j \phi_j,
 \end{aligned}`,
@@ -6746,7 +6746,7 @@ u &\approx \sum_{j=1}^{n_v} u_j \phi_j,
   {
     id: '12.8',
     section: 'the_slip_condition_equation_on_boundary_',
-    label: "Equation 12.8",
+    label: "S_{e,ii}^1 Definition",
     latex: String.raw`\begin{aligned}
 w &\approx \sum_{j=1}^{n_v} w_j \phi_j,
 \end{aligned}`,
@@ -6758,7 +6758,7 @@ w &\approx \sum_{j=1}^{n_v} w_j \phi_j,
   {
     id: '12.9',
     section: 'the_slip_condition_equation_on_boundary_',
-    label: "Equation 12.9",
+    label: "dS_i^1/du Global",
     latex: String.raw`\begin{aligned}
 \sigma^1 &\approx \sum_{j=1}^{n_v} \sigma_j^1 \phi_j,
 \end{aligned}`,
@@ -6770,7 +6770,7 @@ w &\approx \sum_{j=1}^{n_v} w_j \phi_j,
   {
     id: '12.10',
     section: 'the_slip_condition_equation_on_boundary_',
-    label: "Equation 12.10",
+    label: "dS_{e,ii}^1/du Expanded",
     latex: String.raw`\begin{aligned}
 u^{s1} &\approx \sum_{j=1}^{n_v} u_j^{s1} \phi_j,
 \end{aligned}`,
@@ -6782,7 +6782,7 @@ u^{s1} &\approx \sum_{j=1}^{n_v} u_j^{s1} \phi_j,
   {
     id: '12.11',
     section: 'the_slip_condition_equation_on_boundary_',
-    label: "Equation 12.11",
+    label: "dS_{e,ii}^1/du Compact",
     latex: String.raw`\begin{aligned}
 w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
 \end{aligned}`,
@@ -6794,7 +6794,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.12',
     section: 'the_slip_condition_equation_on_boundary_',
-    label: "Equation 12.12",
+    label: "dS_i^1/dw Global",
     latex: String.raw`\begin{aligned}
 \mathcal{S}_i^1 &= \int_{\partial \Omega^{1}} \phi_i^1 \left( \sum_{j=1}^{n_v} u_j^{s1} \phi_j \right) t_r^1 + \int_{\partial \Omega^{1}} \phi_i^1 \left( \sum_{j=1}^{n_v} w_j^{s1} \phi_j \right) t_z^1
 &\quad - \int_{\partial \Omega^{1}} \phi_i^1 \left( \sum_{j=1}^{n_v} u_j \phi_j \right) t_r^1 - \int_{\partial \Omega^{1}} \phi_i^1 \left( \sum_{j=1}^{n_v} w_j \phi_j \right) t_z^1
@@ -6809,7 +6809,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.13',
     section: 'the_slip_condition_equation_on_boundary_',
-    label: "Equation 12.13",
+    label: "dS_{e,ii}^1/dw Expanded",
     latex: String.raw`\begin{aligned}
 \mathcal{S}_i^1 &= \sum_{j=1}^{n_v} u_j^{s1} \int_{\partial \Omega^{1}} \phi_i^1 \phi_j^1 t_r^1 + \sum_{j=1}^{n_v} w_j^{s1} \int_{\partial \Omega^{1}} \phi_i^1 \phi_j^1 t_z^1
 &\quad - \sum_{j=1}^{n_v} u_j \int_{\partial \Omega^{1}} \phi_i^1 \phi_j^1 t_r^1 - \sum_{j=1}^{n_v} w_j \int_{\partial \Omega^{1}} \phi_i^1 \phi_j^1 t_z^1
@@ -6823,7 +6823,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.14',
     section: 'the_slip_condition_equation_on_boundary_',
-    label: "Equation 12.14",
+    label: "dS_{e,ii}^1/dw Compact",
     latex: String.raw`\begin{aligned}
 \mathcal{S}_i^1 &= \frac{1 + 4 E_g B_g}{4 B_g} \phi_i^1(r_c,z_c) \sigma^1(r_c,z_c) - \frac{1 + 4 E_g B_g}{4 B_g} \phi_i^1(r_a,z_a) \sigma^1(r_a,z_a)
 &\quad + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{n_{el}^1} \mathcal{S}_{e_1,ii}^1,
@@ -6836,7 +6836,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.15',
     section: 'the_slip_condition_equation_on_boundary_',
-    label: "Equation 12.15",
+    label: "dS_i^1/d\u03c3 Global",
     latex: String.raw`\begin{aligned}
 \mathcal{S}_{e_1,ii}^1 &= \sum_{jj=1}^{n_v^{1,e_1}} u_{l_1(e_1,jj)}^{s1} \underbrace{\int_{\partial \Omega_{e_1}^1} \phi_{l_1(e_1,ii)}^1 \phi_{l_1(e_1,jj)}^1 t_r^1}_{c_{ii,jj,t_r}(e_1)}
 &\quad + \sum_{jj=1}^{n_v^{1,e_1}} w_{l_1(e_1,jj)}^{s1} \underbrace{\int_{\partial \Omega_{e_1}^1} \phi_{l_1(e_1,ii)}^1 \phi_{l_1(e_1,jj)}^1 t_z^1}_{c_{ii,jj,t_z}(e_1)}
@@ -6852,7 +6852,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.16',
     section: 'the_slip_condition_equation_on_boundary_',
-    label: "Equation 12.16",
+    label: "dS_{e,ii}^1/d\u03c3 Expanded",
     latex: String.raw`\begin{aligned}
 \mathcal{S}_{e_1,ii}^1 &= \sum_{jj=1}^{n_v^{1,e_1}} u_{l_1(e_1,jj)}^{s1} c_{ii,jj,t_r}(e_1) + \sum_{jj=1}^{n_v^{1,e_1}} w_{l_1(e_1,jj)}^{s1} c_{ii,jj,t_z}(e_1)
 &\quad - \sum_{jj=1}^{n_v^{1,e_1}} u_{l_1(e_1,jj)} c_{ii,jj,t_r}(e_1) - \sum_{jj=1}^{n_v^{1,e_1}} w_{l_1(e_1,jj)} c_{ii,jj,t_z}(e_1)
@@ -6866,7 +6866,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.17',
     section: 'the_slip_condition_equation_on_boundary_',
-    label: "Equation 12.17",
+    label: "dS_{e,ii}^1/d\u03c3 Compact",
     latex: String.raw`\begin{aligned}
 \mathcal{S}_i^1 &= \frac{1 + 4 E_g B_g}{4 B_g} \phi_i^1(r_c,z_c) \sigma^1(r_c,z_c) - \frac{1 + 4 E_g B_g}{4 B_g} \phi_i^1(r_a,z_a) \sigma^1(r_a,z_a)
 &\quad + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{n_{el}^1} \mathcal{S}_{e_1,ii}^1,
@@ -6879,7 +6879,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.18',
     section: 'the_slip_condition_equation_on_boundary_',
-    label: "Equation 12.18",
+    label: "dS_i^1/dh Global",
     latex: String.raw`\begin{aligned}
 \mathcal{S}_{e_1,ii}^1 &= \sum_{jj=1}^{n_v^{1,e_1}} \Bigg[ c_{ii,jj,t_r}(e_1) \left( u_{l_1(e_1,jj)}^{s1} - u_{l_1(e_1,jj)} \right)
 &\quad + c_{ii,jj,t_z}(e_1) \left( w_{l_1(e_1,jj)}^{s1} - w_{l_1(e_1,jj)} \right)
@@ -6967,7 +6967,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.25',
     section: 'derivatives_of_s_i_1_with_respect_to_u_q',
-    label: "Equation 12.25",
+    label: "S_{e,ii}^1 Reordered",
     latex: String.raw`\begin{aligned}
 \partial_{u_q^{s1}} \mathcal{S}_i^1 &= \frac{1 + 4 E_g B_g}{4 B_g} \phi_i^1(r_c,z_c) \partial_{u_q^{s1}} \sigma^1(r_c,z_c) - \frac{1 + 4 E_g B_g}{4 B_g} \phi_i^1(r_a,z_a) \partial_{u_q^{s1}} \sigma^1(r_a,z_a)
 &\quad + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{n_{el}^1} \partial_{u_q^{s1}} \mathcal{S}_{e_1,ii}^1.
@@ -6980,7 +6980,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.26',
     section: 'derivatives_of_s_i_1_with_respect_to_u_q',
-    label: "Equation 12.26",
+    label: "S_{e,ii}^1 Compact Form",
     latex: String.raw`\begin{aligned}
 \partial_{u_q^{s1}} \mathcal{S}_{e_1,ii}^1 &= \sum_{jj=1}^{n_v^{1,e_1}} \partial_{u_q^{s1}} u_{l_1(e_1,jj)}^{s1} c_{ii,jj,t_r}(e_1) + \sum_{jj=1}^{n_v^{1,e_1}} \partial_{u_q^{s1}} w_{l_1(e_1,jj)}^{s1} c_{ii,jj,t_z}(e_1)
 &\quad - \sum_{jj=1}^{n_v^{1,e_1}} c_{ii,jj,t_r}(e_1) \partial_{u_q^{s1}} u_{l_1(e_1,jj)} - \sum_{jj=1}^{n_v^{1,e_1}} \partial_{u_q^{s1}} w_{l_1(e_1,jj)} c_{ii,jj,t_z}(e_1)
@@ -6994,7 +6994,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.27',
     section: 'derivatives_of_s_i_1_with_respect_to_u_q',
-    label: "Equation 12.27",
+    label: "dS^1/du Compact",
     latex: String.raw`\partial_{u_q^{s1}} \mathcal{S}_{e_1,ii}^1 = c_{ii,jj,t_r}(e_1) \big|_{q=l_1(e_1,jj)}`,
     description: "",
     references: ["12.16"],
@@ -7004,7 +7004,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.28',
     section: 'derivatives_of_s_i_1_with_respect_to_w_q',
-    label: "Equation 12.28",
+    label: "dS^1/dw Compact",
     latex: String.raw`\begin{aligned}
 \partial_{w_q^{s1}} \mathcal{S}_i^1 &= \frac{1 + 4 E_g B_g}{4 B_g} \phi_i^1(r_c,z_c) \partial_{w_q^{s1}} \sigma^1(r_c,z_c) - \frac{1 + 4 E_g B_g}{4 B_g} \phi_i^1(r_a,z_a) \partial_{w_q^{s1}} \sigma^1(r_a,z_a)
 &\quad + \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{n_{el}^1} \partial_{w_q^{s1}} \mathcal{S}_{e_1,ii}^1.
@@ -7017,7 +7017,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.29',
     section: 'derivatives_of_s_i_1_with_respect_to_w_q',
-    label: "Equation 12.29",
+    label: "dS^1/d\u03c3 Compact",
     latex: String.raw`\begin{aligned}
 \partial_{w_q^{s1}} \mathcal{S}_{e_1,ii}^1 &= \sum_{jj=1}^{n_v^{1,e_1}} \partial_{w_q^{s1}} u_{l_1(e_1,jj)}^{s1} c_{ii,jj,t_r}(e_1) + \sum_{jj=1}^{n_v^{1,e_1}} \partial_{w_q^{s1}} w_{l_1(e_1,jj)}^{s1} c_{ii,jj,t_z}(e_1)
 &\quad - \sum_{jj=1}^{n_v^{1,e_1}} c_{ii,jj,t_r}(e_1) \partial_{w_q^{s1}} u_{l_1(e_1,jj)} - \sum_{jj=1}^{n_v^{1,e_1}} \partial_{w_q^{s1}} w_{l_1(e_1,jj)} c_{ii,jj,t_z}(e_1)
@@ -7031,7 +7031,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.30',
     section: 'derivatives_of_s_i_1_with_respect_to_w_q',
-    label: "Equation 12.30",
+    label: "dS^1/dh Compact",
     latex: String.raw`\partial_{w_q^{s1}} \mathcal{S}_{e_1,ii}^1 = c_{ii,jj,t_z}(e_1) \big|_{q=l_1(e_1,jj)}`,
     description: "",
     references: ["12.16"],
@@ -7091,7 +7091,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.35',
     section: 'derivatives_of_s_i_1_with_respect_to_h_q',
-    label: "Equation 12.35",
+    label: "dS_{e,ii}^1/dh Expanded",
     latex: String.raw`\begin{aligned}
 \partial_{h_{S_1(e_1,qq)}} \mathcal{S}_{e_1,ii}^1 &= \sum_{jj=1}^{n_v^{1,e_1}} u_{l_1(e_1,jj)}^{s1} \partial_{h_{S_1(e_1,qq)}} c_{ii,jj,t_r}(e_1)
 &\quad + \sum_{jj=1}^{n_v^{1,e_1}} w_{l_1(e_1,jj)}^{s1} \partial_{h_{S_1(e_1,qq)}} c_{ii,jj,t_z}(e_1)
@@ -7107,7 +7107,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '12.36',
     section: 'derivatives_of_s_i_1_with_respect_to_h_q',
-    label: "Equation 12.36",
+    label: "dS_{e,ii}^1/dh Compact",
     latex: String.raw`\begin{aligned}
 \partial_{h_{S_1(e_1,qq)}} \mathcal{S}_{e_1,ii}^1 &= \sum_{jj=1}^{n_v^{1,e_1}} \Bigg[ \partial_{h_{S_1(e_1,qq)}} c_{ii,jj,t_r}(e_1) \left( u_{l_1(e_1,jj)}^{s1} - u_{l_1(e_1,jj)} \right)
 &\quad + \partial_{h_{S_1(e_1,qq)}} c_{ii,jj,t_z}(e_1) \left( w_{l_1(e_1,jj)}^{s1} - w_{l_1(e_1,jj)} \right)
@@ -7121,7 +7121,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '13.1',
     section: 'kinematic_boundary_condition_kbc',
-    label: "Equation 13.1",
+    label: "KBC Equation Recalled",
     latex: String.raw`(\mathbf{v}^{s1} - \mathbf{c}) \cdot \mathbf{n}^1 = 0`,
     description: "",
     references: ["2.44"],
@@ -7131,7 +7131,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '13.2',
     section: 'kinematic_boundary_condition_kbc',
-    label: "Equation 13.2",
+    label: "KBC Residual K_i",
     latex: String.raw`u^{s1} n_r^1 - u^c n_r^1 + w^{s1} n_z^1 - w^c n_z^1 = 0`,
     description: "",
     references: ["2.44"],
@@ -7141,7 +7141,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '13.3',
     section: 'kinematic_boundary_condition_kbc',
-    label: "Equation 13.3",
+    label: "K_i with FE Approximation",
     latex: String.raw`\mathcal{K}_i = \int_{\partial \Omega^{1,f}} \phi_i^1 u^{s1} n_r^1 - \int_{\partial \Omega^{1,f}} \phi_i^1 u^c n_r^1 + \int_{\partial \Omega^{1,f}} \phi_i^1 w^{s1} n_z^1 - \int_{\partial \Omega^{1,f}} \phi_i^1 w^c n_z^1`,
     description: "",
     references: ["2.44"],
@@ -7151,7 +7151,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '13.4',
     section: 'kinematic_boundary_condition_kbc',
-    label: "Equation 13.4",
+    label: "K_i Rearranged",
     latex: String.raw`\begin{aligned}
 \mathcal{K}_i &= \int_{\partial \Omega^{1}} \phi_i^1 u^{s1} n_r^1 - \int_{\partial \Omega^{1}} \phi_i^1 \frac{3 r^c(t_n) - 4 r^c(t_{n-1}) + r^c(t_{n-2})}{2 \dt} n_r^1
 &\quad + \int_{\partial \Omega^{1}} \phi_i^1 w^{s1} n_z^1 - \int_{\partial \Omega^{1}} \phi_i^1 \frac{3 z^c(t_n) - 4 z^c(t_{n-1}) + z^c(t_{n-2})}{2 \dt} n_z^1,
@@ -7164,7 +7164,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '13.5',
     section: 'kinematic_boundary_condition_kbc',
-    label: "Equation 13.5",
+    label: "K_i Gathered Sums",
     latex: String.raw`\begin{aligned}
 \mathcal{K}_i &= \frac{2\dt}{3} \int_{\partial \Omega^{1}} \phi_i^1 u^{s1} n_r^1 - \int_{\partial \Omega^{1}} \phi_i^1 r^c n_r^1 + \frac{4}{3} \int_{\partial \Omega^{1}} \phi_i^1 r^c(t_{n-1}) n_r^1 - \frac{1}{3} \int_{\partial \Omega^{1}} \phi_i^1 r^c(t_{n-2}) n_r^1
 &\quad + \frac{2\dt}{3} \int_{\partial \Omega^{1}} \phi_i^1 w^{s1} n_z^1 - \int_{\partial \Omega^{1}} \phi_i^1 z^c n_z^1 + \frac{4}{3} \int_{\partial \Omega^{1}} \phi_i^1 z^c(t_{n-1}) n_z^1 - \frac{1}{3} \int_{\partial \Omega^{1}} \phi_i^1 z^c(t_{n-2}) n_z^1,
@@ -7177,7 +7177,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '13.6',
     section: 'kinematic_boundary_condition_kbc',
-    label: "Equation 13.6",
+    label: "K_i Element-wise",
     latex: String.raw`\begin{aligned}
 \mathcal{K}_i &= \frac{2\dt}{3} \int_{\partial \Omega^{1}} \phi_i^1 \left( \sum_{j=1}^{n_v} u_j^{s1} \phi_j^1 \right) n_r^1 - \int_{\partial \Omega^{1}} \phi_i^1 \left( \sum_{j=1}^{n_v} r_j^c \phi_j^1 \right) n_r^1
 &\quad + \frac{4}{3} \int_{\partial \Omega^{1}} \phi_i^1 \left( \sum_{j=1}^{n_v} r_j^c(t_{n-1}) \phi_j^1 \right) n_r^1 - \frac{1}{3} \int_{\partial \Omega^{1}} \phi_i^1 \left( \sum_{j=1}^{n_v} r_j^c(t_{n-2}) \phi_j^1 \right) n_r^1
@@ -7192,7 +7192,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '13.7',
     section: 'kinematic_boundary_condition_kbc',
-    label: "Equation 13.7",
+    label: "K_i = Sum of K_{e,ii}",
     latex: String.raw`\begin{aligned}
 \mathcal{K}_i &= \frac{2\dt}{3} \sum_{j=1}^{n_v} u_j^{s1} \int_{\partial \Omega^{1}} \phi_i^1 \phi_j^1 n_r^1 - \sum_{j=1}^{n_v} r_j^c \int_{\partial \Omega^{1}} \phi_i^1 \phi_j^1 n_r^1
 &\quad + \frac{4}{3} \sum_{j=1}^{n_v} r_j^c(t_{n-1}) \int_{\partial \Omega^{1}} \phi_i^1 \phi_j^1 n_r^1 - \frac{1}{3} \sum_{j=1}^{n_v} r_j^c(t_{n-2}) \int_{\partial \Omega^{1}} \phi_i^1 \phi_j^1 n_r^1
@@ -7207,7 +7207,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '13.8',
     section: 'kinematic_boundary_condition_kbc',
-    label: "Equation 13.8",
+    label: "K_{e,ii} Definition",
     latex: String.raw`\begin{aligned}
 \mathcal{K}_i &= \sum_{e_1=1}^{n_{el}^1} \Bigg[ \frac{2\dt}{3} \sum_{j=1}^{n_v} u_j^{s1} \int_{\partial \Omega_{e_1}^1} \phi_i^1 \phi_j^1 n_r^1 - \sum_{j=1}^{n_v} r_j^c \int_{\partial \Omega_{e_1}^1} \phi_i^1 \phi_j^1 n_r^1
 &\quad + \frac{4}{3} \sum_{j=1}^{n_v} r_j^c(t_{n-1}) \int_{\partial \Omega_{e_1}^1} \phi_i^1 \phi_j^1 n_r^1 - \frac{1}{3} \sum_{j=1}^{n_v} r_j^c(t_{n-2}) \int_{\partial \Omega_{e_1}^1} \phi_i^1 \phi_j^1 n_r^1
@@ -7222,7 +7222,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '13.11',
     section: 'kinematic_boundary_condition_kbc',
-    label: "Equation 13.11",
+    label: "dK_i/du Global",
     latex: String.raw`\begin{aligned}
 \mathcal{K}_i &= \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{n_{el}^1} \Bigg[ \frac{2\dt}{3} \sum_{jj=1}^{n_v^{1,e_1}} u_{l_1(e_1,jj)}^{s1} \int_{\partial \Omega_{e_1}^1} \phi_{l_1(e_1,ii)}^1 \phi_{l_1(e_1,jj)}^1 n_r^1
 &\quad - \sum_{jj=1}^{n_v^{1,e_1}} r_{l_1(e_1,jj)}^c \int_{\partial \Omega_{e_1}^1} \phi_{l_1(e_1,ii)}^1 \phi_{l_1(e_1,jj)}^1 n_r^1
@@ -7241,7 +7241,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '13.12',
     section: 'kinematic_boundary_condition_kbc',
-    label: "Equation 13.12",
+    label: "dK_{e,ii}/du Compact",
     latex: String.raw`\mathcal{K}_i = \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{n_{el}^1} \mathcal{K}_{e_1,ii}`,
     description: "",
     references: [],
@@ -7251,7 +7251,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '13.13',
     section: 'kinematic_boundary_condition_kbc',
-    label: "Equation 13.13",
+    label: "dK_i/dw Global",
     latex: String.raw`\begin{aligned}
 \mathcal{K}_{e_1,ii} &= \sum_{jj=1}^{n_v^{1,e_1}} \Bigg[ c_{ii,jj,n_r}(e_1) \left( \frac{2\dt}{3} u_{l_1(e_1,jj)}^{s1} - r_{l_1(e_1,jj)}^c + \frac{4}{3} r_{l_1(e_1,jj)}^c(t_{n-1}) - \frac{1}{3} r_{l_1(e_1,jj)}^c(t_{n-2}) \right)
 &\quad + c_{ii,jj,n_z}(e_1) \left( \frac{2\dt}{3} w_{l_1(e_1,jj)}^{s1} - z_{l_1(e_1,jj)}^c + \frac{4}{3} z_{l_1(e_1,jj)}^c(t_{n-1}) - \frac{1}{3} z_{l_1(e_1,jj)}^c(t_{n-2}) \right) \Bigg].
@@ -7264,7 +7264,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '13.14',
     section: 'derivatives_of_k_i_with_respect_to_u_q_s',
-    label: "Equation 13.14",
+    label: "dK_{e,ii}/dw Compact",
     latex: String.raw`\begin{aligned}
 \partial_{u_q^{s1}} \mathcal{K}_i &= \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{n_{el}^1} \sum_{jj=1}^{n_v^{1,e_1}} \partial_{u_q^{s1}} \Bigg[ \frac{2\dt}{3} \left( u_{l_1(e_1,jj)}^{s1} c_{ii,jj,n_r}(e_1) + w_{l_1(e_1,jj)}^{s1} c_{ii,jj,n_z}(e_1) \right)
 &\quad - \left( r_{l_1(e_1,jj)}^c c_{ii,jj,n_r}(e_1) + z_{l_1(e_1,jj)}^c c_{ii,jj,n_z}(e_1) \right)
@@ -7279,7 +7279,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '13.15',
     section: 'derivatives_of_k_i_with_respect_to_u_q_s',
-    label: "Equation 13.15",
+    label: "dK_i/dh Global",
     latex: String.raw`\begin{aligned}
 \partial_{u_q^{s1}} \mathcal{K}_i &= \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{n_{el}^1} \frac{2\dt}{3} \sum_{jj=1}^{n_v^{1,e_1}} c_{ii,jj,n_r}(e_1) \partial_{u_q^{s1}} u_{l_1(e_1,jj)}^{s1},
 \end{aligned}`,
@@ -7291,7 +7291,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '13.16',
     section: 'derivatives_of_k_i_with_respect_to_u_q_s',
-    label: "Equation 13.16",
+    label: "dK_{e,ii}/dh Step 1",
     latex: String.raw`\partial_{u_q^{s1}} \mathcal{K}_i = \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)\\ q=l_1(e_1,jj)}}^{n_{el}^1} \frac{2\dt}{3} c_{ii,jj,n_r}(e_1)`,
     description: "",
     references: [],
@@ -7301,7 +7301,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '13.17',
     section: 'derivatives_of_k_i_with_respect_to_w_q_s',
-    label: "Equation 13.17",
+    label: "dK_{e,ii}/dh Expanded",
     latex: String.raw`\begin{aligned}
 \partial_{w_q^{s1}} \mathcal{K}_i &= \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{n_{el}^1} \sum_{jj=1}^{n_v^{1,e_1}} \partial_{w_q^{s1}} \Bigg[ \frac{2\dt}{3} \left( u_{l_1(e_1,jj)}^{s1} c_{ii,jj,n_r}(e_1) + w_{l_1(e_1,jj)}^{s1} c_{ii,jj,n_z}(e_1) \right)
 &\quad - \left( r_{l_1(e_1,jj)}^c c_{ii,jj,n_r}(e_1) + z_{l_1(e_1,jj)}^c c_{ii,jj,n_z}(e_1) \right)
@@ -7316,7 +7316,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '13.18',
     section: 'derivatives_of_k_i_with_respect_to_w_q_s',
-    label: "Equation 13.18",
+    label: "dK_{e,ii}/dh Compact",
     latex: String.raw`\begin{aligned}
 \partial_{w_q^{s1}} \mathcal{K}_i &= \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)}}^{n_{el}^1} \frac{2\dt}{3} \sum_{jj=1}^{n_v^{1,e_1}} c_{ii,jj,n_z}(e_1) \partial_{w_q^{s1}} w_{l_1(e_1,jj)}^{s1},
 \end{aligned}`,
@@ -7328,7 +7328,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '13.19',
     section: 'derivatives_of_k_i_with_respect_to_w_q_s',
-    label: "Equation 13.19",
+    label: "K_{e,ii} Reordered",
     latex: String.raw`\partial_{w_q^{s1}} \mathcal{K}_i = \sum_{\substack{e_1=1\\ i=l_1(e_1,ii)\\ q=l_1(e_1,jj)}}^{n_{el}^1} \frac{2\dt}{3} c_{ii,jj,n_z}(e_1)`,
     description: "",
     references: [],
@@ -7395,7 +7395,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '13.24',
     section: 'derivatives_of_k_i_with_respect_to_h_q',
-    label: "Equation 13.24",
+    label: "dK/dh Compact",
     latex: String.raw`\begin{aligned}
 \partial_{h_{S_1(e_1,qq)}} \mathcal{K}_{e_1,ii} &= \sum_{jj=1}^{n_v^{1,e_1}} \Bigg[ \frac{2\dt}{3} w_{l_1(e_1,jj)}^{s1} \partial_{h_{S_1(e_1,qq)}} c_{ii,jj,n_r}(e_1)
 &\quad - c_{ii,jj,n_r}(e_1) \partial_{h_{S_1(e_1,qq)}} r_{l_1(e_1,jj)}^c
@@ -7412,7 +7412,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '17.1',
     section: 'r_momentum_residuals',
-    label: "Equation 17.1",
+    label: "M_i^r Summary",
     latex: String.raw`\begin{array}{r l}
 \hat{M}_{i}^{r} = \sum_{e = 1}^{n_{e1}}\hat{M}_{e,ii}^{r} + \sum_{e = 1}^{n_{e1}^{1}}\hat{M}_{e_{1},ii}^{r,1} + \sum_{i = l_{2}(e_{2},ii)}^{n_{e2}^{2}}\hat{M}_{e_{2},ii}^{r,2} \\
 \qquad +\sum_{e = 1}^{n_{e3}^{3}}\hat{M}_{e_{3},ii}^{r,3} + \frac{\sigma_{1}^{4}\phi_{i}(r_{d},z_{d}) - \sigma_{e}^{1}\phi_{i}(r_{c},0)\cos(\theta)}{C a},
@@ -7425,7 +7425,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '17.2',
     section: 'r_momentum_residuals',
-    label: "Equation 17.2",
+    label: "M_{e,ii}^r Bulk",
     latex: String.raw`\begin{aligned}
 \hat{M}_{e,ii}^{r} &= \sum_{j = 1}^{n_{v}}\left(u_{l(e,jj)}\left\{Re\sum_{k = 1}^{n_{v}}\left[u_{l(e,kk)}a_{ii,kk,jj}^{r}(e) + w_{l(e,kk)}a_{ii,kk,jj}^{2}(e)\right]\right.\right.
 &\qquad \left.\left. + 2a_{ii,jj}^{r,r}(e) + a_{ii,jj}^{z,z}(e)\right\} +w_{l(e,jj)}a_{ii,jj}^{z,z}(e)\right)
@@ -7439,7 +7439,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '17.3',
     section: 'r_momentum_residuals',
-    label: "Equation 17.3",
+    label: "M_{e,ii}^{r,1} Free Surface",
     latex: String.raw`\begin{aligned}
 \hat{M}_{e_{1},ii}^{r,1} &= \frac{1}{C a}\sum_{j = 1}^{n_{v}}\sigma_{l_{1}(e_{1},jj)}^{1}c_{ir,jj,ii}^{z}(e_{1}),
 \end{aligned}`,
@@ -7451,7 +7451,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '17.4',
     section: 'r_momentum_residuals',
-    label: "Equation 17.4",
+    label: "M_{e,ii}^{r,2} Solid Surface",
     latex: String.raw`\begin{aligned}
 \hat{M}_{e_{2},ii}^{r,2} &= Be\left\{\sum_{j = 1}^{n_{v}}\left[u_{l_{2}(e_{2},jj)}d_{t_{r},t_{r},ii,jj}(e_{2}) + w_{l_{2}(e_{2},jj)}d_{t_{r},t_{2},ii,jj}(e_{2})\right] + d_{t_{r},t_{r},ii}(e_{2})\right\},
 \end{aligned}`,
@@ -7463,7 +7463,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '17.5',
     section: 'r_momentum_residuals',
-    label: "Equation 17.5",
+    label: "M_{e,ii}^{r,3} Symmetry Axis",
     latex: String.raw`\begin{aligned}
 \hat{M}_{e_{3},ii}^{r,3} &= \sum_{j = 1}^{n_{v}^{e3}}\left[\lambda_{l_{3}^{3}(e_{3},jj)}^{3}f_{ii,jj,n_{r}}(e_{3}) + \gamma_{l_{3}^{3}(e_{3},jj)}^{3}f_{t_{r},ii,jj}(e_{3})\right].
 \end{aligned}`,
@@ -7475,7 +7475,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '17.6',
     section: 'z_momentum_residuals',
-    label: "Equation 17.6",
+    label: "M_i^z Summary",
     latex: String.raw`\hat{M}_i^z = \sum_{e = 1}^{n_{el}}\hat{M}_{e,ii}^z +\sum_{e = 1}^{n_{el}^1}\hat{M}_{e,ii}^z +\sum_{e = 1}^{n_{el}^{2}}\hat{M}_{e,ii}^{z,2}`,
     description: "",
     references: [],
@@ -7485,7 +7485,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '17.7',
     section: 'z_momentum_residuals',
-    label: "Equation 17.7",
+    label: "M_{e,ii}^z Bulk",
     latex: String.raw`\begin{aligned}
 \hat{M}_{e,ii}^{z} &= \sum_{j = 1}^{n_{e}^{c}}\left\{w_{l(e,jj)}\left\{Re\sum_{kk = 1}^{n_{e}^{c}}\left[w_{l(e,kk)}a_{ii,kk,jj}^{r}(e) + w_{l(e,kk)}a_{ii,kk,jj}^{z}(e)\right] + 2a_{ii,ij}^{z,z}(e)\right\} \right\}
 \end{aligned}`,
@@ -7497,7 +7497,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '17.8',
     section: 'z_momentum_residuals',
-    label: "Equation 17.8",
+    label: "M_{e,ii}^{z,1} Free Surface",
     latex: String.raw`\begin{aligned}
 \hat{M}_{e,ii}^{z,1} &= \frac{1}{Ca}\sum_{j = 1}^{n_{e}^{c1}}\sigma_{l_{1}(e_{1},jj)}^{1}c_{t_{2},jj,ii}^{z}(e_{1}),
 \end{aligned}`,
@@ -7509,7 +7509,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '17.9',
     section: 'z_momentum_residuals',
-    label: "Equation 17.9",
+    label: "M_{e,ii}^{z,2} Solid Surface",
     latex: String.raw`\begin{aligned}
 \hat{M}_{e,ii}^{z,2} &= Be\left\{\sum_{j = 1}^{n_{e}^{2},e_{2}}\left[w_{l_{2}(e_{2},jj)}d_{t_{r},t_{r},ii,jj}(e_{2}) + w_{l_{2}(e_{2},jj)}d_{t_{r},t_{2},ii,jj}(e_{2})\right]\right\}
 \end{aligned}`,
@@ -7521,7 +7521,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '17.10',
     section: 'z_momentum_residuals',
-    label: "Equation 17.10",
+    label: "M_{e,ii}^{z,3} Symmetry Axis",
     latex: String.raw`\begin{aligned}
 \hat{M}_{e,ii}^{z,3} &= \sum_{j = 1}^{n_{e}^{3}}\gamma_{l_{3}(e_{3},jj)}^{3}f_{t_{r},ii,jj}(e).
 \end{aligned}`,
@@ -7533,7 +7533,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '17.11',
     section: 'continuity_residuals',
-    label: "Equation 17.11",
+    label: "C_i Summary",
     latex: String.raw`\hat{C}_i = \sum_{e = 1}^{n_{e1}}\sum_{i = 1}^{n_e^e}\left[u_{l(e,ii)}b_{jj,ii}^e (e) + w_{l(e,ii)}b_{jj,ii}^e (e_3)\right]`,
     description: "",
     references: [],
@@ -7543,7 +7543,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '17.12',
     section: 'kinematic_boundary_condition_residuals',
-    label: "Equation 17.12",
+    label: "K_i Summary",
     latex: String.raw`\hat{K}_i = \sum_{e_1 = 1}^{n_{e1}^1}\sum_{j,j = 1}^{n_{e1}^e}\left[u_{l_1(e_1,jj)}c_{ii,jj,n_e}(e_1) + w_{l_1(e_1,jj)}c_{ii,jj,n_e}(e_{1})\right]`,
     description: "",
     references: [],
@@ -7553,7 +7553,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '17.13',
     section: 'impermeability_residuals',
-    label: "Equation 17.13",
+    label: "I_i Summary",
     latex: String.raw`\hat{I}_i = \sum_{e_2 = 1}^{n_{e1}^2}\sum_{j,j = 1}^{n_{e2}^e}\left[u_{l_2(e_2,jj)}d_{ii,jj,n_e}(e_2) + w_{l_2(e,jj)}d_{ii,jj,n_e}(e_2)\right]`,
     description: "",
     references: [],
@@ -7563,7 +7563,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.1',
     section: 'system_jacobian',
-    label: "Equation 18.1",
+    label: "System Jacobian Matrix",
     latex: String.raw`JR =
 \begin{bmatrix}
 \partial_u \hat{M}^r & \partial_w \hat{M}^r & \partial_p \hat{M}^r & \partial_{\omega^2} \hat{M}^r & \partial_{\omega^3} \hat{M}^r & \partial_{\epsilon^3} \hat{M}^r & \partial_h \hat{M}^r \\
@@ -7580,7 +7580,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.2',
     section: 'entries_on_the_first_block_row',
-    label: "Equation 18.2",
+    label: "J: dM^r/du",
     latex: String.raw`\begin{aligned}
 \left(\partial_u \hat{M}^r\right)_{i,q} &= \sum_{e=1}^{n_{el}} \sum_{\substack{i=l(e,ii)\\ q=l(e,kk)}} \left\{ Re \sum_{jj=1}^{n_e^v} u_{l(e,jj)} a_{ii,kk,jj}^r(e) + \sum_{jj=1}^{n_e^v} \left[ Re A_{ii,jj}(u,w,e) + 2a_{ii,jj}^{r,r}(e) + a_{ii,jj}^{z,z}(e) \right] \right\}
 &\quad + \sum_{e_2=1}^{n_{el}^2} \sum_{\substack{i=l_2(e_2,ii)\\ q=l_2(e_2,jj)}} Be \, d_{t_r,t_r,ii,jj}(e_2),
@@ -7593,7 +7593,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.3',
     section: 'entries_on_the_first_block_row',
-    label: "Equation 18.3",
+    label: "J: dM^r/dw",
     latex: String.raw`\begin{aligned}
 \left(\partial_w \hat{M}^r\right)_{i,q} &= \sum_{e=1}^{n_{el}} \sum_{\substack{i=l(e,ii)\\ q=l(e,kk)}} Re u_{l(e,jj)} a_{ii,kk,jj}^z(e) + \sum_{e=1}^{n_{el}} \sum_{q=l(e,jj)} a_{ii,jj}^{z,r}(e)
 &\quad + \sum_{e_2=1}^{n_{el}^2} \sum_{\substack{i=l_2(e_2,ii)\\ q=l_2(e_2,jj)}} Be \, d_{t_r,t_z,ii,jj}(e_2),
@@ -7606,7 +7606,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.4',
     section: 'entries_on_the_first_block_row',
-    label: "Equation 18.4",
+    label: "J: dM^r/dp",
     latex: String.raw`\begin{aligned}
 \left(\partial_p \hat{M}^r\right)_{i,q} &= \sum_{e=1}^{n_{el}} \sum_{\substack{i=l(e,ii)\\ q=l_p(e,jj)}} b_{jj,ii}^r(e),
 \end{aligned}`,
@@ -7618,7 +7618,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.5',
     section: 'entries_on_the_first_block_row',
-    label: "Equation 18.5",
+    label: "J: dM^r/d\u03bb^2",
     latex: String.raw`\begin{aligned}
 \left(\partial_{\lambda^2} \hat{M}^r\right)_{i,q} &= \sum_{e=1}^{n_{el}^2} d_{ii,jj,n_r}(e_2),
 \end{aligned}`,
@@ -7630,7 +7630,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.8',
     section: 'entries_on_the_first_block_row',
-    label: "Equation 18.8",
+    label: "J: dM^r/dh",
     latex: String.raw`\begin{aligned}
 \left(\partial_h \hat{M}^r\right)_{i,q} &=
 \sum_{e=1}^{n_{el}} \sum_{\substack{i=l(e,ii)\\ jj=1\\ q=S(e,qq)}}^{n_e^v} \Bigg( u_{l(e,jj)} \Bigg[ Re \sum_{kk=1}^{n_e^v} \big( u_{l(e,kk)} \partial_{h_{S(e,qq)}} a_{ii,kk,jj}^r(e) + w_{l(e,kk)} \partial_{h_{S(e,qq)}} a_{ii,kk,jj}^z(e) \big)
@@ -7650,7 +7650,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.9',
     section: 'entries_on_the_second_block_row',
-    label: "Equation 18.9",
+    label: "J: dM^z/du",
     latex: String.raw`\begin{aligned}
 \left(\partial_u \hat{M}^z\right)_{i,q} &= \sum_{e=1}^{n_{e1}} \sum_{jj=1}^{n_e^e} Re w_{l(e,jj)} a_{ii,kk,jj}^r(e) + \sum_{e=1}^{n_{e1}} a_{ii,jj}^r(e) + \sum_{e_2=1}^{n_{e1}^2} Be d_{t_r,t_z,ii,jj},
 \end{aligned}`,
@@ -7662,7 +7662,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.10',
     section: 'entries_on_the_second_block_row',
-    label: "Equation 18.10",
+    label: "J: dM^z/dw",
     latex: String.raw`\begin{aligned}
 \left(\partial_w \hat{M}^z\right)_{i,q} &= \sum_{e=1}^{n_{e1}} \left\{ \sum_{jj=1}^{n_e^e} \left[ Re A_{ii,jj}(u,w,e) + 2a_{ii,jj}^{z,z}(e) + a_{ii,jj}^{r,r}(e) \right] \right.
 &\qquad \left. + \sum_{jj=1}^{n_e^e} Re w_{l(e,jj)} a_{ii,kk,jj}^r(e) \right\} + \sum_{e_2=1}^{n_e^2} Be d_{t_z,t_z,ii,jj},
@@ -7675,7 +7675,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.11',
     section: 'entries_on_the_second_block_row',
-    label: "Equation 18.11",
+    label: "J: dM^z/dp",
     latex: String.raw`\begin{aligned}
 \left(\partial_p \hat{M}^z\right)_{i,q} &= \sum_{e=1}^{n_{e1}} -b_{jj,ii}^z(e),
 \end{aligned}`,
@@ -7687,7 +7687,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.12',
     section: 'entries_on_the_second_block_row',
-    label: "Equation 18.12",
+    label: "J: dM^z/d\u03bb^2",
     latex: String.raw`\begin{aligned}
 \left(\partial_{\lambda^2} \hat{M}^z\right)_{i,q} &= \sum_{e=1}^{n_{e1}^2} d_{ii,jj,n_z}(e_2),
 \end{aligned}`,
@@ -7699,7 +7699,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.13',
     section: 'entries_on_the_second_block_row',
-    label: "Equation 18.13",
+    label: "J: dM^z/d\u03bb^3",
     latex: String.raw`\begin{aligned}
 \left(\partial_{\lambda^3} \hat{M}^z\right)_{i,q} &= \sum_{e=1}^{n_{e1}^3} f_{ii,jj,n_z}(e_3),
 \end{aligned}`,
@@ -7711,7 +7711,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.14',
     section: 'entries_on_the_second_block_row',
-    label: "Equation 18.14",
+    label: "J: dM^z/d\u03b3^3",
     latex: String.raw`\begin{aligned}
 \left(\partial_{\gamma^3} \hat{M}^z\right)_{i,q} &= \sum_{e=1}^{n_{e1}^3} f_{ii,jj}(e_3),
 \end{aligned}`,
@@ -7723,7 +7723,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.15',
     section: 'entries_on_the_second_block_row',
-    label: "Equation 18.15",
+    label: "J: dM^z/dh",
     latex: String.raw`\begin{aligned}
 \left(\partial_h \hat{M}^z\right)_{i,q} &=
 \sum_{e=1}^{n_{el}} \sum_{\substack{i=l(e,ii)\\ jj=1\\ q=S(e,qq)}}^{n_e^v} \Bigg( w_{l(e,jj)} \Bigg[ Re \sum_{kk=1}^{n_e^v} \big( u_{l(e,kk)} \partial_{h_{S(e,qq)}} a_{ii,kk,jj}^r(e) + w_{l(e,kk)} \partial_{h_{S(e,qq)}} a_{ii,kk,jj}^z(e) \big)
@@ -7744,7 +7744,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.16',
     section: 'entries_on_the_third_block_row',
-    label: "Equation 18.16",
+    label: "J: dC/du",
     latex: String.raw`\begin{aligned}
 \left(\partial_u \hat{C}\right)_{k,q} &= \sum_{e=1}^{n_{el}} b_{jj,ii}^p(e),
 \end{aligned}`,
@@ -7756,7 +7756,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.17',
     section: 'entries_on_the_third_block_row',
-    label: "Equation 18.17",
+    label: "J: dC/dw",
     latex: String.raw`\begin{aligned}
 \left(\partial_w \hat{C}\right)_{k,q} &= \sum_{e=1}^{n_{el}} b_{jj,ii}^z(e),
 \end{aligned}`,
@@ -7768,7 +7768,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.18',
     section: 'entries_on_the_third_block_row',
-    label: "Equation 18.18",
+    label: "J: dC/dp = 0",
     latex: String.raw`\begin{aligned}
 \left(\partial_p \hat{C}\right)_{i,q} &= 0,
 \end{aligned}`,
@@ -7780,7 +7780,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.19',
     section: 'entries_on_the_third_block_row',
-    label: "Equation 18.19",
+    label: "J: dC/d\u03bb^2 = 0",
     latex: String.raw`\begin{aligned}
 \left(\partial_{\lambda^2} \hat{C}\right)_{i,q} &= 0,
 \end{aligned}`,
@@ -7792,7 +7792,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.20',
     section: 'entries_on_the_third_block_row',
-    label: "Equation 18.20",
+    label: "J: dC/d\u03bb^3 = 0",
     latex: String.raw`\begin{aligned}
 \left(\partial_{\lambda^3} \hat{C}\right)_{i,q} &= 0,
 \end{aligned}`,
@@ -7804,7 +7804,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.22',
     section: 'entries_on_the_third_block_row',
-    label: "Equation 18.22",
+    label: "J: dC/dh",
     latex: String.raw`\begin{aligned}
 \left(\partial_h \hat{C}\right)_{i,q} &= \sum_{e=1}^{n_{el}} \sum_{jj=1}^{n_e^e} \left[ u_{l(e,jj)} \partial_{h_{S(e,qq)}} b_{ii,jj}^p(e) + w_{l(e,jj)} \partial_{h_{S(e,qq)}} b_{ii,jj}^z(e) \right].
 \end{aligned}`,
@@ -7816,7 +7816,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.23',
     section: 'entries_on_the_fourth_block_row',
-    label: "Equation 18.23",
+    label: "J: dK/du",
     latex: String.raw`\begin{aligned}
 \left(\partial_u \hat{K}\right)_{i,q} &= \sum_{e_1=1}^{n_{e1}^1} c_{ii,jj,n_r}(e_1),
 \end{aligned}`,
@@ -7828,7 +7828,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.24',
     section: 'entries_on_the_fourth_block_row',
-    label: "Equation 18.24",
+    label: "J: dK/dw",
     latex: String.raw`\begin{aligned}
 \left(\partial_w \hat{K}\right)_{i,q} &= \sum_{e_1=1}^{n_{e1}^1} c_{ii,jj,n_r}(e_1),
 \end{aligned}`,
@@ -7840,7 +7840,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.25',
     section: 'entries_on_the_fourth_block_row',
-    label: "Equation 18.25",
+    label: "J: dK/dp = 0",
     latex: String.raw`\begin{aligned}
 \left(\partial_p \hat{K}\right)_{i,q} &= 0,
 \end{aligned}`,
@@ -7852,7 +7852,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.26',
     section: 'entries_on_the_fourth_block_row',
-    label: "Equation 18.26",
+    label: "J: dK/d\u03bb^2 = 0",
     latex: String.raw`\begin{aligned}
 \left(\partial_{\lambda^2} \hat{K}\right)_{i,q} &= 0,
 \end{aligned}`,
@@ -7864,7 +7864,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.27',
     section: 'entries_on_the_fourth_block_row',
-    label: "Equation 18.27",
+    label: "J: dK/d\u03bb^3 = 0",
     latex: String.raw`\begin{aligned}
 \left(\partial_{\lambda^3} \hat{K}\right)_{i,q} &= 0,
 \end{aligned}`,
@@ -7876,7 +7876,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.30',
     section: 'entries_on_the_fifth_block_row',
-    label: "Equation 18.30",
+    label: "J: dI/du",
     latex: String.raw`\begin{aligned}
 \left(\partial_u \hat{I}\right)_{i,q} &= \sum_{\substack{i=l_2^2(e_2,ii)\\ q=l_2(e_2,jj)}} d_{ii,jj,n_r}(e_2),
 \end{aligned}`,
@@ -7888,7 +7888,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.31',
     section: 'entries_on_the_fifth_block_row',
-    label: "Equation 18.31",
+    label: "J: dI/dw",
     latex: String.raw`\begin{aligned}
 \left(\partial_w \hat{I}\right)_{i,q} &= \sum_{\substack{i=l_2^2(e_2,ii)\\ q=l_2(e_2,jj)}} d_{ii,jj,n_r}(e_2),
 \end{aligned}`,
@@ -7900,7 +7900,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.32',
     section: 'entries_on_the_fifth_block_row',
-    label: "Equation 18.32",
+    label: "J: dI/dp = 0",
     latex: String.raw`\begin{aligned}
 \left(\partial_p \hat{I}\right)_{i,q} &= 0,
 \end{aligned}`,
@@ -7912,7 +7912,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.33',
     section: 'entries_on_the_fifth_block_row',
-    label: "Equation 18.33",
+    label: "J: dI/d\u03bb^2 = 0",
     latex: String.raw`\begin{aligned}
 \left(\partial_{\lambda^2} \hat{I}\right)_{i,q} &= 0,
 \end{aligned}`,
@@ -7924,7 +7924,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.34',
     section: 'entries_on_the_fifth_block_row',
-    label: "Equation 18.34",
+    label: "J: dI/d\u03bd^3 = 0",
     latex: String.raw`\begin{aligned}
 \left(\partial_{\nu^3} \hat{I}\right)_{i,q} &= 0,
 \end{aligned}`,
@@ -7936,7 +7936,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.35',
     section: 'entries_on_the_fifth_block_row',
-    label: "Equation 18.35",
+    label: "J: dI/ds = 0",
     latex: String.raw`\begin{aligned}
 \left(\partial_s \hat{I}\right)_{i,q} &= 0,
 \end{aligned}`,
@@ -7948,7 +7948,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.36',
     section: 'entries_on_the_fifth_block_row',
-    label: "Equation 18.36",
+    label: "J: dI/dh",
     latex: String.raw`\begin{aligned}
 \left(\partial_h \hat{I}\right)_{i,q} &= \sum_{\substack{i=l_2^2(e,ii)\\ q=S_2(e_2,qq)}} \left[ u_{l_2(e_2,jj)} \partial_{h_q} d_{ii,jj,n_r}(e_2) + w_{l_2(e,jj)} \partial_{h_q} d_{ii,jj,n_r}(e_\ell) \right].
 \end{aligned}`,
@@ -7960,7 +7960,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.37',
     section: 'jacobian_with_explicit_zero_blocks',
-    label: "Equation 18.37",
+    label: "Jacobian with Zero Blocks",
     latex: String.raw`JR =
 \begin{bmatrix}
 \partial_u \hat{M}^r & \partial_w \hat{M}^r & \partial_p \hat{M}^r & \partial_{\omega^2} \hat{M}^r & \partial_{\omega^3} \hat{M}^r & \partial_{\epsilon^3} \hat{M}^r & \partial_h \hat{M}^r \\
@@ -7977,7 +7977,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.38',
     section: 'jacobian_with_explicit_zero_blocks',
-    label: "\u2202M^{r}/\u2202\u03c9^2",
+    label: "dM^r/d\u03c9^2 = 0 (flat bdry 2)",
     latex: String.raw`\partial_{\omega^2} \hat{M}^r = 0`,
     description: "We highlight that when boundary 2 is a straight line parallel to the axis, we also have",
     references: [],
@@ -7987,7 +7987,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '18.39-40',
     section: 'jacobian_with_explicit_zero_blocks',
-    label: "\u2202M^{r}/\u2202\u03b5^3",
+    label: "dM^r/d\u03b5^3 = dM^z/d\u03c9^3 = 0 (flat bdry 3)",
     latex: String.raw`\partial_{\epsilon^3} \hat{M}^r = 0, \qquad \partial_{\omega^3} \hat{M}^z = 0`,
     description: "We highlight that when boundary 2 is a straight line parallel to the axis, we also have and when boundary 3 is a straight line parallel to the axis, we also have",
     references: [],
@@ -7997,7 +7997,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.1',
     section: 'basis_functions',
-    label: "Equation 19.1",
+    label: "\u03c8_1 (Pressure Basis)",
     latex: String.raw`\begin{aligned}
 \psi_{1} &= \frac{1 + \eta}{2},
 \end{aligned}`,
@@ -8009,7 +8009,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.2',
     section: 'basis_functions',
-    label: "Equation 19.2",
+    label: "\u03c8_2 (Pressure Basis)",
     latex: String.raw`\begin{aligned}
 \psi_{2} &= -\frac{\xi + \eta}{2},
 \end{aligned}`,
@@ -8021,7 +8021,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.3',
     section: 'basis_functions',
-    label: "Equation 19.3",
+    label: "\u03c8_3 (Pressure Basis)",
     latex: String.raw`\begin{aligned}
 \psi_{3} &= \frac{1 + \xi}{2}.
 \end{aligned}`,
@@ -8033,7 +8033,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.4',
     section: 'basis_functions',
-    label: "Equation 19.4",
+    label: "\u03c6_1 (Velocity Basis)",
     latex: String.raw`\begin{aligned}
 \phi_{1} &= \psi_{1}(2\psi_{1} - 1) = \frac{1 + \eta}{2} (1 + \eta - 1) = \frac{\eta(\eta + 1)}{2} = \frac{\eta^{2} + \eta}{2},
 \end{aligned}`,
@@ -8045,7 +8045,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.5',
     section: 'basis_functions',
-    label: "Equation 19.5",
+    label: "\u03c6_2 (Velocity Basis)",
     latex: String.raw`\begin{aligned}
 \phi_{2} &= \psi_{2}(2\psi_{2} - 1) = -\frac{\xi + \eta}{2} (-\xi -\eta - 1) = \frac{(\xi + \eta)(\xi + \eta + 1)}{2} = \frac{\xi^{2} + \eta^{2} + 2\xi\eta + \xi + \eta}{2},
 \end{aligned}`,
@@ -8057,7 +8057,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.6',
     section: 'basis_functions',
-    label: "Equation 19.6",
+    label: "\u03c6_3 (Velocity Basis)",
     latex: String.raw`\begin{aligned}
 \phi_{3} &= \psi_{3}(2\psi_{3} - 1) = \frac{1 + \xi}{2} (1 + \xi - 1) = \frac{\xi(\xi + 1)}{2} = \frac{\xi^{2} + \xi}{2},
 \end{aligned}`,
@@ -8069,7 +8069,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.7',
     section: 'basis_functions',
-    label: "Equation 19.7",
+    label: "\u03c6_4 (Velocity Basis)",
     latex: String.raw`\begin{aligned}
 \phi_{4} &= 4\psi_{1}\psi_{3} = 4\frac{1 + \eta}{2}\frac{1 + \xi}{2} = (\xi + 1)(\eta + 1) = \xi\eta +\xi +\eta +1,
 \end{aligned}`,
@@ -8081,7 +8081,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.8',
     section: 'basis_functions',
-    label: "Equation 19.8",
+    label: "\u03c6_5 (Velocity Basis)",
     latex: String.raw`\begin{aligned}
 \phi_{5} &= 4\psi_{2}\psi_{1} = -4\frac{\xi + \eta}{2}\frac{1 + \eta}{2} = -(\xi +\eta)(\eta + 1) = -\eta^{2} - \xi\eta -\xi -\eta ,
 \end{aligned}`,
@@ -8093,7 +8093,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.9',
     section: 'basis_functions',
-    label: "Equation 19.9",
+    label: "\u03c6_6 (Velocity Basis)",
     latex: String.raw`\begin{aligned}
 \phi_{6} &= 4\psi_{3}\psi_{2} = -4\frac{1 + \xi}{2}\frac{\xi + \eta}{2} = -(\xi +\eta)(\xi + 1) = -\xi^{2} - \xi\eta -\xi -\eta .
 \end{aligned}`,
@@ -8105,7 +8105,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.10',
     section: 'basis_functions',
-    label: "Equation 19.10",
+    label: "d\u03c8_1/d\u03be, d\u03c8_1/d\u03b7",
     latex: String.raw`(r^{e},z^{e}) = S_{e}(\xi,\eta)`,
     description: "Function maps the coordinates of the master element to the coordinates of element number",
     references: [],
@@ -8115,7 +8115,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.11',
     section: 'basis_functions',
-    label: "Equation 19.11",
+    label: "d\u03c8_2/d\u03be, d\u03c8_2/d\u03b7",
     latex: String.raw`r_e = \sum_{jj = 1}^{6} r_{e,jj} \phi_{jj}`,
     description: "More specifically The fact that our mapping is isoparametric means that, much like the pressure and velocity functions, the and coordinates of the points in a given element are described as",
     references: [],
@@ -8125,7 +8125,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.12',
     section: 'basis_functions',
-    label: "Equation 19.12",
+    label: "d\u03c8_3/d\u03be, d\u03c8_3/d\u03b7",
     latex: String.raw`z_e = \sum_{jj = 1}^{6} z_{e,jj} \phi_{jj}`,
     description: "More specifically The fact that our mapping is isoparametric means that, much like the pressure and velocity functions, the and coordinates of the points in a given element are described as and",
     references: [],
@@ -8135,7 +8135,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.13',
     section: 'derivatives_of_the_basis_functions',
-    label: "Equation 19.13",
+    label: "d\u03c6_1/d\u03be, d\u03c6_1/d\u03b7",
     latex: String.raw`\begin{aligned}
 \partial_{\xi}\phi_{1} &= 0,
 \end{aligned}`,
@@ -8147,7 +8147,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.14',
     section: 'derivatives_of_the_basis_functions',
-    label: "Equation 19.14",
+    label: "d\u03c6_2/d\u03be, d\u03c6_2/d\u03b7",
     latex: String.raw`\begin{aligned}
 \partial_{\xi}\phi_{2} &= \xi +\eta +\frac{1}{2},
 \end{aligned}`,
@@ -8159,7 +8159,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.15',
     section: 'derivatives_of_the_basis_functions',
-    label: "Equation 19.15",
+    label: "d\u03c6_3/d\u03be, d\u03c6_3/d\u03b7",
     latex: String.raw`\begin{aligned}
 \partial_{\xi}\phi_{3} &= \xi +\frac{1}{2},
 \end{aligned}`,
@@ -8171,7 +8171,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.16',
     section: 'derivatives_of_the_basis_functions',
-    label: "Equation 19.16",
+    label: "d\u03c6_4/d\u03be, d\u03c6_4/d\u03b7",
     latex: String.raw`\begin{aligned}
 \partial_{\xi}\phi_{4} &= \eta +1,
 \end{aligned}`,
@@ -8183,7 +8183,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.17',
     section: 'derivatives_of_the_basis_functions',
-    label: "Equation 19.17",
+    label: "d\u03c6_5/d\u03be, d\u03c6_5/d\u03b7",
     latex: String.raw`\begin{aligned}
 \partial_{\xi}\phi_{5} &= -\eta -1,
 \end{aligned}`,
@@ -8195,7 +8195,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.18',
     section: 'derivatives_of_the_basis_functions',
-    label: "Equation 19.18",
+    label: "d\u03c6_6/d\u03be, d\u03c6_6/d\u03b7",
     latex: String.raw`\begin{aligned}
 \partial_{\xi}\phi_{6} &= -2\xi -\eta -1.
 \end{aligned}`,
@@ -8207,7 +8207,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.19',
     section: 'derivatives_of_the_basis_functions',
-    label: "Equation 19.19",
+    label: "d\u00b2\u03c6_1/d\u03be\u00b2, d\u00b2\u03c6_1/d\u03bed\u03b7, d\u00b2\u03c6_1/d\u03b7\u00b2",
     latex: String.raw`\begin{aligned}
 \partial_{\eta}\phi_{1} &= \eta +\frac{1}{2},
 \end{aligned}`,
@@ -8219,7 +8219,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.20',
     section: 'derivatives_of_the_basis_functions',
-    label: "Equation 19.20",
+    label: "d\u00b2\u03c6_2/d\u03be\u00b2, d\u00b2\u03c6_2/d\u03bed\u03b7, d\u00b2\u03c6_2/d\u03b7\u00b2",
     latex: String.raw`\begin{aligned}
 \partial_{\eta}\phi_{2} &= \xi +\eta +\frac{1}{2},
 \end{aligned}`,
@@ -8231,7 +8231,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.21',
     section: 'derivatives_of_the_basis_functions',
-    label: "Equation 19.21",
+    label: "d\u00b2\u03c6_3/d\u03be\u00b2, d\u00b2\u03c6_3/d\u03bed\u03b7, d\u00b2\u03c6_3/d\u03b7\u00b2",
     latex: String.raw`\begin{aligned}
 \partial_{\eta}\phi_{3} &= 0,
 \end{aligned}`,
@@ -8243,7 +8243,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.22',
     section: 'derivatives_of_the_basis_functions',
-    label: "Equation 19.22",
+    label: "d\u00b2\u03c6_4/d\u03be\u00b2, d\u00b2\u03c6_4/d\u03bed\u03b7, d\u00b2\u03c6_4/d\u03b7\u00b2",
     latex: String.raw`\begin{aligned}
 \partial_{\eta}\phi_{4} &= \xi +1,
 \end{aligned}`,
@@ -8255,7 +8255,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.23',
     section: 'derivatives_of_the_basis_functions',
-    label: "Equation 19.23",
+    label: "d\u00b2\u03c6_5/d\u03be\u00b2, d\u00b2\u03c6_5/d\u03bed\u03b7, d\u00b2\u03c6_5/d\u03b7\u00b2",
     latex: String.raw`\begin{aligned}
 \partial_{\eta}\phi_{5} &= -2\eta -\xi -1,
 \end{aligned}`,
@@ -8267,7 +8267,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '19.24',
     section: 'derivatives_of_the_basis_functions',
-    label: "Equation 19.24",
+    label: "d\u00b2\u03c6_6/d\u03be\u00b2, d\u00b2\u03c6_6/d\u03bed\u03b7, d\u00b2\u03c6_6/d\u03b7\u00b2",
     latex: String.raw`\begin{aligned}
 \partial_{\eta}\phi_{6} &= -\xi -1.
 \end{aligned}`,
@@ -8279,7 +8279,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '20.1',
     section: 'integrals_over_triangular_elements',
-    label: "Equation 20.1",
+    label: "Isoparametric Mapping r(\u03be,\u03b7)",
     latex: String.raw`\int_{\Omega_e} f(r,z) \, dr\,dz = \int_{\eta=-1}^{1} \int_{\xi=-1}^{1} f(\xi,\eta) \, |\det J_e| \, d\xi\, d\eta`,
     description: "That is to say, we need to consider",
     references: [],
@@ -8289,7 +8289,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '20.2',
     section: 'integrals_over_triangular_elements',
-    label: "Equation 20.2",
+    label: "Isoparametric Mapping z(\u03be,\u03b7)",
     latex: String.raw`J_e = \begin{bmatrix}
 \frac{\partial r_e}{\partial \xi} & \frac{\partial r_e}{\partial \eta} \\[4pt]
 \frac{\partial z_e}{\partial \xi} & \frac{\partial z_e}{\partial \eta}
@@ -8302,7 +8302,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '20.3',
     section: 'integrals_over_triangular_elements',
-    label: "Equation 20.3",
+    label: "Jacobian Matrix J",
     latex: String.raw`\det J_e = \frac{\partial r_e}{\partial \xi} \frac{\partial z_e}{\partial \eta} - \frac{\partial r_e}{\partial \eta} \frac{\partial z_e}{\partial \xi}`,
     description: "That is to say, we need to consider where is the Jacobian of the isoparametric map for that element, given by , and therefore",
     references: [],
@@ -8312,7 +8312,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '20.4',
     section: 'integrals_over_triangular_elements',
-    label: "Equation 20.4",
+    label: "Jacobian Determinant |J|",
     latex: String.raw`\det J_e = \left(\sum_{i=1}^6 r_{e,i} \frac{\partial \phi_i}{\partial \xi}\right) \left(\sum_{j=1}^6 z_{e,j} \frac{\partial \phi_j}{\partial \eta}\right) - \left(\sum_{i=1}^6 r_{e,i} \frac{\partial \phi_i}{\partial \eta}\right) \left(\sum_{j=1}^6 z_{e,j} \frac{\partial \phi_j}{\partial \xi}\right)`,
     description: "",
     references: ["19.11", "19.12"],
@@ -8322,7 +8322,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '20.6',
     section: 'integrals_over_triangular_elements',
-    label: "Equation 20.6",
+    label: "dr/d\u03be, dr/d\u03b7 Expansion",
     latex: String.raw`\det J_e = \sum_{i=1}^6 \sum_{j=1}^6 r_{e,i} \left( \frac{\partial \phi_i}{\partial \xi} \frac{\partial \phi_j}{\partial \eta} - \frac{\partial \phi_j}{\partial \xi} \frac{\partial \phi_i}{\partial \eta} \right) z_{e,j}`,
     description: "",
     references: ["19.11", "19.12"],
@@ -8332,7 +8332,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '20.7',
     section: 'integrals_over_triangular_elements',
-    label: "Equation 20.7",
+    label: "dz/d\u03be, dz/d\u03b7 Expansion",
     latex: String.raw`J_e^{-1} = \begin{bmatrix}
 \frac{\partial \xi}{\partial r_e} & \frac{\partial \xi}{\partial z_e} \\[4pt]
 \frac{\partial \eta}{\partial r_e} & \frac{\partial \eta}{\partial z_e}
@@ -8348,7 +8348,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '20.11',
     section: 'integrals_over_triangular_elements',
-    label: "Equation 20.11",
+    label: "a-Integral a_{ii,jj}^{r,r}",
     latex: String.raw`\begin{aligned}
 \frac{\partial \phi_{jj}}{\partial r_e} &= \frac{1}{\det J_e} \left( \frac{\partial \phi_{jj}}{\partial \xi} \frac{\partial z_e}{\partial \eta} - \frac{\partial \phi_{jj}}{\partial \eta} \frac{\partial z_e}{\partial \xi} \right)
 &= \frac{1}{\det J_e} \left[ \frac{\partial \phi_{jj}}{\partial \xi} \left( \sum_{kk} z_{e,kk} \frac{\partial \phi_{kk}}{\partial \eta} \right) - \frac{\partial \phi_{jj}}{\partial \eta} \left( \sum_{kk} z_{e,kk} \frac{\partial \phi_{kk}}{\partial \xi} \right) \right]
@@ -8362,7 +8362,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '20.15',
     section: 'integrals_over_triangular_elements',
-    label: "Equation 20.15",
+    label: "a-Integral a_{ii,jj}^{z,z}",
     latex: String.raw`\begin{aligned}
 \frac{\partial \phi_{jj}}{\partial z_e} &= \frac{1}{\det J_e} \left( -\frac{\partial \phi_{jj}}{\partial \xi} \frac{\partial r_e}{\partial \eta} + \frac{\partial \phi_{jj}}{\partial \eta} \frac{\partial r_e}{\partial \xi} \right)
 &= \frac{1}{\det J_e} \sum_{kk=1}^6 \left( -\frac{\partial \phi_{jj}}{\partial \xi} \frac{\partial \phi_{kk}}{\partial \eta} + \frac{\partial \phi_{jj}}{\partial \eta} \frac{\partial \phi_{kk}}{\partial \xi} \right) r_{e,kk}.
@@ -8375,7 +8375,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
   {
     id: '20.16',
     section: 'a_terms',
-    label: "Equation 20.16",
+    label: "a-Integral a_{ii,jj}^{r,z}",
     latex: String.raw`\begin{aligned}
 a_{g_r,ii}(e) &= \int_{\Omega_e} g_r \phi_{l(e,ii)}
 \end{aligned}`,
@@ -8387,7 +8387,7 @@ a_{g_r,ii}(e) &= \int_{\Omega_e} g_r \phi_{l(e,ii)}
   {
     id: '20.18',
     section: 'a_terms',
-    label: "Equation 20.18",
+    label: "a-Integral a_{ii,jj}^{z,r}",
     latex: String.raw`\begin{aligned}
 &\approx \sum_{p=1}^{n_G} W(p) g_r \phi_{ii}(p) \det J_e(p).
 \end{aligned}`,
@@ -8399,7 +8399,7 @@ a_{g_r,ii}(e) &= \int_{\Omega_e} g_r \phi_{l(e,ii)}
   {
     id: '20.19',
     section: 'a_terms',
-    label: "Equation 20.19",
+    label: "a-Integral a_{ii,kk,jj}^r",
     latex: String.raw`\begin{aligned}
 a_{ii,jj}(e) &= \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,jj)}
 \end{aligned}`,
@@ -8411,7 +8411,7 @@ a_{ii,jj}(e) &= \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,jj)}
   {
     id: '20.21',
     section: 'a_terms',
-    label: "Equation 20.21",
+    label: "a-Integral a_{ii,kk,jj}^z",
     latex: String.raw`\begin{aligned}
 &\approx \sum_{p=1}^{n_G} W(p) \phi_{ii}(p) \phi_{jj}(p) \det J_e(p).
 \end{aligned}`,
@@ -8423,7 +8423,7 @@ a_{ii,jj}(e) &= \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,jj)}
   {
     id: '20.22',
     section: 'a_terms',
-    label: "Equation 20.22",
+    label: "a-Integral a_{ii}",
     latex: String.raw`\begin{aligned}
 a_{ii,kk,jj}^{r}(e) &= \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_r \phi_{l(e,jj)}
 \end{aligned}`,
@@ -8435,7 +8435,7 @@ a_{ii,kk,jj}^{r}(e) &= \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_r 
   {
     id: '20.25',
     section: 'a_terms',
-    label: "Equation 20.25",
+    label: "b-Integral b_{ii,jj}^r",
     latex: String.raw`\begin{aligned}
 &\approx \sum_{p=1}^{n_G} W(p) \phi_{ii}(p) \phi_{kk}(p) \left( \sum_{mm=1}^6 T_{jj,mm}(p) z_{e,mm} \right),
 \end{aligned}`,
@@ -8447,7 +8447,7 @@ a_{ii,kk,jj}^{r}(e) &= \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_r 
   {
     id: '20.26',
     section: 'a_terms',
-    label: "Equation 20.26",
+    label: "b-Integral b_{ii,jj}^z",
     latex: String.raw`\begin{aligned}
 a_{ii,kk,jj}^{z}(e) &= \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_z \phi_{l(e,jj)}
 \end{aligned}`,
@@ -8459,7 +8459,7 @@ a_{ii,kk,jj}^{z}(e) &= \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_z 
   {
     id: '20.28',
     section: 'a_terms',
-    label: "Equation 20.28",
+    label: "da^{r,r}/dh Derivative",
     latex: String.raw`\begin{aligned}
 &\approx -\sum_{p=1}^{n_G} W(p) \phi_{ii}(p) \phi_{kk}(p) \left( \sum_{mm=1}^6 T_{jj,mm}(p) r_{e,mm} \right),
 \end{aligned}`,
@@ -8471,7 +8471,7 @@ a_{ii,kk,jj}^{z}(e) &= \int_{\Omega_e} \phi_{l(e,ii)} \phi_{l(e,kk)} \partial_z 
   {
     id: '20.29',
     section: 'a_terms',
-    label: "Equation 20.29",
+    label: "da^{z,z}/dh Derivative",
     latex: String.raw`\begin{aligned}
 a_{ii,jj}^{r,r}(e) &= \int_{\Omega_e} \partial_r \phi_{l(e,ii)} \partial_r \phi_{l(e,jj)}
 \end{aligned}`,
@@ -8483,7 +8483,7 @@ a_{ii,jj}^{r,r}(e) &= \int_{\Omega_e} \partial_r \phi_{l(e,ii)} \partial_r \phi_
   {
     id: '20.31',
     section: 'a_terms',
-    label: "Equation 20.31",
+    label: "da^{r,z}/dh Derivative",
     latex: String.raw`\begin{aligned}
 &\approx \sum_{p=1}^{n_G} W(p) \frac{ \left( \sum_{mm=1}^6 T_{ii,mm}(p) z_{e,mm} \right) \left( \sum_{nn=1}^6 T_{jj,nn}(p) z_{e,nn} \right) }{ \det J_e(p) },
 \end{aligned}`,
@@ -8495,7 +8495,7 @@ a_{ii,jj}^{r,r}(e) &= \int_{\Omega_e} \partial_r \phi_{l(e,ii)} \partial_r \phi_
   {
     id: '20.32',
     section: 'a_terms',
-    label: "Equation 20.32",
+    label: "da^{z,r}/dh Derivative",
     latex: String.raw`\begin{aligned}
 a_{ii,jj}^{z,r}(e) &= \int_{\Omega_e} \partial_z \phi_{l(e,ii)} \partial_r \phi_{l(e,jj)}
 \end{aligned}`,
@@ -8507,7 +8507,7 @@ a_{ii,jj}^{z,r}(e) &= \int_{\Omega_e} \partial_z \phi_{l(e,ii)} \partial_r \phi_
   {
     id: '20.34',
     section: 'a_terms',
-    label: "Equation 20.34",
+    label: "da^r_{ii,kk,jj}/dh Derivative",
     latex: String.raw`\begin{aligned}
 &\approx -\sum_{p=1}^{n_G} W(p) \frac{ \left( \sum_{mm=1}^6 T_{ii,mm}(p) r_{e,mm} \right) \left( \sum_{nn=1}^6 T_{jj,nn}(p) z_{e,nn} \right) }{ \det J_e(p) },
 \end{aligned}`,
@@ -8519,7 +8519,7 @@ a_{ii,jj}^{z,r}(e) &= \int_{\Omega_e} \partial_z \phi_{l(e,ii)} \partial_r \phi_
   {
     id: '20.35',
     section: 'a_terms',
-    label: "Equation 20.35",
+    label: "da^z_{ii,kk,jj}/dh Derivative",
     latex: String.raw`\begin{aligned}
 a_{ii,jj}^{z,z}(e) &= \int_{\Omega_e} \partial_z \phi_{l(e,ii)} \partial_z \phi_{l(e,jj)}
 \end{aligned}`,
@@ -8531,7 +8531,7 @@ a_{ii,jj}^{z,z}(e) &= \int_{\Omega_e} \partial_z \phi_{l(e,ii)} \partial_z \phi_
   {
     id: '20.37',
     section: 'a_terms',
-    label: "Equation 20.37",
+    label: "da_{ii}/dh Derivative",
     latex: String.raw`\begin{aligned}
 &\approx \sum_{p=1}^{n_G} W(p) \frac{ \left( \sum_{mm=1}^6 T_{ii,mm}(p) r_{e,mm} \right) \left( \sum_{nn=1}^6 T_{jj,nn}(p) r_{e,nn} \right) }{ \det J_e(p) },
 \end{aligned}`,
@@ -8543,7 +8543,7 @@ a_{ii,jj}^{z,z}(e) &= \int_{\Omega_e} \partial_z \phi_{l(e,ii)} \partial_z \phi_
   {
     id: '20.38',
     section: 'a_terms',
-    label: "Equation 20.38",
+    label: "db^r/dh Derivative",
     latex: String.raw`\begin{aligned}
 a_{ii,jj}^{r,z}(e) &= \int_{\Omega_e} \partial_r \phi_{l(e,ii)} \partial_z \phi_{l(e,jj)}
 \end{aligned}`,
@@ -8555,7 +8555,7 @@ a_{ii,jj}^{r,z}(e) &= \int_{\Omega_e} \partial_r \phi_{l(e,ii)} \partial_z \phi_
   {
     id: '20.40',
     section: 'a_terms',
-    label: "Equation 20.40",
+    label: "db^z/dh Derivative",
     latex: String.raw`\begin{aligned}
 &\approx -\sum_{p=1}^{n_G} W(p) \frac{ \left( \sum_{mm=1}^6 T_{ii,mm}(p) z_{e,mm} \right) \left( \sum_{nn=1}^6 T_{jj,nn}(p) r_{e,nn} \right) }{ \det J_e(p) },
 \end{aligned}`,
@@ -8567,7 +8567,7 @@ a_{ii,jj}^{r,z}(e) &= \int_{\Omega_e} \partial_r \phi_{l(e,ii)} \partial_z \phi_
   {
     id: '20.41',
     section: 'a_terms',
-    label: "Equation 20.41",
+    label: "dJ/dh Jacobian Derivative",
     latex: String.raw`\begin{aligned}
 a_{g_z,ii}(e) &= \int_{\Omega_e} g_z \phi_{l(e,ii)}
 \end{aligned}`,
@@ -8579,7 +8579,7 @@ a_{g_z,ii}(e) &= \int_{\Omega_e} g_z \phi_{l(e,ii)}
   {
     id: '20.43',
     section: 'a_terms',
-    label: "Equation 20.43",
+    label: "d\u03c6/dr in Terms of dh",
     latex: String.raw`\begin{aligned}
 &\approx \sum_{p=1}^{n_G} W(p) g_z \phi_{ii}(p) \det J_e(p).
 \end{aligned}`,
@@ -8591,7 +8591,7 @@ a_{g_z,ii}(e) &= \int_{\Omega_e} g_z \phi_{l(e,ii)}
   {
     id: '20.44',
     section: 'b_terms',
-    label: "Equation 20.44",
+    label: "d\u03c6/dz in Terms of dh",
     latex: String.raw`\begin{aligned}
 b_{jj,ii}^{r}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_r \phi_{l(e,ii)}
 \end{aligned}`,
@@ -8603,7 +8603,7 @@ b_{jj,ii}^{r}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_r \phi_{l(e,ii)}
   {
     id: '20.47',
     section: 'b_terms',
-    label: "Equation 20.47",
+    label: "d\u00b2\u03c6/dr\u00b2 in Terms of dh",
     latex: String.raw`\begin{aligned}
 &\approx \sum_{p=1}^{n_G} W(p) \psi_{jj}(p) \sum_{mm=1}^6 T_{ii,mm}(p) z_{e,mm},
 \end{aligned}`,
@@ -8615,7 +8615,7 @@ b_{jj,ii}^{r}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_r \phi_{l(e,ii)}
   {
     id: '20.48',
     section: 'b_terms',
-    label: "Equation 20.48",
+    label: "d\u00b2\u03c6/drdz in Terms of dh",
     latex: String.raw`\begin{aligned}
 b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
 \end{aligned}`,
@@ -8627,7 +8627,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '20.50',
     section: 'b_terms',
-    label: "Equation 20.50",
+    label: "d\u00b2\u03c6/dz\u00b2 in Terms of dh",
     latex: String.raw`\begin{aligned}
 &\approx -\sum_{p=1}^{n_G} W(p) \psi_{jj}(p) \sum_{mm=1}^6 T_{ii,mm}(p) r_{e,mm}.
 \end{aligned}`,
@@ -8639,7 +8639,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '20.52',
     section: 'derivatives_of_integrals_over_triangle_e',
-    label: "Equation 20.52",
+    label: "d\u03c8/dr in Terms of dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} \det J_e &= \sum_{i=1}^6 \sum_{j=1}^6 \left[ (\partial_{h_q} r_{e,i}) T_{ii,jj} z_{e,j} + r_{e,i} T_{ii,jj} (\partial_{h_q} z_{e,j}) \right].
 \end{aligned}`,
@@ -8651,7 +8651,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '20.55',
     section: 'derivatives_of_a_terms',
-    label: "Equation 20.55",
+    label: "d\u03c8/dz in Terms of dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} a_{g_r,ii}(e) &\approx \sum_{p=1}^{n_G} W(p) g_r \phi_{ii}(p) \partial_{h_q} \det J_e(p),
 \end{aligned}`,
@@ -8663,7 +8663,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '20.58',
     section: 'derivatives_of_a_terms',
-    label: "Equation 20.58",
+    label: "d(dr/d\u03be)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} a_{ii,jj}(e) &\approx \sum_{p=1}^{n_G} W(p) \phi_{ii}(p) \phi_{jj}(p) \partial_{h_q} \det J_e(p),
 \end{aligned}`,
@@ -8675,7 +8675,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '20.61',
     section: 'derivatives_of_a_terms',
-    label: "Equation 20.61",
+    label: "d(dr/d\u03b7)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} a_{ii,kk,jj}^{r}(e) &\approx \sum_{p=1}^{n_G} W(p) \phi_{ii}(p) \phi_{kk}(p) \sum_{mm=1}^6 T_{jj,mm}(p) \partial_{h_q} z_{e,mm},
 \end{aligned}`,
@@ -8687,7 +8687,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '20.64',
     section: 'derivatives_of_a_terms',
-    label: "Equation 20.64",
+    label: "d(dz/d\u03be)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} a_{ii,kk,jj}^{z}(e) &\approx -\sum_{p=1}^{n_G} W(p) \phi_{ii}(p) \phi_{kk}(p) \sum_{mm=1}^6 T_{jj,mm}(p) \partial_{h_q} r_{e,mm},
 \end{aligned}`,
@@ -8699,7 +8699,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '20.67',
     section: 'derivatives_of_a_terms',
-    label: "Equation 20.67",
+    label: "d(dz/d\u03b7)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} a_{ii,jj}^{r,r}(e) &\approx \sum_{p=1}^{n_G} W(p) \frac{ \left( \sum_{mm} T_{ii,mm}(p) \partial_{h_q} z_{e,mm} \right) \left( \sum_{nn} T_{jj,nn}(p) z_{e,nn} \right) }{ \det J_e(p) }
 &\quad + \sum_{p=1}^{n_G} W(p) \frac{ \left( \sum_{mm} T_{ii,mm}(p) z_{e,mm} \right) \left( \sum_{nn} T_{jj,nn}(p) \partial_{h_q} z_{e,nn} \right) }{ \det J_e(p) }
@@ -8713,7 +8713,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '20.70',
     section: 'derivatives_of_a_terms',
-    label: "Equation 20.70",
+    label: "d(d\u00b2r/d\u03be\u00b2)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} a_{ii,jj}^{r,z}(e) &\approx -\sum_{p=1}^{n_G} W(p) \frac{ \left( \sum_{mm} T_{ii,mm}(p) \partial_{h_q} z_{e,mm} \right) \left( \sum_{nn} T_{jj,nn}(p) r_{e,nn} \right) }{ \det J_e(p) }
 &\quad - \sum_{p=1}^{n_G} W(p) \frac{ \left( \sum_{mm} T_{ii,mm}(p) z_{e,mm} \right) \left( \sum_{nn} T_{jj,nn}(p) \partial_{h_q} r_{e,nn} \right) }{ \det J_e(p) }
@@ -8727,7 +8727,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '20.73',
     section: 'derivatives_of_a_terms',
-    label: "Equation 20.73",
+    label: "d(d\u00b2r/d\u03bed\u03b7)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} a_{ii,jj}^{z,r}(e) &\approx -\sum_{p=1}^{n_G} W(p) \frac{ \left( \sum_{mm} T_{ii,mm}(p) \partial_{h_q} r_{e,mm} \right) \left( \sum_{nn} T_{jj,nn}(p) z_{e,nn} \right) }{ \det J_e(p) }
 &\quad - \sum_{p=1}^{n_G} W(p) \frac{ \left( \sum_{mm} T_{ii,mm}(p) r_{e,mm} \right) \left( \sum_{nn} T_{jj,nn}(p) \partial_{h_q} z_{e,nn} \right) }{ \det J_e(p) }
@@ -8741,7 +8741,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '20.76',
     section: 'derivatives_of_a_terms',
-    label: "Equation 20.76",
+    label: "d(d\u00b2z/d\u03be\u00b2)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} a_{ii,jj}^{z,z}(e) &\approx \sum_{p=1}^{n_G} W(p) \frac{ \left( \sum_{mm} T_{ii,mm}(p) \partial_{h_q} r_{e,mm} \right) \left( \sum_{nn} T_{jj,nn}(p) r_{e,nn} \right) }{ \det J_e(p) }
 &\quad + \sum_{p=1}^{n_G} W(p) \frac{ \left( \sum_{mm} T_{ii,mm}(p) r_{e,mm} \right) \left( \sum_{nn} T_{jj,nn}(p) \partial_{h_q} r_{e,nn} \right) }{ \det J_e(p) }
@@ -8755,7 +8755,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '20.79',
     section: 'derivatives_of_a_terms',
-    label: "Equation 20.79",
+    label: "d(d\u00b2z/d\u03bed\u03b7)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} a_{g_z,ii}(e) &\approx \sum_{p=1}^{n_G} W(p) g_z \phi_{ii}(p) \partial_{h_q} \det J_e(p).
 \end{aligned}`,
@@ -8767,7 +8767,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '20.82',
     section: 'derivatives_of_b_terms',
-    label: "Equation 20.82",
+    label: "d|J|/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} b_{jj,ii}^{r}(e) &\approx \sum_{p=1}^{n_G} W(p) \psi_{jj}(p) \sum_{mm=1}^6 T_{ii,mm}(p) \partial_{h_q} z_{e,mm},
 \end{aligned}`,
@@ -8779,7 +8779,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '20.85',
     section: 'derivatives_of_b_terms',
-    label: "Equation 20.85",
+    label: "d(1/|J|)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} b_{jj,ii}^{z}(e) &\approx -\sum_{p=1}^{n_G} W(p) \psi_{jj}(p) \sum_{mm=1}^6 T_{ii,mm}(p) \partial_{h_q} r_{e,mm}.
 \end{aligned}`,
@@ -8791,7 +8791,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '21.1',
     section: 'the_free_surface_line_elements',
-    label: "Equation 21.1",
+    label: "Free Surface Arc Length ds^1",
     latex: String.raw`c_{t_r,jj,ii}^{s}(e_1) = \int_{\partial\Omega_{e_1}} t_r^1 \phi_{i_1(e_1,jj)}^1 \partial_s \phi_{i_1(e_1,ii)}^1`,
     description: "",
     references: [],
@@ -8801,7 +8801,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '21.2',
     section: 'the_free_surface_line_elements',
-    label: "Equation 21.2",
+    label: "Free Surface dr/ds, dz/ds",
     latex: String.raw`\begin{aligned}
 \phi_1^1(\xi) &= \phi_2(\xi,\eta=-1),
 \end{aligned}`,
@@ -8813,7 +8813,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '21.3',
     section: 'the_free_surface_line_elements',
-    label: "Equation 21.3",
+    label: "Normal n^1 Components",
     latex: String.raw`\begin{aligned}
 \phi_2^1(\xi) &= \phi_6(\xi,\eta=-1),
 \end{aligned}`,
@@ -8825,7 +8825,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '21.4',
     section: 'the_free_surface_line_elements',
-    label: "Equation 21.4",
+    label: "Tangent t^1 Components",
     latex: String.raw`\begin{aligned}
 \phi_3^1(\xi) &= \phi_3(\xi,\eta=-1),
 \end{aligned}`,
@@ -8837,7 +8837,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '21.6',
     section: 'the_free_surface_line_elements',
-    label: "Equation 21.6",
+    label: "ds^1 in Terms of d\u03be",
     latex: String.raw`\begin{aligned}
 \phi_1^1(\xi) &= \frac{\xi^2 - \xi}{2},
 \end{aligned}`,
@@ -8849,7 +8849,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '21.8',
     section: 'the_free_surface_line_elements',
-    label: "Equation 21.8",
+    label: "c-Integral c_{t_r,jj,ii}^s",
     latex: String.raw`\begin{aligned}
 \phi_2^1(\xi) &= -\xi^2 + 1,
 \end{aligned}`,
@@ -8861,7 +8861,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '21.9',
     section: 'the_free_surface_line_elements',
-    label: "Equation 21.9",
+    label: "c-Integral c_{t_z,jj,ii}^s",
     latex: String.raw`\begin{aligned}
 \phi_3^1(\xi) &= \frac{\xi^2 + \xi}{2},
 \end{aligned}`,
@@ -8873,7 +8873,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '21.10',
     section: 'the_free_surface_line_elements',
-    label: "Equation 21.10",
+    label: "c-Integral c_{ii,jj,n_r}",
     latex: String.raw`\begin{aligned}
 \partial_\xi \phi_1^1(\xi) &= \xi - \frac12,
 \end{aligned}`,
@@ -8885,7 +8885,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '21.11',
     section: 'the_free_surface_line_elements',
-    label: "Equation 21.11",
+    label: "c-Integral c_{ii,jj,n_z}",
     latex: String.raw`\begin{aligned}
 \partial_\xi \phi_2^1(\xi) &= -2\xi,
 \end{aligned}`,
@@ -8897,7 +8897,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '21.12',
     section: 'the_free_surface_line_elements',
-    label: "Equation 21.12",
+    label: "c-Integral c_{ii,n_r}",
     latex: String.raw`\begin{aligned}
 \partial_\xi \phi_3^1(\xi) &= \xi + \frac12.
 \end{aligned}`,
@@ -8909,7 +8909,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '21.13',
     section: 'the_free_surface_line_elements',
-    label: "Equation 21.13",
+    label: "c-Integral c_{ii,n_z}",
     latex: String.raw`t^1 = \frac{ (\partial_\xi r_{e_1}^1, \partial_\xi z_{e_1}^1) }{ \sqrt{ (\partial_\xi r_{e_1}^1)^2 + (\partial_\xi z_{e_1}^1)^2 } }`,
     description: "From equation (19.5) we have and consequently We can calculate the tangent to the line element by",
     references: ["19.5"],
@@ -8919,7 +8919,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '21.14',
     section: 'the_free_surface_line_elements',
-    label: "Equation 21.14",
+    label: "dc_{t_r}/dh Derivative",
     latex: String.raw`(r_{e_1}^1, z_{e_1}^1) = S_{e_1}^1(\xi)`,
     description: "And its analogue for are defined by the map which takes the interval to the line element in boundary one, i.e",
     references: [],
@@ -8929,7 +8929,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '21.15',
     section: 'the_free_surface_line_elements',
-    label: "Equation 21.15",
+    label: "dc_{t_z}/dh Derivative",
     latex: String.raw`\begin{aligned}
 \partial_\xi r_{e_1}^1 &= \sum_{jj=1}^3 r_{e_1,jj}^1 \partial_\xi \phi_{jj}^1,
 \end{aligned}`,
@@ -8941,7 +8941,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '21.16',
     section: 'the_free_surface_line_elements',
-    label: "Equation 21.16",
+    label: "dc_{n_r}/dh Derivative",
     latex: String.raw`\begin{aligned}
 \partial_\xi z_{e_1}^1 &= \sum_{jj=1}^3 z_{e_1,jj}^1 \partial_\xi \phi_{jj}^1,
 \end{aligned}`,
@@ -8953,7 +8953,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '21.19',
     section: 'the_free_surface_line_elements',
-    label: "Equation 21.19",
+    label: "dc_{n_z}/dh Derivative",
     latex: String.raw`J_{e_1}^1 \coloneqq \partial_\xi s = \sqrt{ (\partial_\xi r_{e_1}^1)^2 + (\partial_\xi z_{e_1}^1)^2 }`,
     description: "Moreover, we have and we introduce",
     references: [],
@@ -8963,7 +8963,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '21.21',
     section: 'the_free_surface_line_elements',
-    label: "Equation 21.21",
+    label: "Liquid-Solid Arc Length ds^2",
     latex: String.raw`c_{t_r,jj,ii}^{s}(e_1) = \int_{\xi=-1}^{1} \frac{ \partial_\xi r_{e_1}^1(\xi) }{ J_{e_1}^1(\xi) } \phi_{jj}^1(\xi) \partial_s \phi_{ii}^1(\xi) \, \partial_\xi s = \int_{\xi=-1}^{1} \frac{ \partial_\xi r_{e_1}^1(\xi) }{ J_{e_1}^1(\xi) } \phi_{jj}^1(\xi) \partial_\xi \phi_{ii}^1(\xi) \, d\xi`,
     description: "Moreover, we have and we introduce which is the determinant of the Jacobian of",
     references: ["21.1"],
@@ -8973,7 +8973,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '21.22',
     section: 'the_free_surface_line_elements',
-    label: "Equation 21.22",
+    label: "Liquid-Solid dr/ds, dz/ds",
     latex: String.raw`c_{t_r,jj,ii}^{s}(e_1) \approx \sum_{p=1}^{n_{IG}} W_l(p) \frac{ \partial_\xi r_{e_1}^1(p) }{ J_{e_1}^1(p) } \phi_{jj}^1(p) \partial_\xi \phi_{ii}^1(p)`,
     description: "The integral (21.1) can be rewritten as Hence, using Gaussian quadrature we have",
     references: ["21.1"],
@@ -8983,7 +8983,7 @@ b_{jj,ii}^{z}(e) &= \int_{\Omega_e} \psi_{l_p(e,jj)} \partial_z \phi_{l(e,ii)}
   {
     id: '21.25',
     section: 'the_free_surface_line_elements',
-    label: "Equation 21.25",
+    label: "ds^2 in Terms of d\u03be",
     latex: String.raw`\begin{aligned}
 c_{t_z,jj,ii}^{s}(e_1) &= \int_{\partial\Omega_{e_1}} t_z^1 \phi_{i_1(e_1,jj)}^1 \partial_s \phi_{i_1(e_1,ii)}^1
 &\approx \sum_{p=1}^{n_{IG}} W_l(p) \frac{ \partial_\xi z_{e_1}^1(p) }{ J_{e_1}^1(p) } \phi_{jj}^1(p) \partial_\xi \phi_{ii}^1(p),
@@ -8996,7 +8996,7 @@ c_{t_z,jj,ii}^{s}(e_1) &= \int_{\partial\Omega_{e_1}} t_z^1 \phi_{i_1(e_1,jj)}^1
   {
     id: '21.29',
     section: 'the_free_surface_line_elements',
-    label: "Equation 21.29",
+    label: "d-Integral d_{t_r,t_r,ii,jj}",
     latex: String.raw`\begin{aligned}
 c_{ii,jj,n_r}(e_1) &= \int_{\partial\Omega_{e_1}} n_r^1 \phi_{i_1(e_1,ii)}^1 \phi_{i_1(e_1,jj)}^1 \approx -\sum_{p=1}^{n_{IG}} W_l(p) \partial_\xi z_{e_1}^1(p) \phi_{ii}^1(p) \phi_{jj}^1(p),
 \end{aligned}`,
@@ -9008,7 +9008,7 @@ c_{ii,jj,n_r}(e_1) &= \int_{\partial\Omega_{e_1}} n_r^1 \phi_{i_1(e_1,ii)}^1 \ph
   {
     id: '21.32',
     section: 'the_free_surface_line_elements',
-    label: "Equation 21.32",
+    label: "d-Integral d_{t_r,t_z,ii,jj}",
     latex: String.raw`\begin{aligned}
 c_{ii,jj,n_z}(e_1) &= \int_{\partial\Omega_{e_1}} n_z^1 \phi_{i_1(e_1,ii)}^1 \phi_{i_1(e_1,jj)}^1 \approx \sum_{p=1}^{n_{IG}} W_l(p) \partial_\xi r_{e_1}^1(p) \phi_{ii}^1(p) \phi_{jj}^1(p).
 \end{aligned}`,
@@ -9020,7 +9020,7 @@ c_{ii,jj,n_z}(e_1) &= \int_{\partial\Omega_{e_1}} n_z^1 \phi_{i_1(e_1,ii)}^1 \ph
   {
     id: '21.33',
     section: 'the_liquid_solid_surface_line_elements',
-    label: "Equation 21.33",
+    label: "d-Integral d_{t_z,t_z,ii,jj}",
     latex: String.raw`\begin{aligned}
 \phi_1^2(\eta) &= \phi_2(\xi=-1,\eta),
 \end{aligned}`,
@@ -9032,7 +9032,7 @@ c_{ii,jj,n_z}(e_1) &= \int_{\partial\Omega_{e_1}} n_z^1 \phi_{i_1(e_1,ii)}^1 \ph
   {
     id: '21.34',
     section: 'the_liquid_solid_surface_line_elements',
-    label: "Equation 21.34",
+    label: "d-Integral d_{t_r,t_r,ii}",
     latex: String.raw`\begin{aligned}
 \phi_2^2(\eta) &= \phi_5(\xi=-1,\eta),
 \end{aligned}`,
@@ -9044,7 +9044,7 @@ c_{ii,jj,n_z}(e_1) &= \int_{\partial\Omega_{e_1}} n_z^1 \phi_{i_1(e_1,ii)}^1 \ph
   {
     id: '21.35',
     section: 'the_liquid_solid_surface_line_elements',
-    label: "Equation 21.35",
+    label: "d-Integral d_{t_z,t_z,ii}",
     latex: String.raw`\begin{aligned}
 \phi_3^2(\eta) &= \phi_1(\xi=-1,\eta),
 \end{aligned}`,
@@ -9056,7 +9056,7 @@ c_{ii,jj,n_z}(e_1) &= \int_{\partial\Omega_{e_1}} n_z^1 \phi_{i_1(e_1,ii)}^1 \ph
   {
     id: '21.37',
     section: 'the_liquid_solid_surface_line_elements',
-    label: "Equation 21.37",
+    label: "d-Integral d_{ii,jj,n_r}",
     latex: String.raw`\begin{aligned}
 \phi_1^2(\eta) &= \frac{\eta^2 - \eta}{2},
 \end{aligned}`,
@@ -9068,7 +9068,7 @@ c_{ii,jj,n_z}(e_1) &= \int_{\partial\Omega_{e_1}} n_z^1 \phi_{i_1(e_1,ii)}^1 \ph
   {
     id: '21.39',
     section: 'the_liquid_solid_surface_line_elements',
-    label: "Equation 21.39",
+    label: "d-Integral d_{ii,jj,n_z}",
     latex: String.raw`\begin{aligned}
 \phi_2^2(\eta) &= -\eta^2 + 1,
 \end{aligned}`,
@@ -9080,7 +9080,7 @@ c_{ii,jj,n_z}(e_1) &= \int_{\partial\Omega_{e_1}} n_z^1 \phi_{i_1(e_1,ii)}^1 \ph
   {
     id: '21.40',
     section: 'the_liquid_solid_surface_line_elements',
-    label: "Equation 21.40",
+    label: "dd_{t_r,t_r,ii,jj}/dh",
     latex: String.raw`\begin{aligned}
 \phi_3^2(\eta) &= \frac{\eta^2 + \eta}{2},
 \end{aligned}`,
@@ -9092,7 +9092,7 @@ c_{ii,jj,n_z}(e_1) &= \int_{\partial\Omega_{e_1}} n_z^1 \phi_{i_1(e_1,ii)}^1 \ph
   {
     id: '21.41',
     section: 'the_liquid_solid_surface_line_elements',
-    label: "Equation 21.41",
+    label: "dd_{t_r,t_z,ii,jj}/dh",
     latex: String.raw`\begin{aligned}
 \partial_\eta \phi_1^2(\eta) &= \eta - \frac12,
 \end{aligned}`,
@@ -9104,7 +9104,7 @@ c_{ii,jj,n_z}(e_1) &= \int_{\partial\Omega_{e_1}} n_z^1 \phi_{i_1(e_1,ii)}^1 \ph
   {
     id: '21.42',
     section: 'the_liquid_solid_surface_line_elements',
-    label: "Equation 21.42",
+    label: "dd_{t_z,t_z,ii,jj}/dh",
     latex: String.raw`\begin{aligned}
 \partial_\eta \phi_2^2(\eta) &= -2\eta,
 \end{aligned}`,
@@ -9116,7 +9116,7 @@ c_{ii,jj,n_z}(e_1) &= \int_{\partial\Omega_{e_1}} n_z^1 \phi_{i_1(e_1,ii)}^1 \ph
   {
     id: '21.43',
     section: 'the_liquid_solid_surface_line_elements',
-    label: "Equation 21.43",
+    label: "dd_{t_r,t_r,ii}/dh",
     latex: String.raw`\begin{aligned}
 \partial_\eta \phi_3^2(\eta) &= \eta + \frac12.
 \end{aligned}`,
@@ -9128,7 +9128,7 @@ c_{ii,jj,n_z}(e_1) &= \int_{\partial\Omega_{e_1}} n_z^1 \phi_{i_1(e_1,ii)}^1 \ph
   {
     id: '21.50',
     section: 'the_liquid_solid_surface_line_elements',
-    label: "Equation 21.50",
+    label: "dd_{ii,jj,n_r}/dh",
     latex: String.raw`\begin{aligned}
 d_{t_r,t_r,ii,jj}(e_2) &= \int_{\partial\Omega_{e_2}} t_r^2 t_r^2 \phi_{l_2(e_2,ii)}^2 \phi_{l_2(e_2,jj)}^2
 &\approx \sum_{p=1}^{n_{IG}} W_l(p) \frac{ (\partial_\eta r_{e_2}^2(p))^2 }{ J_{e_2}^2(p) } \phi_{ii}^2(p) \phi_{jj}^2(p),
@@ -9141,7 +9141,7 @@ d_{t_r,t_r,ii,jj}(e_2) &= \int_{\partial\Omega_{e_2}} t_r^2 t_r^2 \phi_{l_2(e_2,
   {
     id: '21.53',
     section: 'the_liquid_solid_surface_line_elements',
-    label: "Equation 21.53",
+    label: "dd_{ii,jj,n_z}/dh",
     latex: String.raw`\begin{aligned}
 d_{t_r,t_z,ii,jj}(e_2) &\approx \sum_{p=1}^{n_{IG}} W_l(p) \frac{ (\partial_\eta r_{e_2}^2(p)) (\partial_\eta z_{e_2}^2(p)) }{ J_{e_2}^2(p) } \phi_{ii}^2(p) \phi_{jj}^2(p),
 \end{aligned}`,
@@ -9153,7 +9153,7 @@ d_{t_r,t_z,ii,jj}(e_2) &\approx \sum_{p=1}^{n_{IG}} W_l(p) \frac{ (\partial_\eta
   {
     id: '21.56',
     section: 'the_liquid_solid_surface_line_elements',
-    label: "Equation 21.56",
+    label: "Symmetry Axis Line Element",
     latex: String.raw`\begin{aligned}
 d_{t_z,t_z,ii,jj}(e_2) &\approx \sum_{p=1}^{n_{IG}} W_l(p) \frac{ (\partial_\eta z_{e_2}^2(p))^2 }{ J_{e_2}^2(p) } \phi_{ii}^2(p) \phi_{jj}^2(p),
 \end{aligned}`,
@@ -9165,7 +9165,7 @@ d_{t_z,t_z,ii,jj}(e_2) &\approx \sum_{p=1}^{n_{IG}} W_l(p) \frac{ (\partial_\eta
   {
     id: '21.60',
     section: 'the_liquid_solid_surface_line_elements',
-    label: "Equation 21.60",
+    label: "f-Integral f_{ii,jj,n_r}",
     latex: String.raw`\begin{aligned}
 d_{ii,jj,n_r}(e_2) &\approx \sum_{p=1}^{n_{IG}} W_l(p) \frac{ \partial_\eta z_{e_2}^2(p) }{ J_{e_2}^2(p) } \phi_{ii}(p) \phi_{jj}(p),
 \end{aligned}`,
@@ -9177,7 +9177,7 @@ d_{ii,jj,n_r}(e_2) &\approx \sum_{p=1}^{n_{IG}} W_l(p) \frac{ \partial_\eta z_{e
   {
     id: '21.63',
     section: 'the_liquid_solid_surface_line_elements',
-    label: "Equation 21.63",
+    label: "f-Integral f_{ii,jj,n_z}",
     latex: String.raw`\begin{aligned}
 d_{ii,jj,n_z}(e_2) &\approx -\sum_{p=1}^{n_{IG}} W_l(p) \frac{ \partial_\eta r_{e_2}^2(p) }{ J_{e_2}^2(p) } \phi_{ii}(p) \phi_{jj}(p).
 \end{aligned}`,
@@ -9189,7 +9189,7 @@ d_{ii,jj,n_z}(e_2) &\approx -\sum_{p=1}^{n_{IG}} W_l(p) \frac{ \partial_\eta r_{
   {
     id: '21.64',
     section: 'the_inflow_boundary_line_elements',
-    label: "Equation 21.64",
+    label: "f-Integral f_{t_r,ii,jj}",
     latex: String.raw`\begin{aligned}
 \phi_1^3(\xi) &= \phi_1(\xi,\eta=-\xi),
 \end{aligned}`,
@@ -9201,7 +9201,7 @@ d_{ii,jj,n_z}(e_2) &\approx -\sum_{p=1}^{n_{IG}} W_l(p) \frac{ \partial_\eta r_{
   {
     id: '21.65',
     section: 'the_inflow_boundary_line_elements',
-    label: "Equation 21.65",
+    label: "f-Integral f_{t_z,ii,jj}",
     latex: String.raw`\begin{aligned}
 \phi_2^3(\xi) &= \phi_4(\xi,\eta=-\xi),
 \end{aligned}`,
@@ -9213,7 +9213,7 @@ d_{ii,jj,n_z}(e_2) &\approx -\sum_{p=1}^{n_{IG}} W_l(p) \frac{ \partial_\eta r_{
   {
     id: '21.66',
     section: 'the_inflow_boundary_line_elements',
-    label: "Equation 21.66",
+    label: "df_{ii,jj,n_r}/dh",
     latex: String.raw`\begin{aligned}
 \phi_3^3(\xi) &= \phi_3(\xi,\eta=-\xi),
 \end{aligned}`,
@@ -9225,7 +9225,7 @@ d_{ii,jj,n_z}(e_2) &\approx -\sum_{p=1}^{n_{IG}} W_l(p) \frac{ \partial_\eta r_{
   {
     id: '21.68',
     section: 'the_inflow_boundary_line_elements',
-    label: "Equation 21.68",
+    label: "df_{ii,jj,n_z}/dh",
     latex: String.raw`\begin{aligned}
 \phi_1^3(\xi) &= \frac{\xi^2 - \xi}{2},
 \end{aligned}`,
@@ -9237,7 +9237,7 @@ d_{ii,jj,n_z}(e_2) &\approx -\sum_{p=1}^{n_{IG}} W_l(p) \frac{ \partial_\eta r_{
   {
     id: '21.70',
     section: 'the_inflow_boundary_line_elements',
-    label: "Equation 21.70",
+    label: "df_{t_r,ii,jj}/dh",
     latex: String.raw`\begin{aligned}
 \phi_2^3(\xi) &= -\xi^2 + 1,
 \end{aligned}`,
@@ -9249,7 +9249,7 @@ d_{ii,jj,n_z}(e_2) &\approx -\sum_{p=1}^{n_{IG}} W_l(p) \frac{ \partial_\eta r_{
   {
     id: '21.71',
     section: 'the_inflow_boundary_line_elements',
-    label: "Equation 21.71",
+    label: "df_{t_z,ii,jj}/dh",
     latex: String.raw`\begin{aligned}
 \phi_3^3(\xi) &= \frac{\xi^2 + \xi}{2},
 \end{aligned}`,
@@ -9261,7 +9261,7 @@ d_{ii,jj,n_z}(e_2) &\approx -\sum_{p=1}^{n_{IG}} W_l(p) \frac{ \partial_\eta r_{
   {
     id: '21.72',
     section: 'the_inflow_boundary_line_elements',
-    label: "Equation 21.72",
+    label: "Separatrix Line Element",
     latex: String.raw`\begin{aligned}
 \partial_\xi \phi_1^3(\xi) &= \xi - \frac12,
 \end{aligned}`,
@@ -9273,7 +9273,7 @@ d_{ii,jj,n_z}(e_2) &\approx -\sum_{p=1}^{n_{IG}} W_l(p) \frac{ \partial_\eta r_{
   {
     id: '21.73',
     section: 'the_inflow_boundary_line_elements',
-    label: "Equation 21.73",
+    label: "g-Integral g_{ii,jj,n_r}",
     latex: String.raw`\begin{aligned}
 \partial_\xi \phi_2^3(\xi) &= -2\xi,
 \end{aligned}`,
@@ -9285,7 +9285,7 @@ d_{ii,jj,n_z}(e_2) &\approx -\sum_{p=1}^{n_{IG}} W_l(p) \frac{ \partial_\eta r_{
   {
     id: '21.74',
     section: 'the_inflow_boundary_line_elements',
-    label: "Equation 21.74",
+    label: "g-Integral g_{ii,jj,n_z}",
     latex: String.raw`\begin{aligned}
 \partial_\xi \phi_3^3(\xi) &= \xi + \frac12.
 \end{aligned}`,
@@ -9297,7 +9297,7 @@ d_{ii,jj,n_z}(e_2) &\approx -\sum_{p=1}^{n_{IG}} W_l(p) \frac{ \partial_\eta r_{
   {
     id: '21.81',
     section: 'the_inflow_boundary_line_elements',
-    label: "Equation 21.81",
+    label: "dg_{ii,jj,n_r}/dh",
     latex: String.raw`\begin{aligned}
 f_{t_r,ii,jj}(e_3) &= \int_{\partial\Omega_{e_3}} t_r^3 \phi_{l_3(e_3,ii)}^3 \phi_{l_3(e_3,jj)}^3 \approx \sum_{p=1}^{n_{IG}} \partial_\xi r_{e_3}^3(p) \phi_{ii}(p) \phi_{jj}(p),
 \end{aligned}`,
@@ -9309,7 +9309,7 @@ f_{t_r,ii,jj}(e_3) &= \int_{\partial\Omega_{e_3}} t_r^3 \phi_{l_3(e_3,ii)}^3 \ph
   {
     id: '21.84',
     section: 'the_inflow_boundary_line_elements',
-    label: "Equation 21.84",
+    label: "dg_{ii,jj,n_z}/dh",
     latex: String.raw`\begin{aligned}
 f_{t_z,ii,jj}(e_3) &\approx \sum_{p=1}^{n_{IG}} \partial_\xi z_{e_3}^3(p) \phi_{ii}(p) \phi_{jj}(p),
 \end{aligned}`,
@@ -9321,7 +9321,7 @@ f_{t_z,ii,jj}(e_3) &\approx \sum_{p=1}^{n_{IG}} \partial_\xi z_{e_3}^3(p) \phi_{
   {
     id: '21.88',
     section: 'the_inflow_boundary_line_elements',
-    label: "Equation 21.88",
+    label: "dc_{ii,jj,n_r}/dh",
     latex: String.raw`\begin{aligned}
 f_{ii,jj,n_r}(e_3) &\approx \sum_{p=1}^{n_{IG}} \partial_\xi z_{e_3}^3(p) \phi_{ii}(p) \phi_{jj}(p),
 \end{aligned}`,
@@ -9333,7 +9333,7 @@ f_{ii,jj,n_r}(e_3) &\approx \sum_{p=1}^{n_{IG}} \partial_\xi z_{e_3}^3(p) \phi_{
   {
     id: '21.91',
     section: 'the_inflow_boundary_line_elements',
-    label: "Equation 21.91",
+    label: "dc_{ii,jj,n_z}/dh",
     latex: String.raw`\begin{aligned}
 f_{ii,jj,n_z}(e_3) &\approx -\sum_{p=1}^{n_{IG}} \partial_\xi r_{e_3}^3(p) \phi_{ii}(p) \phi_{jj}(p).
 \end{aligned}`,
@@ -9345,7 +9345,7 @@ f_{ii,jj,n_z}(e_3) &\approx -\sum_{p=1}^{n_{IG}} \partial_\xi r_{e_3}^3(p) \phi_
   {
     id: '21.92',
     section: 'derivatives_of_line_element_integrals',
-    label: "Equation 21.92",
+    label: "dc_{ii,n_r}/dh",
     latex: String.raw`J_{e_i}^i(p) = \sqrt{ \left( \partial_{\xi_i} r_{e_i}^i(p) \right)^2 + \left( \partial_{\xi_i} z_{e_i}^i(p) \right)^2 }`,
     description: "",
     references: [],
@@ -9355,7 +9355,7 @@ f_{ii,jj,n_z}(e_3) &\approx -\sum_{p=1}^{n_{IG}} \partial_\xi r_{e_3}^3(p) \phi_
   {
     id: '21.94',
     section: 'derivatives_of_line_element_integrals',
-    label: "Equation 21.94",
+    label: "dc_{ii,n_z}/dh",
     latex: String.raw`\partial_{h_q} J_{e_i}^i(p) = \frac{ \partial_{\xi_i} r_{e_i}^i(p) \partial_{h_q} \left( \partial_{\xi_i} r_{e_i}^i(p) \right) + \partial_{\xi_i} z_{e_i}^i(p) \partial_{h_q} \left( \partial_{\xi_i} z_{e_i}^i(p) \right) }{ J_{e_i}^i(p) }`,
     description: "We recall where for and for",
     references: [],
@@ -9365,7 +9365,7 @@ f_{ii,jj,n_z}(e_3) &\approx -\sum_{p=1}^{n_{IG}} \partial_\xi r_{e_3}^3(p) \phi_
   {
     id: '21.97',
     section: 'derivatives_of_line_element_integrals',
-    label: "Equation 21.97",
+    label: "d(ds^1)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} \left( \partial_{\xi_i} r_{e_i}^i \right) &= \sum_{mm=1}^3 \left( \partial_{\xi_i} \phi_{mm}^i \right) \left( \partial_{h_q} r_{e_i,mm}^i \right),
 \end{aligned}`,
@@ -9377,7 +9377,7 @@ f_{ii,jj,n_z}(e_3) &\approx -\sum_{p=1}^{n_{IG}} \partial_\xi r_{e_3}^3(p) \phi_
   {
     id: '21.98',
     section: 'derivatives_of_line_element_integrals',
-    label: "Equation 21.98",
+    label: "d(t_r^1)/dh, d(t_z^1)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} \left( \partial_{\xi_i} z_{e_i}^i \right) &= \sum_{mm=1}^3 \left( \partial_{\xi_i} \phi_{mm}^i \right) \left( \partial_{h_q} z_{e_i,mm}^i \right).
 \end{aligned}`,
@@ -9389,7 +9389,7 @@ f_{ii,jj,n_z}(e_3) &\approx -\sum_{p=1}^{n_{IG}} \partial_\xi r_{e_3}^3(p) \phi_
   {
     id: '21.101',
     section: 'derivatives_of_c_terms',
-    label: "Equation 21.101",
+    label: "d(n_r^1)/dh, d(n_z^1)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} c_{t_r,jj,ii}^{s}(e_1) &\approx \sum_{p=1}^{n_{IG}} \frac{ \phi_{jj}^1(p) \partial_\xi \phi_{ii}^1(p) \partial_{h_q} \partial_\xi r_{e_1}^1(p) }{ J_{e_1}^1(p) }
 &\quad - \sum_{p=1}^{n_{IG}} \frac{ \phi_{jj}^1(p) \partial_\xi \phi_{ii}^1(p) \partial_\xi r_{e_1}^1(p) \partial_{h_q} J_{e_1}^1(p) }{ (J_{e_1}^1(p))^2 },
@@ -9402,7 +9402,7 @@ f_{ii,jj,n_z}(e_3) &\approx -\sum_{p=1}^{n_{IG}} \partial_\xi r_{e_3}^3(p) \phi_
   {
     id: '21.104',
     section: 'derivatives_of_c_terms',
-    label: "Equation 21.104",
+    label: "d(dr^1/d\u03be)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} c_{t_z,jj,ii}^{s}(e_1) &\approx \sum_{p=1}^{n_{IG}} \frac{ \phi_{jj}^1(p) \partial_\xi \phi_{ii}^1(p) \partial_{h_q} \partial_\xi z_{e_1}^1(p) }{ J_{e_1}^1(p) }
 &\quad - \sum_{p=1}^{n_{IG}} \frac{ \phi_{jj}^1(p) \partial_\xi \phi_{ii}^1(p) \partial_\xi z_{e_1}^1(p) \partial_{h_q} J_{e_1}^1(p) }{ (J_{e_1}^1(p))^2 },
@@ -9415,7 +9415,7 @@ f_{ii,jj,n_z}(e_3) &\approx -\sum_{p=1}^{n_{IG}} \partial_\xi r_{e_3}^3(p) \phi_
   {
     id: '21.107',
     section: 'derivatives_of_c_terms',
-    label: "Equation 21.107",
+    label: "d(dz^1/d\u03be)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} c_{ii,jj,n_r}(e_1) &\approx -\sum_{p=1}^{n_{IG}} \frac{ \phi_{jj}^1(p) \partial_\xi \phi_{ii}^1(p) \partial_{h_q} \partial_\xi z_{e_1}^1(p) }{ J_{e_1}^1(p) }
 &\quad + \sum_{p=1}^{n_{IG}} \frac{ \phi_{jj}^1(p) \partial_\xi \phi_{ii}^1(p) \partial_\xi z_{e_1}^1(p) \partial_{h_q} J_{e_1}^1(p) }{ (J_{e_1}^1(p))^2 },
@@ -9428,7 +9428,7 @@ f_{ii,jj,n_z}(e_3) &\approx -\sum_{p=1}^{n_{IG}} \partial_\xi r_{e_3}^3(p) \phi_
   {
     id: '21.110',
     section: 'derivatives_of_c_terms',
-    label: "Equation 21.110",
+    label: "d(ds^2)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} c_{ii,jj,n_z}(e_1) &\approx \sum_{p=1}^{n_{IG}} \frac{ \phi_{jj}^1(p) \partial_\xi \phi_{ii}^1(p) \partial_{h_q} \partial_\xi r_{e_1}^1(p) }{ J_{e_1}^1(p) }
 &\quad - \sum_{p=1}^{n_{IG}} \frac{ \phi_{jj}^1(p) \partial_\xi \phi_{ii}^1(p) \partial_\xi r_{e_1}^1(p) \partial_{h_q} J_{e_1}^1(p) }{ (J_{e_1}^1(p))^2 }.
@@ -9441,7 +9441,7 @@ f_{ii,jj,n_z}(e_3) &\approx -\sum_{p=1}^{n_{IG}} \partial_\xi r_{e_3}^3(p) \phi_
   {
     id: '21.113',
     section: 'derivatives_of_d_terms',
-    label: "Equation 21.113",
+    label: "d(t_r^2)/dh, d(t_z^2)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} d_{t_r,t_r,ii,jj}(e_2) &\approx 2 \sum_{p=1}^{n_{IG}} \phi_{ii}^2(p) \phi_{jj}^2(p) \frac{ \partial_\eta r_{e_2}^2(p) \partial_{h_q} \partial_\eta r_{e_2}^2(p) }{ J_{e_2}^2(p) }
 &\quad - \sum_{p=1}^{n_{IG}} \phi_{ii}^2(p) \phi_{jj}^2(p) \frac{ (\partial_\eta r_{e_2}^2(p))^2 \partial_{h_q} J_{e_2}^2(p) }{ (J_{e_2}^2(p))^2 },
@@ -9454,7 +9454,7 @@ f_{ii,jj,n_z}(e_3) &\approx -\sum_{p=1}^{n_{IG}} \partial_\xi r_{e_3}^3(p) \phi_
   {
     id: '21.116',
     section: 'derivatives_of_d_terms',
-    label: "Equation 21.116",
+    label: "d(n_r^2)/dh, d(n_z^2)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} d_{t_r,t_z,ii,jj}(e_2) &\approx \sum_{p=1}^{n_{IG}} \phi_{ii}^2(p) \phi_{jj}^2(p) \frac{ \partial_\eta r_{e_2}^2(p) \partial_{h_q} \partial_\eta z_{e_2}^2(p) + \partial_\eta z_{e_2}^2(p) \partial_{h_q} \partial_\eta r_{e_2}^2(p) }{ J_{e_2}^2(p) }
 &\quad - \sum_{p=1}^{n_{IG}} \phi_{ii}^2(p) \phi_{jj}^2(p) \frac{ (\partial_\eta r_{e_2}^2(p)) (\partial_\eta z_{e_2}^2(p)) \partial_{h_q} J_{e_2}^2(p) }{ (J_{e_2}^2(p))^2 },
@@ -9467,7 +9467,7 @@ f_{ii,jj,n_z}(e_3) &\approx -\sum_{p=1}^{n_{IG}} \partial_\xi r_{e_3}^3(p) \phi_
   {
     id: '21.119',
     section: 'derivatives_of_d_terms',
-    label: "Equation 21.119",
+    label: "d(dr^2/d\u03be)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} d_{t_z,t_z,ii,jj}(e_2) &\approx 2 \sum_{p=1}^{n_{IG}} \phi_{ii}^2(p) \phi_{jj}^2(p) \frac{ \partial_\eta z_{e_2}^2(p) \partial_{h_q} \partial_\eta z_{e_2}^2(p) }{ J_{e_2}^2(p) }
 &\quad - \sum_{p=1}^{n_{IG}} \phi_{ii}^2(p) \phi_{jj}^2(p) \frac{ (\partial_\eta z_{e_2}^2(p))^2 \partial_{h_q} J_{e_2}^2(p) }{ (J_{e_2}^2(p))^2 },
@@ -9480,7 +9480,7 @@ f_{ii,jj,n_z}(e_3) &\approx -\sum_{p=1}^{n_{IG}} \partial_\xi r_{e_3}^3(p) \phi_
   {
     id: '21.122',
     section: 'derivatives_of_d_terms',
-    label: "Equation 21.122",
+    label: "d(dz^2/d\u03be)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} d_{ii,jj,n_r}(e_2) &\approx \sum_{p=1}^{n_{IG}} \phi_{ii}^2(p) \phi_{jj}^2(p) \frac{ \partial_{h_q} \partial_\eta z_{e_2}^2(p) }{ J_{e_2}^2(p) }
 &\quad - \sum_{p=1}^{n_{IG}} \phi_{ii}^2(p) \phi_{jj}^2(p) \frac{ \partial_\eta z_{e_2}^2(p) \partial_{h_q} J_{e_2}^2(p) }{ (J_{e_2}^2(p))^2 },
@@ -9493,7 +9493,7 @@ f_{ii,jj,n_z}(e_3) &\approx -\sum_{p=1}^{n_{IG}} \partial_\xi r_{e_3}^3(p) \phi_
   {
     id: '21.125',
     section: 'derivatives_of_d_terms',
-    label: "Equation 21.125",
+    label: "d(ds^3)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} d_{ii,jj,n_z}(e_2) &\approx - \sum_{p=1}^{n_{IG}} \phi_{ii}^2(p) \phi_{jj}^2(p) \frac{ \partial_{h_q} \partial_\eta r_{e_2}^2(p) }{ J_{e_2}^2(p) }
 &\quad + \sum_{p=1}^{n_{IG}} \phi_{ii}^2(p) \phi_{jj}^2(p) \frac{ \partial_\eta r_{e_2}^2(p) \partial_{h_q} J_{e_2}^2(p) }{ (J_{e_2}^2(p))^2 }.
@@ -9506,7 +9506,7 @@ f_{ii,jj,n_z}(e_3) &\approx -\sum_{p=1}^{n_{IG}} \partial_\xi r_{e_3}^3(p) \phi_
   {
     id: '21.128',
     section: 'derivatives_of_f_terms',
-    label: "Equation 21.128",
+    label: "d(t_r^3)/dh, d(t_z^3)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} f_{t_r,ii,jj}(e_3) &\approx \sum_{p=1}^{n_{IG}} \phi_{ii}^3(p) \phi_{jj}^3(p) \partial_{h_q} \partial_\xi r_{e_3}^3(p),
 \end{aligned}`,
@@ -9518,7 +9518,7 @@ f_{ii,jj,n_z}(e_3) &\approx -\sum_{p=1}^{n_{IG}} \partial_\xi r_{e_3}^3(p) \phi_
   {
     id: '21.131',
     section: 'derivatives_of_f_terms',
-    label: "Equation 21.131",
+    label: "d(n_r^3)/dh, d(n_z^3)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} f_{t_z,ii,jj}(e_3) &\approx \sum_{p=1}^{n_{IG}} \phi_{ii}^3(p) \phi_{jj}^3(p) \partial_{h_q} \partial_\xi z_{e_3}^3(p),
 \end{aligned}`,
@@ -9530,7 +9530,7 @@ f_{ii,jj,n_z}(e_3) &\approx -\sum_{p=1}^{n_{IG}} \partial_\xi r_{e_3}^3(p) \phi_
   {
     id: '21.134',
     section: 'derivatives_of_f_terms',
-    label: "Equation 21.134",
+    label: "d(dr^3/d\u03be)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} f_{ii,jj,n_r}(e_3) &\approx \sum_{p=1}^{n_{IG}} \phi_{ii}^3(p) \phi_{jj}^3(p) \partial_{h_q} \partial_\xi z_{e_3}^3(p),
 \end{aligned}`,
@@ -9542,7 +9542,7 @@ f_{ii,jj,n_z}(e_3) &\approx -\sum_{p=1}^{n_{IG}} \partial_\xi r_{e_3}^3(p) \phi_
   {
     id: '21.137',
     section: 'derivatives_of_f_terms',
-    label: "Equation 21.137",
+    label: "d(dz^3/d\u03be)/dh",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} f_{ii,jj,n_z}(e_3) &\approx -\sum_{p=1}^{n_{IG}} \phi_{ii}^3(p) \phi_{jj}^3(p) \partial_{h_q} \partial_\xi r_{e_3}^3(p).
 \end{aligned}`,
@@ -9554,7 +9554,7 @@ f_{ii,jj,n_z}(e_3) &\approx -\sum_{p=1}^{n_{IG}} \partial_\xi r_{e_3}^3(p) \phi_
   {
     id: '22.1',
     section: 'derivatives_of_r_and_z_with_respect_to_h',
-    label: "Equation 22.1",
+    label: "dr/dh for Boundary 1",
     latex: String.raw`\begin{aligned}
 r_{i,q} &= r_q - R_q \cos\left( \frac{\alpha_i^q h_q}{R_q} \right),
 \end{aligned}`,
@@ -9566,7 +9566,7 @@ r_{i,q} &= r_q - R_q \cos\left( \frac{\alpha_i^q h_q}{R_q} \right),
   {
     id: '22.2',
     section: 'derivatives_of_r_and_z_with_respect_to_h',
-    label: "Equation 22.2",
+    label: "dz/dh for Boundary 1",
     latex: String.raw`\begin{aligned}
 z_{i,q} &= R_q \sin\left( \frac{\alpha_i^q h_q}{R_q} \right),
 \end{aligned}`,
@@ -9578,7 +9578,7 @@ z_{i,q} &= R_q \sin\left( \frac{\alpha_i^q h_q}{R_q} \right),
   {
     id: '22.3',
     section: 'derivatives_of_r_and_z_with_respect_to_h',
-    label: "Equation 22.3",
+    label: "dr/dh for Boundary 2",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} r_{i,q} &= \alpha_i^q \sin\left( \frac{\alpha_i^q h_q}{R_q} \right),
 \end{aligned}`,
@@ -9590,7 +9590,7 @@ z_{i,q} &= R_q \sin\left( \frac{\alpha_i^q h_q}{R_q} \right),
   {
     id: '22.4',
     section: 'derivatives_of_r_and_z_with_respect_to_h',
-    label: "Equation 22.4",
+    label: "dz/dh for Boundary 2",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} z_{i,q} &= \alpha_i^q \cos\left( \frac{\alpha_i^q h_q}{R_q} \right).
 \end{aligned}`,
@@ -9602,7 +9602,7 @@ z_{i,q} &= R_q \sin\left( \frac{\alpha_i^q h_q}{R_q} \right),
   {
     id: '22.5',
     section: 'derivatives_of_r_and_z_with_respect_to_h',
-    label: "Equation 22.5",
+    label: "dr/dh for Boundary 3",
     latex: String.raw`\begin{aligned}
 r_{i,q} &= -f,
 \end{aligned}`,
@@ -9614,7 +9614,7 @@ r_{i,q} &= -f,
   {
     id: '22.6',
     section: 'derivatives_of_r_and_z_with_respect_to_h',
-    label: "Equation 22.6",
+    label: "dz/dh for Boundary 3",
     latex: String.raw`\begin{aligned}
 z_{i,q} &= \alpha_i^q h_q,
 \end{aligned}`,
@@ -9626,7 +9626,7 @@ z_{i,q} &= \alpha_i^q h_q,
   {
     id: '22.7',
     section: 'derivatives_of_r_and_z_with_respect_to_h',
-    label: "Equation 22.7",
+    label: "dr/dh for Bulk Nodes",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} r_{i,q} &= 0,
 \end{aligned}`,
@@ -9638,7 +9638,7 @@ z_{i,q} &= \alpha_i^q h_q,
   {
     id: '22.8',
     section: 'derivatives_of_r_and_z_with_respect_to_h',
-    label: "Equation 22.8",
+    label: "dz/dh for Bulk Nodes",
     latex: String.raw`\begin{aligned}
 \partial_{h_q} z_{i,q} &= \alpha_i^q.
 \end{aligned}`,
@@ -9650,7 +9650,7 @@ z_{i,q} &= \alpha_i^q h_q,
   {
     id: '22.9',
     section: 'derivatives_of_r_and_z_with_respect_to_h',
-    label: "Equation 22.9",
+    label: "dr/dh, dz/dh Summary",
     latex: String.raw`\partial_f r \approx \frac{r^+ - r^-}{f^+ - f^-}`,
     description: "Spine number 1), we perturb the length of forward (see figure 11) and backward and we assess the differential quotient given by",
     references: [],

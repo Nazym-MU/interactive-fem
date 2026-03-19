@@ -103,6 +103,25 @@
     </div>
   </div>
 
+  <!-- Chapter comparison panel (side-by-side view) -->
+  <div id="chapter-compare-overlay" class="hidden"></div>
+  <div id="chapter-compare-panel" class="hidden">
+    <div class="chapter-compare-header">
+      <span class="compare-title">Comparing Chapters</span>
+      <button id="btn-chapter-compare-close">&times;</button>
+    </div>
+    <div class="chapter-compare-body">
+      <div class="chapter-compare-col" id="chapter-compare-left">
+        <div class="chapter-compare-col-title" id="chapter-compare-left-title"></div>
+        <div class="chapter-compare-eqs"></div>
+      </div>
+      <div class="chapter-compare-col" id="chapter-compare-right">
+        <div class="chapter-compare-col-title" id="chapter-compare-right-title"></div>
+        <div class="chapter-compare-eqs"></div>
+      </div>
+    </div>
+  </div>
+
   <script type="module" src="equations.js"></script>
   <script type="module" src="app.js"></script>
 </body>

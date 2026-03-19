@@ -411,10 +411,11 @@ body {
 }
 #timeline-dots {
   position: absolute;
-  top: 0;
+  top: 50%;
   left: 0;
   right: 0;
-  height: 100%;
+  height: 20px;
+  transform: translateY(-50%);
   display: flex;
   align-items: center;
 }
@@ -427,7 +428,8 @@ body {
   border: 2px solid var(--bg);
   cursor: pointer;
   transition: var(--transition);
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
+  top: 50%;
 }
 .timeline-dot.active {
   background: var(--accent);
@@ -439,7 +441,7 @@ body {
   opacity: 0.5;
 }
 .timeline-dot:hover {
-  transform: translateX(-50%) scale(1.4);
+  transform: translate(-50%, -50%) scale(1.4);
 }
 .timeline-dot.section-start {
   width: 10px;
@@ -568,9 +570,14 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  pointer-events: none;
+}
+#compare-panel.hidden {
+  display: none;
 }
 #compare-panel.visible {
   transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
 }
 
 .compare-header {
@@ -723,6 +730,191 @@ body {
 @media (max-width: 700px) {
   #compare-panel {
     max-height: 92vh;
+  }
+}
+
+/* ---- Placeholder for lazy rendering ---- */
+.eq-placeholder {
+  min-height: 100px;
+}
+
+/* ---- Section compare button ---- */
+.section-compare-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  padding: 4px 12px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 0.68rem;
+  font-family: var(--font-sans);
+  color: var(--fg-muted);
+  cursor: pointer;
+  transition: var(--transition);
+  letter-spacing: 0.03em;
+}
+.section-compare-btn:hover {
+  background: var(--accent-glow);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ---- Chapter comparison panel ---- */
+#chapter-compare-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 399;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+}
+#chapter-compare-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#chapter-compare-panel {
+  position: fixed;
+  inset: 20px;
+  z-index: 400;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+#chapter-compare-panel.hidden {
+  display: none;
+}
+#chapter-compare-panel.visible {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.chapter-compare-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+#btn-chapter-compare-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--fg-muted);
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  transition: var(--transition);
+  border-radius: 6px;
+}
+#btn-chapter-compare-close:hover {
+  color: var(--fg);
+  background: var(--accent-glow);
+}
+
+.chapter-compare-body {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  gap: 1px;
+  background: var(--border);
+  overflow: hidden;
+}
+.chapter-compare-col {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--bg);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.chapter-compare-col-title {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--surface);
+  padding: 12px 16px;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--fg);
+  border-bottom: 1px solid var(--border);
+}
+.chapter-compare-eqs {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chapter-eq-card {
+  padding: 16px 14px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  position: relative;
+}
+.chapter-eq-number {
+  font-size: 0.7rem;
+  color: var(--fg-muted);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.chapter-eq-label {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: var(--fg);
+  margin-bottom: 8px;
+}
+.chapter-eq-math {
+  font-size: 0.95rem;
+  overflow-x: auto;
+  padding: 6px 0;
+  text-align: center;
+}
+.chapter-eq-math .katex-display {
+  margin: 0;
+}
+.chapter-eq-desc {
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+  line-height: 1.5;
+  font-family: var(--font-serif);
+  margin-top: 6px;
+}
+.chapter-eq-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80px;
+  opacity: 0.3;
+}
+
+/* Responsive: stack chapters vertically on mobile */
+@media (max-width: 768px) {
+  #chapter-compare-panel {
+    inset: 8px;
+  }
+  .chapter-compare-body {
+    flex-direction: column;
+  }
+  .chapter-compare-col {
+    max-height: 50%;
   }
 }
 
