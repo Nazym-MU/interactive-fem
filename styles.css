@@ -928,3 +928,306 @@ body {
   color: var(--accent);
 }
 
+
+/* ============================================================
+   Search
+   ============================================================ */
+#search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+#search .search-icon {
+  position: absolute;
+  left: 10px;
+  color: var(--fg-muted);
+  pointer-events: none;
+}
+#search-input {
+  width: 260px;
+  padding: 7px 30px 7px 30px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--fg);
+  font: inherit;
+  font-size: 0.82rem;
+  transition: border-color var(--transition), box-shadow var(--transition), width var(--transition);
+}
+#search-input::placeholder { color: var(--fg-muted); }
+#search-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+  width: 340px;
+}
+#search-input::-webkit-search-cancel-button { display: none; }
+.search-kbd {
+  position: absolute;
+  right: 8px;
+  padding: 0 6px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  color: var(--fg-muted);
+  pointer-events: none;
+}
+#search-input:focus ~ .search-kbd { display: none; }
+#search-results {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  width: min(440px, 92vw);
+  max-height: 60vh;
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  padding: 6px;
+  z-index: 400;
+}
+.search-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.search-item.active { background: var(--accent-glow); }
+.search-badge {
+  flex-shrink: 0;
+  min-width: 52px;
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-muted);
+  padding-top: 1px;
+}
+.search-badge.section, .search-badge.jac {
+  color: var(--accent);
+  font-weight: 600;
+}
+.search-text { display: flex; flex-direction: column; min-width: 0; }
+.search-title {
+  font-size: 0.85rem;
+  color: var(--fg);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.search-sub {
+  font-size: 0.72rem;
+  color: var(--fg-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.search-empty {
+  padding: 10px;
+  font-size: 0.8rem;
+  color: var(--fg-muted);
+}
+
+@media (max-width: 700px) {
+  .subtitle { display: none; }
+  #search-input, #search-input:focus { width: 46vw; }
+  .search-kbd { display: none; }
+}
+
+/* ============================================================
+   Jacobian links on equation cards
+   ============================================================ */
+.eq-jac-row {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 6px;
+}
+.eq-jac-row-label {
+  color: var(--fg-faint);
+  font-size: 0.75rem;
+  font-family: var(--font-sans);
+}
+.eq-jac-chip {
+  padding: 0 8px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+}
+.eq-jac-chip.zero { opacity: 0.45; }
+.eq-jac-chip.missing { border-style: dashed; }
+
+/* ============================================================
+   Jacobian entry panel
+   ============================================================ */
+#jac-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 290;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+#jac-overlay.hidden { display: none; }
+#jac-overlay.visible { opacity: 1; pointer-events: auto; }
+
+#jac-panel {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+  width: min(98vw, 1600px);
+  max-height: 94vh;
+  z-index: 300;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: var(--radius) var(--radius) 0 0;
+  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.15);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  pointer-events: none;
+}
+#jac-panel.hidden { display: none; }
+#jac-panel.visible { transform: translateX(-50%) translateY(0); pointer-events: auto; }
+
+#jac-panel .compare-header { gap: 16px; justify-content: flex-start; }
+.jac-title { font-size: 1.05rem; color: var(--fg); }
+.panel-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--fg-muted);
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  border-radius: 6px;
+  transition: var(--transition);
+}
+.panel-close:hover { color: var(--fg); background: var(--accent-glow); }
+
+.jac-body > * { flex-shrink: 0; } /* the body scrolls; its sections never squash */
+.jac-body {
+  padding: 18px 24px 24px;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* Block map */
+.jac-map {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  align-self: center;
+  align-items: center;
+  font-size: 0.72rem;
+}
+.jac-map-head {
+  text-align: center;
+  color: var(--fg-muted);
+  padding: 0 6px;
+}
+.jac-map-head.row { text-align: right; }
+.jac-map-head.active { color: var(--accent); font-weight: 600; }
+.jac-map-cell {
+  min-width: 58px;
+  padding: 4px 6px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--fg);
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.jac-map-cell:hover { border-color: var(--accent); color: var(--accent); }
+.jac-map-cell.zero { color: var(--fg-muted); opacity: 0.6; }
+.jac-map-cell.missing { border-style: dashed; color: var(--fg-muted); }
+.jac-map-cell.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  opacity: 1;
+}
+
+/* Residual  →  entry */
+.jac-pair {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+}
+.jac-card { flex: 1 1 0; }
+.jac-card .compare-eq-math { text-align: left; }
+.jac-arrow {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--accent);
+  padding: 0 4px;
+}
+.jac-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.jac-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 10px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: none;
+  color: var(--fg-muted);
+  font: inherit;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.jac-chip.has { color: var(--fg); }
+.jac-chip:hover { border-color: var(--accent); }
+.jac-chip.active { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+.jac-chip-count {
+  min-width: 16px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background: var(--highlight-bg);
+  color: var(--fg);
+  font-size: 0.68rem;
+  text-align: center;
+}
+.jac-note {
+  font-size: 0.8rem;
+  color: var(--fg-muted);
+  line-height: 1.55;
+  font-family: var(--font-serif);
+}
+.jac-note:empty { display: none; }
+.jac-actions { gap: 10px; flex-wrap: wrap; }
+
+/* The variable being differentiated, inside the residual */
+.var-hl {
+  background: var(--highlight-bg);
+  box-shadow: 0 0 0 2px var(--highlight-bg);
+  border-radius: 3px;
+  color: var(--fg);
+}
+.var-hl .mord { color: inherit; }
+
+@media (max-width: 900px) {
+  .jac-pair { flex-direction: column; }
+  .jac-arrow { flex-direction: row; padding: 4px 0; align-self: center; }
+  .jac-arrow svg { transform: rotate(90deg); }
+  .jac-map { align-self: stretch; overflow-x: auto; }
+  .jac-map-cell { min-width: 44px; }
+}

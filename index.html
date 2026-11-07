@@ -10,8 +10,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/ScrollToPlugin.min.js"></script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -27,6 +25,13 @@
       <span class="subtitle">Dynamic Wetting · ALE · Navier-Stokes</span>
     </div>
     <div class="header-right">
+      <div id="search" role="search">
+        <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+        <input id="search-input" type="search" placeholder="Search equations…" autocomplete="off" spellcheck="false"
+               aria-label="Search equations, sections and Jacobian blocks" aria-controls="search-results" />
+        <kbd class="search-kbd">/</kbd>
+        <div id="search-results" role="listbox" hidden></div>
+      </div>
       <span id="eq-counter">1 / —</span>
       <button id="btn-toc" title="Table of Contents">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -101,6 +106,41 @@
     <div class="compare-footer">
       <button id="btn-compare-goto" class="compare-goto-btn">Jump to this equation</button>
     </div>
+  </div>
+
+  <!-- Jacobian entry panel: residual next to its derivative -->
+  <div id="jac-overlay" class="hidden"></div>
+  <div id="jac-panel" class="hidden" role="dialog" aria-label="Jacobian entry">
+    <div class="compare-header">
+      <span class="compare-title">Jacobian entry</span>
+      <span id="jac-title" class="jac-title"></span>
+      <button id="btn-jac-close" class="panel-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="jac-body">
+      <div class="jac-map" id="jac-map" aria-label="All blocks of the system Jacobian"></div>
+      <div class="jac-pair">
+        <div class="compare-card jac-card" id="jac-left">
+          <div class="compare-badge ref">Residual</div>
+          <div class="jac-chips" id="jac-chips"></div>
+          <div class="compare-eq-number"></div>
+          <div class="compare-eq-label"></div>
+          <div class="compare-eq-math"></div>
+          <div class="jac-note" id="jac-left-note"></div>
+        </div>
+        <div class="jac-arrow">
+          <span id="jac-arrow-label"></span>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+        <div class="compare-card jac-card" id="jac-right">
+          <div class="compare-badge">Jacobian entry</div>
+          <div class="compare-eq-number"></div>
+          <div class="compare-eq-label"></div>
+          <div class="compare-eq-math"></div>
+          <div class="jac-note" id="jac-right-note"></div>
+        </div>
+      </div>
+    </div>
+    <div class="compare-footer jac-actions" id="jac-actions"></div>
   </div>
 
   <!-- Chapter comparison panel (side-by-side view) -->

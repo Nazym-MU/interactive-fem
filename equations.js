@@ -7588,7 +7588,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the first row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.3',
@@ -7601,7 +7601,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the first row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.4',
@@ -7613,7 +7613,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the first row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.5',
@@ -7625,7 +7625,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the first row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.8',
@@ -7645,7 +7645,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.9',
@@ -7657,7 +7657,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the second row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.10',
@@ -7670,7 +7670,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the second row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.11',
@@ -7682,7 +7682,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the second row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.12',
@@ -7694,7 +7694,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the second row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.13',
@@ -7706,7 +7706,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the second row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.14',
@@ -7718,7 +7718,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the second row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.15',
@@ -7739,7 +7739,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.16',
@@ -7751,7 +7751,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the third row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.17',
@@ -7763,7 +7763,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the third row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.18',
@@ -7775,7 +7775,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the third row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.19',
@@ -7787,7 +7787,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the third row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.20',
@@ -7799,7 +7799,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the third row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.22',
@@ -7811,7 +7811,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the third row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.23',
@@ -7823,7 +7823,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the fourth row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.24',
@@ -7835,7 +7835,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the fourth row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.25',
@@ -7847,7 +7847,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the fourth row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.26',
@@ -7859,7 +7859,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the fourth row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.27',
@@ -7871,7 +7871,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the fourth row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.30',
@@ -7883,7 +7883,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the fourth row are given by Blocks in the fifth row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.31',
@@ -7895,7 +7895,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the fourth row are given by Blocks in the fifth row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.32',
@@ -7907,7 +7907,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the fourth row are given by Blocks in the fifth row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.33',
@@ -7919,7 +7919,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the fourth row are given by Blocks in the fifth row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.34',
@@ -7931,7 +7931,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the fourth row are given by Blocks in the fifth row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.35',
@@ -7943,7 +7943,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the fourth row are given by Blocks in the fifth row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.36',
@@ -7955,7 +7955,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "Blocks in the fourth row are given by Blocks in the fifth row are given by",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.37',
@@ -7982,7 +7982,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "We highlight that when boundary 2 is a straight line parallel to the axis, we also have",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '18.39-40',
@@ -7992,7 +7992,7 @@ w^{s1} &\approx \sum_{j=1}^{n_v} w_j^{s1} \phi_j.
     description: "We highlight that when boundary 2 is a straight line parallel to the axis, we also have and when boundary 3 is a straight line parallel to the axis, we also have",
     references: [],
     transform: null,
-    hidden: true,
+    hidden: false,
   },
   {
     id: '19.1',

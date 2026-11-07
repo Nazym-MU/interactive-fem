@@ -3,6 +3,10 @@
 // ============================================================
 
 import { equations as allEquations, sections } from './equations.js';
+import {
+  JAC_ROWS, JAC_COLS, ENTRY_INDEX, RESIDUAL_INDEX,
+  cellTex, isZeroBlock, highlightSymbol,
+} from './jacobian.js';
 
 // Filter out equations that shouldn't appear in the main flow (like jacobian entries)
 const equations = allEquations.filter(e => !e.hidden);
@@ -124,19 +128,8 @@ function renderEquation(eq, idx) {
   const mathDiv = document.createElement('div');
   mathDiv.className = 'eq-math';
 
-  let renderLatex = eq.latex;
-  if (eq.id === '18.1' || eq.id === '18.37') {
-    const jacobianMap = {
-      '\\partial_u \\hat{M}^r': '18.2', '\\partial_w \\hat{M}^r': '18.3', '\\partial_p \\hat{M}^r': '18.4', '\\partial_{\\omega^2} \\hat{M}^r': '18.5', '\\partial_h \\hat{M}^r': '18.8',
-      '\\partial_u \\hat{M}^z': '18.9', '\\partial_w \\hat{M}^z': '18.10', '\\partial_p \\hat{M}^z': '18.11', '\\partial_{\\omega^2} \\hat{M}^z': '18.12', '\\partial_{\\omega^3} \\hat{M}^z': '18.13', '\\partial_{\\epsilon^3} \\hat{M}^z': '18.14', '\\partial_h \\hat{M}^z': '18.15',
-      '\\partial_u \\hat{C}': '18.16', '\\partial_w \\hat{C}': '18.17', '\\partial_p \\hat{C}': '18.18', '\\partial_h \\hat{C}': '18.22',
-      '\\partial_u \\hat{K}': '18.23', '\\partial_w \\hat{K}': '18.24', '\\partial_p \\hat{K}': '18.25', '\\partial_h \\hat{K}': '18.29',
-      '\\partial_u \\hat{I}': '18.30', '\\partial_w \\hat{I}': '18.31', '\\partial_p \\hat{I}': '18.32', '\\partial_h \\hat{I}': '18.36'
-    };
-    for (const [key, id] of Object.entries(jacobianMap)) {
-      renderLatex = renderLatex.replace(key, `\\htmlId{jacob-${id}}{\\htmlClass{jacob-link}{${key}}}`);
-    }
-  }
+  const isMatrix = eq.id === '18.1' || eq.id === '18.37';
+  const renderLatex = isMatrix ? linkJacobianCells(eq.latex) : eq.latex;
 
   try {
     katex.render(renderLatex, mathDiv, {
@@ -149,25 +142,7 @@ function renderEquation(eq, idx) {
   } catch (e) {
     mathDiv.textContent = renderLatex;
   }
-
-  // Attach event listeners for jacobian matrix items if any
-  if (eq.id === '18.1' || eq.id === '18.37') {
-    setTimeout(() => {
-      const links = mathDiv.querySelectorAll('[id^="jacob-"]');
-      links.forEach(link => {
-        const targetId = link.id.replace('jacob-', '');
-        if (targetId) {
-          link.classList.add('jacob-link-item');
-          link.style.cursor = 'pointer';
-          link.title = `View equation ${targetId}`;
-          link.addEventListener('click', (e) => {
-            e.stopPropagation();
-            openComparison(eq, targetId);
-          });
-        }
-      });
-    }, 0);
-  }
+  if (isMatrix) wireJacobianCells(mathDiv);
 
   card.appendChild(mathDiv);
 
@@ -202,11 +177,19 @@ function renderEquation(eq, idx) {
     card.appendChild(refDiv);
   }
 
+  // Jacobian entry -> the residual it differentiates and its derivation chapter
+  const entryPos = ENTRY_INDEX.get(eq.id);
+  if (entryPos) card.appendChild(renderEntryLinks(entryPos.r, entryPos.c));
+  // Summary residual -> every block of its Jacobian row
+  if (RESIDUAL_INDEX.has(eq.id) && JAC_ROWS[RESIDUAL_INDEX.get(eq.id)].residual === eq.id) {
+    card.appendChild(renderResidualRowLinks(RESIDUAL_INDEX.get(eq.id)));
+  }
+
   // Make the entire card clickable to jump to it
   card.style.cursor = 'pointer';
   card.title = 'Click to focus this equation';
   card.addEventListener('click', (e) => {
-    if (!e.target.closest('.eq-ref-link') && !e.target.closest('.jacob-link-item')) {
+    if (!e.target.closest('.eq-ref-link') && !e.target.closest('.jacob-link-item') && !e.target.closest('.eq-jac-link')) {
       goTo(idx);
     }
   });
@@ -777,6 +760,26 @@ function closeChapterComparison() {
 
 // ---- Keyboard navigation ----
 document.addEventListener('keydown', (e) => {
+  const typing = e.target.closest && e.target.closest('input, textarea');
+  if (!typing && (e.key === '/' || ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k'))) {
+    e.preventDefault();
+    searchInput.focus();
+    searchInput.select();
+    return;
+  }
+  if (typing) return; // the search box handles its own keys
+  if (jac.open) {
+    const moves = { ArrowLeft: [0, -1], ArrowRight: [0, 1], ArrowUp: [-1, 0], ArrowDown: [1, 0] };
+    if (moves[e.key]) {
+      e.preventDefault();
+      const r = Math.min(JAC_ROWS.length - 1, Math.max(0, jac.r + moves[e.key][0]));
+      const c = Math.min(JAC_COLS.length - 1, Math.max(0, jac.c + moves[e.key][1]));
+      openJacobian(r, c);
+    } else if (e.key === 'Escape') {
+      closeJacobian();
+    }
+    return;
+  }
   if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
     e.preventDefault();
     next();
@@ -824,7 +827,10 @@ if (chapterCompareOverlay) {
 
 // ---- Scroll wheel navigation (optional) ----
 let scrollTimeout = null;
+// Scrolling inside a panel, the TOC or the search results scrolls that, not the flow.
+const SCROLLABLE_UI = '#jac-panel, #compare-panel, #chapter-compare-panel, #toc-panel, #search';
 document.addEventListener('wheel', (e) => {
+  if (e.target.closest && e.target.closest(SCROLLABLE_UI)) return;
   if (scrollTimeout) return;
   scrollTimeout = setTimeout(() => { scrollTimeout = null; }, 400);
 
@@ -838,10 +844,469 @@ document.addEventListener('touchstart', (e) => {
   touchStartY = e.touches[0].clientY;
 }, { passive: true });
 document.addEventListener('touchend', (e) => {
+  if (e.target.closest && e.target.closest(SCROLLABLE_UI)) return;
   const delta = touchStartY - e.changedTouches[0].clientY;
   if (delta > 50) next();
   else if (delta < -50) prev();
 }, { passive: true });
 
+// ============================================================
+// System Jacobian: cells, cross-links and the entry panel
+// ============================================================
+
+const eqById = (id) => allEquations.find(e => e.id === id);
+const idxOf = (id) => equations.findIndex(e => e.id === id);
+
+function renderKatex(latex, el, displayMode = true) {
+  try {
+    katex.render(latex, el, { displayMode, throwOnError: false, trust: true, strict: false, macros: latexMacros });
+  } catch (e) {
+    el.textContent = latex;
+  }
+}
+
+// Wrap every ∂_x R̂ cell of the matrix so it can be clicked.
+function linkJacobianCells(latex) {
+  JAC_ROWS.forEach((row, r) => JAC_COLS.forEach((col, c) => {
+    const key = cellTex(r, c);
+    latex = latex.replace(key, `\\htmlData{jr=${r},jc=${c}}{${key}}`);
+  }));
+  return latex;
+}
+
+function wireJacobianCells(root) {
+  root.querySelectorAll('[data-jr]').forEach(el => {
+    const r = Number(el.dataset.jr);
+    const c = Number(el.dataset.jc);
+    el.classList.add('jacob-link-item');
+    el.title = `∂/∂${JAC_COLS[c].name} of the ${JAC_ROWS[r].name} residual — open side by side`;
+    el.addEventListener('click', (e) => { e.stopPropagation(); openJacobian(r, c); });
+  });
+}
+
+function makeLink(text, title, onClick, extraClass = '') {
+  const link = document.createElement('span');
+  link.className = `eq-ref-link eq-jac-link ${extraClass}`.trim();
+  link.textContent = text;
+  link.title = title;
+  link.addEventListener('click', (e) => { e.stopPropagation(); onClick(); });
+  return link;
+}
+
+function linkRow(labelText) {
+  const div = document.createElement('div');
+  div.className = 'eq-desc eq-jac-row';
+  const label = document.createElement('span');
+  label.className = 'eq-jac-row-label';
+  label.textContent = labelText;
+  div.appendChild(label);
+  return div;
+}
+
+// On an entry card, e.g. (18.3): which residual it differentiates, by what, and where it's derived.
+function renderEntryLinks(r, c) {
+  const row = JAC_ROWS[r];
+  const col = JAC_COLS[c];
+  const div = linkRow(`∂/∂${col.name} of `);
+  div.appendChild(makeLink(`(${row.residual})`, `${row.name} residual`, () => openJacobian(r, c)));
+  const deriv = row.derivations[col.key];
+  if (deriv) {
+    div.appendChild(document.createTextNode('  ·  derived in '));
+    div.appendChild(makeLink(`(${deriv[0]})–(${deriv[1]})`, 'Go to the derivation chapter', () => goTo(idxOf(deriv[0]))));
+  }
+  div.appendChild(document.createTextNode('  ·  '));
+  div.appendChild(makeLink('side by side', 'Show this entry next to its residual', () => openJacobian(r, c), 'eq-jac-open'));
+  return div;
+}
+
+// On a summary residual card, e.g. (17.1): one chip per block of its Jacobian row.
+function renderResidualRowLinks(r) {
+  const row = JAC_ROWS[r];
+  const div = linkRow('Jacobian row: ');
+  JAC_COLS.forEach((col, c) => {
+    const tag = row.entries[col.key];
+    const zero = isZeroBlock(r, c);
+    const chip = makeLink(`∂${col.name}`, tag ? `(${tag})${zero ? ' — zero block' : ''}` : 'not written out in section 18',
+      () => openJacobian(r, c), `eq-jac-chip${zero ? ' zero' : ''}${tag ? '' : ' missing'}`);
+    div.appendChild(chip);
+  });
+  return div;
+}
+
+// ---- Panel ----
+const jac = { open: false, r: 0, c: 0, leftId: null, candidates: [], counts: [] };
+const jacPanel    = document.getElementById('jac-panel');
+const jacOverlay  = document.getElementById('jac-overlay');
+const jacTitle    = document.getElementById('jac-title');
+const jacMap      = document.getElementById('jac-map');
+const jacLeft     = document.getElementById('jac-left');
+const jacRight    = document.getElementById('jac-right');
+const jacChips    = document.getElementById('jac-chips');
+const jacLeftNote = document.getElementById('jac-left-note');
+const jacRightNote = document.getElementById('jac-right-note');
+const jacArrow    = document.getElementById('jac-arrow-label');
+const jacActions  = document.getElementById('jac-actions');
+
+function openJacobian(r, c) {
+  const row = JAC_ROWS[r];
+  const col = JAC_COLS[c];
+  jac.r = r;
+  jac.c = c;
+  jac.candidates = [row.residual, ...row.parts].filter(id => eqById(id));
+  jac.counts = jac.candidates.map(id => highlightSymbol(eqById(id).latex, col.hl).count);
+
+  // Start on the summary residual if the variable shows up there, otherwise on the
+  // component equation where it shows up most.
+  let start = 0;
+  if (jac.counts[0] === 0) {
+    let most = 0;
+    jac.counts.forEach((n, i) => { if (n > most) { most = n; start = i; } });
+  }
+
+  renderKatex(`${cellTex(r, c)}`, jacTitle, false);
+  renderKatex(`\\dfrac{\\partial}{\\partial ${col.tex}}`, jacArrow, false);
+  renderJacMap();
+  renderJacRight();
+  showJacLeft(jac.candidates[start]);
+
+  if (!jac.open) {
+    jac.open = true;
+    jacPanel.classList.remove('hidden');
+    jacOverlay.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      jacPanel.classList.add('visible');
+      jacOverlay.classList.add('visible');
+      scrollMapToActive(); // the map had no size while the panel was hidden
+    });
+  }
+}
+
+function closeJacobian() {
+  if (!jac.open) return;
+  jac.open = false;
+  jacPanel.classList.remove('visible');
+  jacOverlay.classList.remove('visible');
+  setTimeout(() => {
+    if (jac.open) return;
+    jacPanel.classList.add('hidden');
+    jacOverlay.classList.add('hidden');
+  }, 400);
+}
+
+function fillJacCard(card, eq, latex) {
+  card.querySelector('.compare-eq-number').textContent = eq ? `(${eq.id})` : '';
+  card.querySelector('.compare-eq-label').textContent = eq ? (eq.label || '') : '';
+  const math = card.querySelector('.compare-eq-math');
+  math.innerHTML = '';
+  renderKatex(latex, math);
+}
+
+function showJacLeft(id) {
+  const row = JAC_ROWS[jac.r];
+  const col = JAC_COLS[jac.c];
+  const eq = eqById(id);
+  jac.leftId = id;
+
+  // Chips: the summary residual and its component equations, with how often the variable appears.
+  jacChips.innerHTML = '';
+  if (jac.candidates.length > 1) {
+    jac.candidates.forEach((cid, i) => {
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'jac-chip' + (cid === id ? ' active' : '') + (jac.counts[i] ? ' has' : '');
+      chip.innerHTML = `(${cid})${jac.counts[i] ? `<span class="jac-chip-count">${jac.counts[i]}</span>` : ''}`;
+      chip.title = jac.counts[i]
+        ? `${col.viaCoefficients ? 'geometric coefficients' : col.name} appear${jac.counts[i] === 1 ? 's' : ''} ${jac.counts[i]}× here`
+        : `no explicit ${col.name} here`;
+      chip.addEventListener('click', () => showJacLeft(cid));
+      jacChips.appendChild(chip);
+    });
+  }
+
+  const { latex, count } = highlightSymbol(eq.latex, col.hl);
+  fillJacCard(jacLeft, eq, latex);
+
+  const elsewhere = jac.candidates.filter((cid, i) => cid !== id && jac.counts[i] > 0).map(cid => `(${cid})`);
+  const deriv = row.derivations[col.key];
+  let note;
+  if (col.viaCoefficients) {
+    note = count
+      ? `h never appears explicitly: it moves the mesh nodes, so ∂/∂h acts on the geometric coefficients a, b, c, d, f highlighted here (${count}).`
+      : `h never appears explicitly: it moves the mesh nodes, so ∂/∂h acts on the geometric coefficients inside ${elsewhere.join(', ') || 'the element terms'}.`;
+  } else if (count) {
+    note = count === 1
+      ? `${col.name} appears in 1 highlighted term; differentiating it gives the entry on the right.`
+      : `${col.name} appears in ${count} highlighted terms; differentiating them gives the entry on the right.`;
+  } else if (elsewhere.length) {
+    note = `${col.name} doesn't appear in (${id}) directly; it sits inside ${elsewhere.join(', ')}.`;
+  } else {
+    note = `${col.name} doesn't appear explicitly in the summary residual${deriv ? `; the derivation (${deriv[0]})–(${deriv[1]}) shows where it enters` : ''}.`;
+  }
+  jacLeftNote.textContent = note;
+  renderJacActions();
+}
+
+function renderJacRight() {
+  const row = JAC_ROWS[jac.r];
+  const col = JAC_COLS[jac.c];
+  const tag = row.entries[col.key];
+  const zero = isZeroBlock(jac.r, jac.c);
+  const deriv = row.derivations[col.key];
+  const notes = [];
+
+  if (tag) {
+    fillJacCard(jacRight, eqById(tag), eqById(tag).latex);
+  } else {
+    fillJacCard(jacRight, null, `${cellTex(jac.r, jac.c)} ${zero ? '= 0' : '= \\;?'}`);
+    jacRight.querySelector('.compare-eq-label').textContent = 'Not written out in section 18';
+    if (zero) notes.push('Zero block in (18.37); the notes don’t give it its own equation.');
+    else if (deriv) notes.push(`Section 18 doesn’t write this block out, but its derivation is in (${deriv[0]})–(${deriv[1]}).`);
+    else notes.push('This block isn’t in the notes.');
+  }
+  if (col.alias) notes.push(`Column ${col.name} of (18.1) is ${col.alias}.`);
+  if (row.notes[col.key]) notes.push(row.notes[col.key]);
+  jacRightNote.textContent = notes.join(' ');
+}
+
+function renderJacMap() {
+  jacMap.innerHTML = '';
+  jacMap.style.gridTemplateColumns = `auto repeat(${JAC_COLS.length}, 1fr)`;
+  jacMap.appendChild(document.createElement('span'));
+  JAC_COLS.forEach((col, c) => {
+    const head = document.createElement('span');
+    head.className = 'jac-map-head' + (c === jac.c ? ' active' : '');
+    renderKatex(col.tex, head, false);
+    jacMap.appendChild(head);
+  });
+  JAC_ROWS.forEach((row, r) => {
+    const head = document.createElement('span');
+    head.className = 'jac-map-head row' + (r === jac.r ? ' active' : '');
+    renderKatex(row.tex, head, false);
+    jacMap.appendChild(head);
+    JAC_COLS.forEach((col, c) => {
+      const tag = row.entries[col.key];
+      const zero = isZeroBlock(r, c);
+      const cell = document.createElement('button');
+      cell.type = 'button';
+      cell.className = 'jac-map-cell'
+        + (r === jac.r && c === jac.c ? ' active' : '')
+        + (zero ? ' zero' : '')
+        + (!tag && !zero ? ' missing' : '');
+      cell.textContent = zero ? '0' : (tag || '—');
+      cell.title = `∂${row.plain}/∂${col.name}` + (tag ? ` (${tag})` : zero ? ' — zero block' : ' — not written out in section 18');
+      cell.addEventListener('click', () => openJacobian(r, c));
+      jacMap.appendChild(cell);
+    });
+  });
+  scrollMapToActive();
+}
+
+// On narrow screens the map scrolls sideways; keep the selected block in view.
+function scrollMapToActive() {
+  const active = jacMap.querySelector('.jac-map-cell.active');
+  if (active && jacMap.scrollWidth > jacMap.clientWidth) {
+    jacMap.scrollLeft = Math.max(0, active.offsetLeft - (jacMap.clientWidth - active.offsetWidth) / 2);
+  }
+}
+
+function renderJacActions() {
+  const row = JAC_ROWS[jac.r];
+  const col = JAC_COLS[jac.c];
+  const tag = row.entries[col.key];
+  const deriv = row.derivations[col.key];
+  jacActions.innerHTML = '';
+  const add = (text, id) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'compare-goto-btn';
+    btn.textContent = text;
+    btn.addEventListener('click', () => {
+      closeJacobian();
+      const idx = idxOf(id);
+      if (idx >= 0) goTo(idx);
+    });
+    jacActions.appendChild(btn);
+  };
+  add(`Go to residual (${jac.leftId})`, jac.leftId);
+  if (tag) add(`Go to entry (${tag})`, tag);
+  if (deriv) add(`Derivation (${deriv[0]})–(${deriv[1]})`, deriv[0]);
+  add(`Where ${row.plain} comes from (${row.chapter})`, row.chapter);
+}
+
+document.getElementById('btn-jac-close').addEventListener('click', closeJacobian);
+jacOverlay.addEventListener('click', closeJacobian);
+
+// ============================================================
+// Search: equations, sections and Jacobian blocks
+// ============================================================
+
+const searchInput   = document.getElementById('search-input');
+const searchResults = document.getElementById('search-results');
+const searchIndex = [];
+let searchHits = [];
+let searchActive = 0;
+
+const GREEK = {
+  'α': 'alpha', 'β': 'beta', 'γ': 'gamma', 'δ': 'delta', 'ε': 'epsilon', 'ζ': 'zeta', 'η': 'eta',
+  'θ': 'theta', 'λ': 'lambda', 'μ': 'mu', 'ν': 'nu', 'ξ': 'xi', 'π': 'pi', 'ρ': 'rho', 'σ': 'sigma',
+  'τ': 'tau', 'φ': 'phi', 'ψ': 'psi', 'ω': 'omega', 'ϖ': 'varpi', 'ϱ': 'varrho',
+};
+
+function norm(text) {
+  return String(text || '')
+    .toLowerCase()
+    .replace(/[α-ωϖϱ]/g, ch => ` ${GREEK[ch] || ''} `)
+    .replace(/[^a-z0-9.]+/g, ' ')
+    .replace(/(^|\s)\.+|\.+(?=\s|$)/g, ' ') // keep dots only inside tags like 18.3
+    .trim()
+    .replace(/\s+/g, ' ');
+}
+
+function buildSearchIndex() {
+  sections.forEach(sec => {
+    const idx = equations.findIndex(e => e.section === sec.id);
+    if (idx < 0) return;
+    searchIndex.push({
+      kind: 'section', idx, title: sec.title, sub: sec.subtitle || 'Section',
+      fields: { label: norm(sec.title), section: norm(sec.subtitle) },
+    });
+  });
+  equations.forEach((eq, idx) => {
+    const sec = sections.find(s => s.id === eq.section);
+    searchIndex.push({
+      kind: 'eq', idx, id: eq.id, title: eq.label, sub: sec ? sec.title : '',
+      fields: { id: eq.id, label: norm(eq.label), section: norm(sec ? sec.title : ''), desc: norm(eq.description) },
+    });
+  });
+  JAC_ROWS.forEach((row, r) => JAC_COLS.forEach((col, c) => {
+    const tag = row.entries[col.key];
+    searchIndex.push({
+      kind: 'jac', r, c, title: `∂${row.plain}/∂${col.name}`,
+      sub: `System Jacobian · ${row.name} residual${tag ? ` · (${tag})` : ''}`,
+      fields: {
+        label: norm(`jacobian block d${row.plain} d${col.key} ${row.plain} ${col.words} ${row.name}`),
+        section: 'system jacobian',
+      },
+    });
+  }));
+}
+
+const FIELD_WEIGHTS = { id: 8, label: 4, section: 2, desc: 1 };
+
+function fieldScore(text, token) {
+  if (!text) return 0;
+  const words = text.split(' ');
+  if (words.includes(token)) return 1;
+  if (words.some(w => w.startsWith(token))) return 0.8;
+  if (token.length >= 3 && text.includes(token)) return 0.5;
+  return 0;
+}
+
+function scoreEntry(entry, tokens, phrase) {
+  let total = 0;
+  for (const token of tokens) {
+    let best = 0;
+    for (const [field, weight] of Object.entries(FIELD_WEIGHTS)) {
+      const text = entry.fields[field];
+      if (!text) continue;
+      const s = field === 'id' ? (text === token ? 1 : text.startsWith(token) ? 0.6 : 0) : fieldScore(text, token);
+      best = Math.max(best, s * weight);
+    }
+    if (best === 0) return 0; // every word must match somewhere
+    total += best;
+  }
+  if (phrase.length > 2 && entry.fields.label && entry.fields.label.includes(phrase)) total += 6;
+  if (entry.kind === 'section') total += 1;
+  return total;
+}
+
+// Filler words never have to match ("derivatives of M w.r.t. h").
+const STOPWORDS = new Set(['of', 'the', 'a', 'an', 'to', 'and', 'in', 'on', 'for', 'with', 'respect',
+  'wrt', 'w.r.t', 'w.r.t.', 'by', 'is']);
+
+function runSearch() {
+  const all = norm(searchInput.value);
+  const tokens = all.split(' ').filter(t => t && !STOPWORDS.has(t));
+  const phrase = tokens.join(' ');
+  if (!tokens.length) { hideSearch(); return; }
+  searchHits = searchIndex
+    .map(entry => ({ entry, score: scoreEntry(entry, tokens, phrase) }))
+    .filter(h => h.score > 0)
+    .sort((a, b) => b.score - a.score || (a.entry.idx ?? 1e9) - (b.entry.idx ?? 1e9))
+    .slice(0, 12)
+    .map(h => h.entry);
+  searchActive = 0;
+  renderSearchResults();
+}
+
+function renderSearchResults() {
+  searchResults.innerHTML = '';
+  if (!searchHits.length) {
+    searchResults.innerHTML = '<div class="search-empty">No matches</div>';
+    searchResults.hidden = false;
+    return;
+  }
+  searchHits.forEach((hit, i) => {
+    const item = document.createElement('div');
+    item.className = 'search-item' + (i === searchActive ? ' active' : '');
+    item.setAttribute('role', 'option');
+    const badge = hit.kind === 'section' ? '§' : hit.kind === 'jac' ? '∂' : `(${hit.id})`;
+    item.innerHTML = `<span class="search-badge ${hit.kind}"></span><span class="search-text"><span class="search-title"></span><span class="search-sub"></span></span>`;
+    item.querySelector('.search-badge').textContent = badge;
+    item.querySelector('.search-title').textContent = hit.title;
+    item.querySelector('.search-sub').textContent = hit.sub;
+    // mousedown, not click: fires before the input loses focus and closes the list
+    item.addEventListener('mousedown', (e) => { e.preventDefault(); chooseSearchHit(hit); });
+    item.addEventListener('mousemove', () => { if (searchActive !== i) { searchActive = i; highlightSearchItem(); } });
+    searchResults.appendChild(item);
+  });
+  searchResults.hidden = false;
+}
+
+function highlightSearchItem() {
+  [...searchResults.children].forEach((el, i) => el.classList.toggle('active', i === searchActive));
+  const active = searchResults.children[searchActive];
+  if (active) active.scrollIntoView({ block: 'nearest' });
+}
+
+function chooseSearchHit(hit) {
+  searchInput.value = '';
+  hideSearch();
+  searchInput.blur();
+  closeTOC();
+  closeComparison();
+  if (hit.kind === 'jac') {
+    openJacobian(hit.r, hit.c);
+  } else {
+    closeJacobian();
+    goTo(hit.idx);
+  }
+}
+
+function hideSearch() {
+  searchResults.hidden = true;
+  searchHits = [];
+}
+
+searchInput.addEventListener('input', runSearch);
+searchInput.addEventListener('focus', () => { if (searchInput.value) runSearch(); });
+searchInput.addEventListener('blur', () => setTimeout(hideSearch, 100));
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    e.preventDefault();
+    if (!searchHits.length) return;
+    searchActive = (searchActive + (e.key === 'ArrowDown' ? 1 : -1) + searchHits.length) % searchHits.length;
+    highlightSearchItem();
+  } else if (e.key === 'Enter') {
+    e.preventDefault();
+    if (searchHits[searchActive]) chooseSearchHit(searchHits[searchActive]);
+  } else if (e.key === 'Escape') {
+    searchInput.value = '';
+    hideSearch();
+    searchInput.blur();
+  }
+});
+
 // ---- Init ----
+buildSearchIndex();
 buildFlow();

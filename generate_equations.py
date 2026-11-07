@@ -1047,8 +1047,9 @@ for eq in raw_equations:
     latex = js_escape(eq['latex'])
     section_id = eq['section_id']
     
-    # Hide individual jacobian block equations from main flow
-    hidden = 'true' if (tag.startswith('18.') and tag not in ['18.1', '18.37']) else 'false'
+    # Jacobian block entries (18.2-18.36) used to be hidden from the main flow, which
+    # made them impossible to jump to. They now show in order, like the notes.
+    hidden = 'false'
     
     lines.append('  {')
     lines.append(f"    id: '{tag}',")
