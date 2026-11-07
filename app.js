@@ -1,12 +1,14 @@
 // ============================================================
 // FEM Dynamic Wetting · Main Application Engine
+// Bump ?v= here and in index.html on every deploy: GitHub Pages lets browsers cache
+// files for 10 minutes, and a new index.html with old CSS/data renders broken.
 // ============================================================
 
-import { equations as allEquations, sections } from './equations.js';
+import { equations as allEquations, sections } from './equations.js?v=2';
 import {
   JAC_ROWS, JAC_COLS, ENTRY_INDEX, RESIDUAL_INDEX,
   cellTex, isZeroBlock, highlightSymbol,
-} from './jacobian.js';
+} from './jacobian.js?v=2';
 
 // Filter out equations that shouldn't appear in the main flow (like jacobian entries)
 const equations = allEquations.filter(e => !e.hidden);
